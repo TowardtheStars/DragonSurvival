@@ -22,7 +22,7 @@ public class DragonFood {
 	@Nullable
 	public static Food getEffectiveFoodProperties(Item item, Entity entity) {
 		if (entity != null && DragonStateProvider.isDragon(entity))
-			return DragonFoodHandler.getDragonFoodProperties(item, DragonStateProvider.getCap(entity).orElseGet(null).getType());
+			return DragonFoodHandler.getDragonFoodProperties(item, getDragonType(entity));
 		return item.getFoodProperties();
 	}
 	

@@ -416,26 +416,34 @@ public class AppleSkinSupport
 	}
 	
 	public static boolean isRotten(ItemStack itemStack) {
-		if(itemStack == null || itemStack.getItem() == null || itemStack.getItem().getFoodProperties() == null || itemStack.getItem().getFoodProperties().getEffects() == null)
+		if(itemStack == null || itemStack.getItem().getFoodProperties() == null)
 			return false;
-		
-		if (!DragonFoodHandler.isDragonEdible(itemStack.getItem(), DragonStateProvider.getDragonType(Minecraft.getInstance().player))) {
+
+		if (!DragonFoodHandler.isDragonEdible(itemStack.getItem(), DragonStateProvider.getDragonType(Minecraft.getInstance().player)))
 			return false;
 			
-		} else {
-			Iterator var1 = itemStack.getItem().getFoodProperties().getEffects().iterator();
-			
-			Pair effect;
-			do {
-				if (!var1.hasNext()) {
-					return false;
-				}
-				
-				effect = (Pair)var1.next();
-			} while(effect.getFirst() == null || ((EffectInstance)effect.getFirst()).getEffect() == null || ((EffectInstance)effect.getFirst()).getEffect().getCategory() != EffectType.HARMFUL);
-			
-			return true;
-		}
+
+//			Iterator var1 = itemStack.getItem().getFoodProperties().getEffects().iterator();
+//
+//			Pair effect;
+//			do {
+//				if (!var1.hasNext()) {
+//					return false;
+//				}
+//
+//				effect = (Pair)var1.next();
+//			} while(effect.getFirst() == null || ((EffectInstance)effect.getFirst()).getEffect() == null || ((EffectInstance)effect.getFirst()).getEffect().getCategory() != EffectType.HARMFUL);
+			return itemStack.getItem().getFoodProperties().getEffects().stream()
+					.anyMatch(effect ->
+					{
+						if (effect.getFirst() == null)
+						{
+							return true;
+						}
+						return effect.getFirst().getEffect().getCategory() != EffectType.HARMFUL;
+					});
+
+
 	}
 	
 	static {
