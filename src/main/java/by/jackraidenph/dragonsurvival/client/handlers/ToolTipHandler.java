@@ -5,6 +5,7 @@ import by.jackraidenph.dragonsurvival.client.gui.AbilityScreen;
 import by.jackraidenph.dragonsurvival.client.gui.widgets.buttons.HelpButton;
 import by.jackraidenph.dragonsurvival.client.gui.widgets.buttons.SkillProgressButton;
 import by.jackraidenph.dragonsurvival.common.blocks.DSBlocks;
+import by.jackraidenph.dragonsurvival.common.capability.DragonStateHandler;
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateProvider;
 import by.jackraidenph.dragonsurvival.common.handlers.DragonFoodHandler;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
@@ -216,7 +217,7 @@ public class ToolTipHandler
 			event.setBorderStart(top);
 			event.setBorderEnd(bottom);
 		}else if(screen || isFood){
-			DragonType type = DragonStateProvider.getCap(Minecraft.getInstance().player).map((cap) -> cap.getType()).get();
+			DragonType type = DragonStateProvider.getCap(Minecraft.getInstance().player).map(DragonStateHandler::getType).get();
 			Color topColor = null;
 			Color bottomColor = null;
 			

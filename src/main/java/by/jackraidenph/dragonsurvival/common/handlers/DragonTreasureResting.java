@@ -46,9 +46,9 @@ public class DragonTreasureResting
 		PlayerEntity player = event.player;
 		
 		if(DragonStateProvider.isDragon(player)){
-			DragonStateHandler handler = DragonStateProvider.getCap(player).orElse(null);
+			DragonStateProvider.getCap(player).
 			
-			if(handler != null){
+			ifPresent(handler -> {
 				if(handler.treasureResting){
 					if(player.isCrouching() || !(player.getFeetBlockState().getBlock() instanceof TreasureBlock) || handler.getMovementData().bite){
 						handler.treasureResting = false;
@@ -92,7 +92,7 @@ public class DragonTreasureResting
 						}
 					}
 				}
-			}
+			} );
 		}
 	}
 	
@@ -115,17 +115,21 @@ public class DragonTreasureResting
 						} else if (serverplayerentity.isSleeping()) {
 							++j;
 						} else if (DragonStateProvider.isDragon(serverplayerentity)) {
-							DragonStateHandler handler = DragonStateProvider.getCap(serverplayerentity).orElse(null);
-							
-							if (ForgeEventFactory.fireSleepingTimeCheck(serverplayerentity, Optional.empty())) {
-								
-								if (handler != null) {
-									if (handler.treasureResting) {
+							Optional<DragonStateHandler> optionalDragonStateHandler = DragonStateProvider.getCap(serverplayerentity).resolve();
+							if (optionalDragonStateHandler.isPresent())
+							{
+								DragonStateHandler handler = optionalDragonStateHandler.get();
+								if (ForgeEventFactory.fireSleepingTimeCheck(serverplayerentity, Optional.empty()))
+								{
+
+									if (handler.treasureResting)
+									{
 										++j;
 									}
+								} else
+								{
+									handler.treasureSleepTimer = 0;
 								}
-							}else{
-								handler.treasureSleepTimer = 0;
 							}
 						}
 					}
@@ -147,9 +151,7 @@ public class DragonTreasureResting
 		PlayerEntity player = Minecraft.getInstance().player;
 		
 		if(DragonStateProvider.isDragon(player)){
-			DragonStateHandler handler = DragonStateProvider.getCap(player).orElse(null);
-			
-			if(handler != null){
+			DragonStateProvider.getCap(player).ifPresent(handler ->{
 				if(handler.treasureResting){
 					Vector3d velocity = player.getDeltaMovement();
 					float groundSpeed = MathHelper.sqrt((velocity.x * velocity.x) + (velocity.z * velocity.z));
@@ -158,7 +160,7 @@ public class DragonTreasureResting
 						NetworkHandler.CHANNEL.sendToServer(new SyncTreasureRestStatus(player.getId(), false));
 					}
 				}
-			}
+			});
 		}
 	}
 	

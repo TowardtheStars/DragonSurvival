@@ -50,7 +50,7 @@ public class AppleSkinSupport
 	private static float unclampedFlashAlpha = 0.0F;
 	private static float flashAlpha = 0.0F;
 	private static byte alphaDir = 1;
-	public static final Vector<Point> foodBarOffsets = new Vector();
+	public static final Vector<Point> foodBarOffsets = new Vector<>();
 	
 	private static final TextureOffsets normalBarTextureOffsets;
 	private static final TextureOffsets rottenBarTextureOffsets;

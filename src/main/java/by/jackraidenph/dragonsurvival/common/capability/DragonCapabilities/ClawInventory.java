@@ -84,7 +84,7 @@ public class ClawInventory implements DragonCapability
 			int j = compoundnbt.getByte("Slot") & 255;
 			ItemStack itemstack = ItemStack.of(compoundnbt);
 			if (!itemstack.isEmpty()) {
-				if (j >= 0 && j < inventory.getContainerSize()) {
+				if (j < inventory.getContainerSize()) {
 					inventory.setItem(j, itemstack);
 				}
 			}

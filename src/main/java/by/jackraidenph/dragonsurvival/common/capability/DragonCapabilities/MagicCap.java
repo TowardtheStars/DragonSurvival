@@ -18,14 +18,14 @@ import java.util.Objects;
 public class MagicCap implements DragonCapability
 {
 	
-	private DragonStateHandler instance;
+	private final DragonStateHandler instance;
 	
 	public MagicCap(DragonStateHandler instance)
 	{
 		this.instance = instance;
 	}
 	
-	private ArrayList<DragonAbility> abilities = new ArrayList<>();
+	private final ArrayList<DragonAbility> abilities = new ArrayList<>();
 	
 	private ActiveDragonAbility currentlyCasting = null;
 	private int selectedAbilitySlot = 0;
@@ -38,7 +38,7 @@ public class MagicCap implements DragonCapability
 	
 	public void initAbilities(DragonType type){
 		if(DragonAbilities.ACTIVE_ABILITIES.containsKey(type)) {
-			if(instance.getType() != null && instance.getType() != DragonType.NONE) {
+			if(instance.getType() != DragonType.NONE) {
 				if (!ConfigHandler.SERVER.saveAllAbilities.get()) {
 					abilities.clear();
 				}
@@ -104,7 +104,7 @@ public class MagicCap implements DragonCapability
 	
 	public ArrayList<DragonAbility> getAbilities()
 	{
-		if(abilities.size() <= 0 && this.instance.getType() != null && this.instance.getType() != DragonType.NONE){
+		if(abilities.size() <= 0 && this.instance.getType() != DragonType.NONE){
 			initAbilities(this.instance.getType());
 		}
 		
@@ -112,12 +112,12 @@ public class MagicCap implements DragonCapability
 	}
 	
 	public void addAbility(DragonAbility ability){
-		abilities.removeIf((c) -> c.getId() == ability.getId());
+		abilities.removeIf((c) -> Objects.equals(c.getId(), ability.getId()));
 		abilities.add(ability);
 	}
 	
 	public ActiveDragonAbility getAbilityFromSlot(int slot) {
-		ActiveDragonAbility dragonAbility = instance.getType() != null && DragonAbilities.ACTIVE_ABILITIES.get(instance.getType()) != null && DragonAbilities.ACTIVE_ABILITIES.get(instance.getType()).size() >= slot ? DragonAbilities.ACTIVE_ABILITIES.get(instance.getType()).get(slot) : null;
+		ActiveDragonAbility dragonAbility = DragonAbilities.ACTIVE_ABILITIES.get(instance.getType()) != null && DragonAbilities.ACTIVE_ABILITIES.get(instance.getType()).size() >= slot ? DragonAbilities.ACTIVE_ABILITIES.get(instance.getType()).get(slot) : null;
 		ActiveDragonAbility actual = (ActiveDragonAbility)getAbility(dragonAbility);
 		
 		return actual == null ? dragonAbility : actual;
@@ -207,12 +207,10 @@ public class MagicCap implements DragonCapability
 		
 		if(tag.contains("abilityData")) {
 			CompoundNBT ability = tag.getCompound("abilityData");
-			
-			if (ability != null) {
-				setSelectedAbilitySlot(ability.getInt("selectedAbilitySlot"));
-				setCurrentMana(ability.getInt("mana"));
-				loadAbilities(ability);
-			}
+
+			setSelectedAbilitySlot(ability.getInt("selectedAbilitySlot"));
+			setCurrentMana(ability.getInt("mana"));
+			loadAbilities(ability);
 		}
 	}
 	

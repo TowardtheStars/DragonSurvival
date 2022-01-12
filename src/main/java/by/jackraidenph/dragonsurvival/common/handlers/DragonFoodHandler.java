@@ -72,7 +72,7 @@ public class DragonFoodHandler {
 	}
 	
 	private static void rebuildFoodMap() {
-		ConcurrentHashMap<DragonType, ConcurrentHashMap<Item, Food>> dragonMap = new ConcurrentHashMap<DragonType, ConcurrentHashMap<Item, Food>>();
+		ConcurrentHashMap<DragonType, ConcurrentHashMap<Item, Food>> dragonMap = new ConcurrentHashMap<>();
 		dragonMap.put(DragonType.CAVE, buildDragonFoodMap(DragonType.CAVE));
 		dragonMap.put(DragonType.FOREST, buildDragonFoodMap(DragonType.FOREST));
 		dragonMap.put(DragonType.SEA, buildDragonFoodMap(DragonType.SEA));
@@ -117,7 +117,7 @@ public class DragonFoodHandler {
 	}
 	
 	private static ConcurrentHashMap<Item, Food> buildDragonFoodMap(DragonType type) {
-		ConcurrentHashMap<Item, Food> foodMap = new ConcurrentHashMap<Item, Food>();
+		ConcurrentHashMap<Item, Food> foodMap = new ConcurrentHashMap<>();
 		
 		if(!ConfigHandler.SERVER.customDragonFoods.get()){
 			return foodMap;
@@ -184,7 +184,9 @@ public class DragonFoodHandler {
 	}
 
 	@Nullable
-	private static Food calculateDragonFoodProperties(Item item, DragonType type, int nutrition, int saturation, boolean dragonFood) {
+	private static Food calculateDragonFoodProperties(
+			Item item, DragonType type, int nutrition, int saturation, boolean dragonFood
+	) {
 		if (!ConfigHandler.SERVER.customDragonFoods.get() || type == DragonType.NONE)
 			return item.getFoodProperties();
 		Food.Builder builder = new Food.Builder();
@@ -201,7 +203,7 @@ public class DragonFoodHandler {
 					builder.fast();
 				for (Pair<EffectInstance, Float> effect : humanFood.getEffects())
 					if (effect.getFirst().getEffect() != Effects.HUNGER && effect.getFirst().getEffect() != Effects.POISON)
-						builder.effect(() -> effect.getFirst(), effect.getSecond());
+						builder.effect(effect::getFirst, effect.getSecond());
 			}
 		} else {
 			Food humanFood = item.getFoodProperties();
@@ -215,7 +217,7 @@ public class DragonFoodHandler {
 				builder.fast();
 			for (Pair<EffectInstance, Float> effect : humanFood.getEffects())
 				if (effect.getFirst().getEffect() != Effects.HUNGER)
-					builder.effect(() -> effect.getFirst(), effect.getSecond());
+					builder.effect(effect::getFirst, effect.getSecond());
 			builder.effect(() -> new EffectInstance(Effects.HUNGER, 20 * 60, 0), 1.0F);
 		}
 		return builder.build();

@@ -1,10 +1,10 @@
 package by.jackraidenph.dragonsurvival.common.capability;
 
 import by.jackraidenph.dragonsurvival.common.DragonEffects;
+import by.jackraidenph.dragonsurvival.common.magic.DragonAbilities;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
 import by.jackraidenph.dragonsurvival.misc.DragonType;
 import by.jackraidenph.dragonsurvival.network.NetworkHandler;
-import by.jackraidenph.dragonsurvival.common.magic.DragonAbilities;
 import by.jackraidenph.dragonsurvival.network.magic.SyncMagicStats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,11 +20,15 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.PacketDistributor;
 
+import javax.annotation.Nonnull;
+import java.util.Objects;
+
 public class DragonStateProvider implements ICapabilitySerializable<CompoundNBT> {
 
     @CapabilityInject(DragonStateHandler.class)
     public static Capability<DragonStateHandler> DRAGON_CAPABILITY;
-    private final LazyOptional<DragonStateHandler> instance = LazyOptional.of(DRAGON_CAPABILITY::getDefaultInstance);
+
+    private final DragonStateHandler instance = Objects.requireNonNull(DRAGON_CAPABILITY.getDefaultInstance());
 
     public static LazyOptional<DragonStateHandler> getCap(Entity entity) {
         return entity == null ? LazyOptional.empty() : entity.getCapability(DragonStateProvider.DRAGON_CAPABILITY);
@@ -35,8 +39,7 @@ public class DragonStateProvider implements ICapabilitySerializable<CompoundNBT>
     }
     
     public static DragonType getDragonType(Entity entity) {
-        DragonStateHandler handler = getCap(entity).orElse(null);
-        return handler != null ? handler.getType() : DragonType.NONE;
+        return getCap(entity).map(DragonStateHandler::getType).orElse(DragonType.NONE);
     }
     
     public static int getCurrentMana(PlayerEntity entity) {
@@ -117,31 +120,33 @@ public class DragonStateProvider implements ICapabilitySerializable<CompoundNBT>
 	
 	    if(entity instanceof PlayerEntity){
 	        PlayerEntity player = (PlayerEntity)entity;
-	        DragonStateHandler handler = getCap(player).orElse(null);
-	        if(handler != null && handler.isDragon()){
+	        getCap(player).filter(DragonStateHandler::isDragon).
+	        ifPresent(handler ->{
 	            float f1 = -(float)handler.getMovementData().bodyYaw * ((float)Math.PI / 180F);
 	        
 	            float f4 = MathHelper.sin(f1);
 	            float f5 = MathHelper.cos(f1);
 	            lookVector.set((float)(f4 * (handler.getSize() / 40)), 0, (float)(f5 * (handler.getSize() / 40)));
-	        }
+	        });
 	    }
 	    
 	    return lookVector;
 	}
 	
-	@Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        return cap == DRAGON_CAPABILITY ? instance.cast() : LazyOptional.empty();
+	@Nonnull
+    @Override
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
+        return cap == DRAGON_CAPABILITY ? LazyOptional.of(()->instance).cast() : LazyOptional.empty();
     }
 
     @Override
     public CompoundNBT serializeNBT() {
-        return (CompoundNBT) DRAGON_CAPABILITY.getStorage().writeNBT(DRAGON_CAPABILITY, this.instance.orElseThrow(() -> new IllegalArgumentException("LazyOptional must not be empty!")), null);
+        return (CompoundNBT) DRAGON_CAPABILITY.getStorage().writeNBT(
+                DRAGON_CAPABILITY, instance, null);
     }
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
-        DRAGON_CAPABILITY.getStorage().readNBT(DRAGON_CAPABILITY, this.instance.orElseThrow(() -> new IllegalArgumentException("LazyOptional must not be empty!")), null, nbt);
+        DRAGON_CAPABILITY.getStorage().readNBT(DRAGON_CAPABILITY, instance, null, nbt);
     }
 }

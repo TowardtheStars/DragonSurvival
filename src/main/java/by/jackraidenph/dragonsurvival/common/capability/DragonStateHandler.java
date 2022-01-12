@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.UUID;
@@ -378,6 +379,7 @@ public class DragonStateHandler {
     	return this.debuffData;
     }
 
+    @Nonnull
     public DragonType getType() {
         return this.type;
     }

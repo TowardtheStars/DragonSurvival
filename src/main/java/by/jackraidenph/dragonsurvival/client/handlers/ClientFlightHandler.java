@@ -68,10 +68,10 @@ public class ClientFlightHandler {
         ActiveRenderInfo info = setup.getInfo();
     
         if(currentPlayer != null) {
-            DragonStateHandler dragonStateHandler = DragonStateProvider.getCap(currentPlayer).orElse(null);
+
             MixinGameRendererZoom gameRenderer = (MixinGameRendererZoom)Minecraft.getInstance().gameRenderer;
-    
-            if (dragonStateHandler != null) {
+            DragonStateProvider.getCap(currentPlayer)
+                    .ifPresent (dragonStateHandler -> {
                 if ( ServerFlightHandler.isGliding(currentPlayer)) {
                     if (setup.getInfo().isDetached()) {
                 
@@ -110,7 +110,7 @@ public class ClientFlightHandler {
                        }
                     }
                 }
-            }
+            });
         }
     }
     public static final ResourceLocation SPIN_COOLDOWN = new ResourceLocation(DragonSurvivalMod.MODID, "textures/gui/spin_cooldown.png");
@@ -452,12 +452,17 @@ public class ClientFlightHandler {
         ClientPlayerEntity player = Minecraft.getInstance().player;
         if(player == null) return;
         
-        DragonStateHandler handler = DragonStateProvider.getCap(player).orElse(null);
-        if(handler == null || !handler.isDragon()) return;
-        
-        if(KeyInputHandler.SPIN_ABILITY.getKey().getValue() == keyInputEvent.getButton()) {
-            spinKeybind(player, handler);
-        }
+        DragonStateProvider
+                .getCap(player)
+                .filter(DragonStateHandler::isDragon)
+                .ifPresent(handler ->
+                {
+
+                    if (KeyInputHandler.SPIN_ABILITY.getKey().getValue() == keyInputEvent.getButton())
+                    {
+                        spinKeybind(player, handler);
+                    }
+                });
     }
     
     @SubscribeEvent
@@ -465,51 +470,70 @@ public class ClientFlightHandler {
         ClientPlayerEntity player = Minecraft.getInstance().player;
         if(player == null) return;
     
-        DragonStateHandler handler = DragonStateProvider.getCap(player).orElse(null);
-        if(handler == null || !handler.isDragon()) return;
-        
-        boolean currentState = handler.isWingsSpread();
-        Vector3d lookVec = player.getLookAngle();
-    
-        if(KeyInputHandler.SPIN_ABILITY.getKey().getValue() == keyInputEvent.getKey()) {
-            spinKeybind(player, handler);
-        }
-        
-        if(ConfigHandler.CLIENT.jumpToFly.get() && !player.isCreative() && !player.isSpectator()) {
-            if (Minecraft.getInstance().options.keyJump.isDown()) {
-                if(keyInputEvent.getAction() == GLFW.GLFW_PRESS) {
-                    if (handler.hasWings() && !currentState && (lookVec.y > 0.8 || !ConfigHandler.CLIENT.lookAtSkyForFlight.get())) {
-                        if (!player.isOnGround() && !player.isInLava() && !player.isInWater()) {
-                            if (player.getFoodData().getFoodLevel() > ConfigHandler.SERVER.flightHungerThreshold.get() || player.isCreative() || ConfigHandler.SERVER.allowFlyingWithoutHunger.get()) {
-                                NetworkHandler.CHANNEL.sendToServer(new SyncFlyingStatus(player.getId(), true));
-                            } else {
-                                if (lastHungerMessage == 0 || lastHungerMessage + TimeUnit.MILLISECONDS.convert(30, TimeUnit.SECONDS) < System.currentTimeMillis()) {
-                                    lastHungerMessage = System.currentTimeMillis();
-                                    player.sendMessage(new TranslationTextComponent("ds.wings.nohunger"), player.getUUID());
+        DragonStateProvider.getCap(player).filter(DragonStateHandler::isDragon).ifPresent
+        (handler->
+        {
+
+            boolean currentState = handler.isWingsSpread();
+            Vector3d lookVec = player.getLookAngle();
+
+            if (KeyInputHandler.SPIN_ABILITY.getKey().getValue() == keyInputEvent.getKey())
+            {
+                spinKeybind(player, handler);
+            }
+
+            if (ConfigHandler.CLIENT.jumpToFly.get() && !player.isCreative() && !player.isSpectator())
+            {
+                if (Minecraft.getInstance().options.keyJump.isDown())
+                {
+                    if (keyInputEvent.getAction() == GLFW.GLFW_PRESS)
+                    {
+                        if (handler.hasWings() && !currentState && (lookVec.y > 0.8 || !ConfigHandler.CLIENT.lookAtSkyForFlight.get()))
+                        {
+                            if (!player.isOnGround() && !player.isInLava() && !player.isInWater())
+                            {
+                                if (player.getFoodData().getFoodLevel() > ConfigHandler.SERVER.flightHungerThreshold.get() || player.isCreative() || ConfigHandler.SERVER.allowFlyingWithoutHunger.get())
+                                {
+                                    NetworkHandler.CHANNEL.sendToServer(new SyncFlyingStatus(player.getId(), true));
+                                } else
+                                {
+                                    if (lastHungerMessage == 0 || lastHungerMessage + TimeUnit.MILLISECONDS.convert(30, TimeUnit.SECONDS) < System.currentTimeMillis())
+                                    {
+                                        lastHungerMessage = System.currentTimeMillis();
+                                        player.sendMessage(new TranslationTextComponent("ds.wings.nohunger"), player.getUUID());
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-        }
-        
-        if (KeyInputHandler.TOGGLE_WINGS.consumeClick()) {
-            if (handler.hasWings()) {
-                //Allows toggling the wings if food level is above 0, player is creative, wings are already enabled (allows disabling even when hungry) or if config options is turned on
-                if((player.getFoodData().getFoodLevel() > ConfigHandler.SERVER.flightHungerThreshold.get() || player.isCreative()) || currentState || ConfigHandler.SERVER.allowFlyingWithoutHunger.get()) {
-                    NetworkHandler.CHANNEL.sendToServer(new SyncFlyingStatus(player.getId(), !currentState));
-                    if (ConfigHandler.CLIENT.notifyWingStatus.get()) {
-                        if (!currentState) player.sendMessage(new TranslationTextComponent("ds.wings.enabled"), player.getUUID());
-                        else player.sendMessage(new TranslationTextComponent("ds.wings.disabled"), player.getUUID());
+
+            if (KeyInputHandler.TOGGLE_WINGS.consumeClick())
+            {
+                if (handler.hasWings())
+                {
+                    //Allows toggling the wings if food level is above 0, player is creative, wings are already enabled (allows disabling even when hungry) or if config options is turned on
+                    if ((player.getFoodData().getFoodLevel() > ConfigHandler.SERVER.flightHungerThreshold.get() || player.isCreative()) || currentState || ConfigHandler.SERVER.allowFlyingWithoutHunger.get())
+                    {
+                        NetworkHandler.CHANNEL.sendToServer(new SyncFlyingStatus(player.getId(), !currentState));
+                        if (ConfigHandler.CLIENT.notifyWingStatus.get())
+                        {
+                            if (!currentState)
+                                player.sendMessage(new TranslationTextComponent("ds.wings.enabled"), player.getUUID());
+                            else
+                                player.sendMessage(new TranslationTextComponent("ds.wings.disabled"), player.getUUID());
+                        }
+                    } else
+                    {
+                        player.sendMessage(new TranslationTextComponent("ds.wings.nohunger"), player.getUUID());
                     }
-                }else{
-                    player.sendMessage(new TranslationTextComponent("ds.wings.nohunger"), player.getUUID());
+                } else
+                {
+                    player.sendMessage(new TranslationTextComponent("ds.you.have.no.wings"), player.getUUID());
                 }
-            } else {
-                player.sendMessage(new TranslationTextComponent("ds.you.have.no.wings"), player.getUUID());
             }
-        }
+        });
     }
     
     private static void spinKeybind(ClientPlayerEntity player, DragonStateHandler handler)

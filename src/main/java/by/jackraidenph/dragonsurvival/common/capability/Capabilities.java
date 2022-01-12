@@ -36,37 +36,38 @@ public class Capabilities {
     
     public static class VillageRelationshipsProvider implements ICapabilitySerializable<CompoundNBT>
     {
-        private final LazyOptional<VillageRelationShips> instance = LazyOptional.of(() -> (VillageRelationShips) Objects.<Object>requireNonNull(VILLAGE_RELATIONSHIP.getDefaultInstance()));
+        private final VillageRelationShips instance =Objects.requireNonNull(VILLAGE_RELATIONSHIP.getDefaultInstance());
     
         @Nonnull
         public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable
                 Direction side) {
-            return (cap == VILLAGE_RELATIONSHIP) ? this.instance.cast() : LazyOptional.empty();
+            return (cap == VILLAGE_RELATIONSHIP) ? LazyOptional.of(()->instance).cast() : LazyOptional.empty();
         }
     
         public CompoundNBT serializeNBT() {
-            return (CompoundNBT) VILLAGE_RELATIONSHIP.getStorage().writeNBT(VILLAGE_RELATIONSHIP, this.instance.orElse(null), null);
+            return (CompoundNBT) VILLAGE_RELATIONSHIP.getStorage().writeNBT(VILLAGE_RELATIONSHIP, this.instance, null);
         }
     
         public void deserializeNBT(CompoundNBT nbt) {
-            VILLAGE_RELATIONSHIP.getStorage().readNBT(VILLAGE_RELATIONSHIP, this.instance.orElse(null), null, (INBT) nbt);
+            VILLAGE_RELATIONSHIP.getStorage().readNBT(
+                    VILLAGE_RELATIONSHIP, this.instance, null, nbt);
         }
     }
     
     public static class GenericCapabilityProvider implements ICapabilitySerializable<CompoundNBT> {
-        private final LazyOptional<GenericCapability> instance = LazyOptional.of(() -> (GenericCapability) Objects.<Object>requireNonNull(GENERIC_CAPABILITY.getDefaultInstance()));
+        private final GenericCapability instance = Objects.requireNonNull(GENERIC_CAPABILITY.getDefaultInstance());
     
         @Nonnull
         public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-            return (cap == GENERIC_CAPABILITY) ? this.instance.cast() : LazyOptional.empty();
+            return (cap == GENERIC_CAPABILITY) ? LazyOptional.of(()->instance).cast() : LazyOptional.empty();
         }
     
         public CompoundNBT serializeNBT() {
-            return (CompoundNBT) GENERIC_CAPABILITY.getStorage().writeNBT(GENERIC_CAPABILITY, this.instance.orElse(null), null);
+            return (CompoundNBT) GENERIC_CAPABILITY.getStorage().writeNBT(GENERIC_CAPABILITY, this.instance, null);
         }
     
         public void deserializeNBT(CompoundNBT nbt) {
-            GENERIC_CAPABILITY.getStorage().readNBT(GENERIC_CAPABILITY, this.instance.orElse(null), null, (INBT) nbt);
+            GENERIC_CAPABILITY.getStorage().readNBT(GENERIC_CAPABILITY, this.instance, null, nbt);
         }
     }
 }

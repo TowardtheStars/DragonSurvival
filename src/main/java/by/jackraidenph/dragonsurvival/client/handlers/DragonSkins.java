@@ -1,7 +1,6 @@
 package by.jackraidenph.dragonsurvival.client.handlers;
 
 import by.jackraidenph.dragonsurvival.DragonSurvivalMod;
-import by.jackraidenph.dragonsurvival.common.capability.DragonStateHandler;
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateProvider;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
 import by.jackraidenph.dragonsurvival.misc.DragonLevel;
@@ -21,6 +20,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DragonSkins
 {
@@ -38,22 +38,21 @@ public class DragonSkins
 	private static ArrayList<String> hasFailedFetch = new ArrayList<>();
 	
 	public static boolean renderStage(PlayerEntity player, DragonLevel level){
-		DragonStateHandler handler = DragonStateProvider.getCap(player).orElse(null);
-		
-		if(handler != null){
+		AtomicBoolean result = new AtomicBoolean(false);
+		DragonStateProvider.getCap(player).ifPresent(handler->{
 			switch(level){
 				case BABY:
-					return handler.getSkin().renderNewborn;
+					result.set(handler.getSkin().renderNewborn);
 					
 				case YOUNG:
-					return handler.getSkin().renderYoung;
+					result.set(handler.getSkin().renderYoung);
 					
 				case ADULT:
-					return handler.getSkin().renderAdult;
+					result.set(handler.getSkin().renderAdult);
 			}
-		}
+		});
 		
-		return false;
+		return result.get();
 	}
 	
 	public static ResourceLocation getPlayerSkin(String playerKey){

@@ -8,9 +8,12 @@ import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nonnull;
+
 @JeiPlugin
 @SuppressWarnings("unused")
 public class JEIPlugin implements IModPlugin {
+    @Nonnull
     @Override
     public ResourceLocation getPluginUid() {
         return new ResourceLocation(DragonSurvivalMod.MODID, "fix");
