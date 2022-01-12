@@ -40,6 +40,7 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
@@ -65,18 +66,18 @@ public class PrincessEntity extends VillagerEntity {
     }
 
     @Nullable
-    public ILivingEntityData finalizeSpawn(IServerWorld serverWorld, DifficultyInstance difficultyInstance, SpawnReason reason, @Nullable ILivingEntityData livingEntityData, @Nullable CompoundNBT compoundNBT) {
+    public ILivingEntityData finalizeSpawn(@Nonnull IServerWorld serverWorld, @Nonnull DifficultyInstance difficultyInstance, SpawnReason reason, @Nullable ILivingEntityData livingEntityData, @Nullable CompoundNBT compoundNBT) {
         setColor(colors.get(this.random.nextInt(6)).getId());
         setVillagerData(getVillagerData().setProfession(DSEntities.PRINCESS_PROFESSION));
         return super.finalizeSpawn(serverWorld, difficultyInstance, reason, livingEntityData, compoundNBT);
     }
 
-    public void readAdditionalSaveData(CompoundNBT compoundNBT) {
+    public void readAdditionalSaveData(@Nonnull CompoundNBT compoundNBT) {
         super.readAdditionalSaveData(compoundNBT);
         setColor(compoundNBT.getInt("Color"));
     }
 
-    public void addAdditionalSaveData(CompoundNBT compoundNBT) {
+    public void addAdditionalSaveData(@Nonnull CompoundNBT compoundNBT) {
         super.addAdditionalSaveData(compoundNBT);
         compoundNBT.putInt("Color", getColor());
     }
@@ -94,15 +95,17 @@ public class PrincessEntity extends VillagerEntity {
         return null;
     }
 
-    protected SoundEvent getHurtSound(DamageSource p_184601_1_) {
+    protected SoundEvent getHurtSound(@Nonnull DamageSource p_184601_1_) {
         return SoundEvents.GENERIC_HURT;
     }
 
+    @Nonnull
     @Override
     protected SoundEvent getTradeUpdatedSound(boolean p_213721_1_) {
         return null;
     }
 
+    @Nonnull
     @Override
     public SoundEvent getNotifyTradeSound() {
         return null;
@@ -118,26 +121,28 @@ public class PrincessEntity extends VillagerEntity {
     public void playWorkSound() {
     }
 
+    @Nonnull
     @Override
-    protected Brain<?> makeBrain(Dynamic<?> p_213364_1_) {
+    protected Brain<?> makeBrain(@Nonnull Dynamic<?> p_213364_1_) {
         return brainProvider().makeBrain(p_213364_1_);
     }
 
-    public void refreshBrain(ServerWorld p_213770_1_) {
+    public void refreshBrain(@Nonnull ServerWorld p_213770_1_) {
     }
 
     public boolean canBreed() {
         return false;
     }
 
+    @Nonnull
     protected ITextComponent getTypeName() {
         return new TranslationTextComponent(this.getType().getDescriptionId());
     }
 
-    public void thunderHit(ServerWorld p_241841_1_, LightningBoltEntity p_241841_2_) {
+    public void thunderHit(@Nonnull ServerWorld p_241841_1_, @Nonnull LightningBoltEntity p_241841_2_) {
     }
 
-    protected void pickUpItem(ItemEntity p_175445_1_) {
+    protected void pickUpItem(@Nonnull ItemEntity p_175445_1_) {
     }
 
     protected void updateTrades() {
@@ -165,14 +170,14 @@ public class PrincessEntity extends VillagerEntity {
         goalSelector.addGoal(7, new PanicGoal(this, 1));
     }
 
-    public void gossip(ServerWorld p_242368_1_, VillagerEntity p_242368_2_, long p_242368_3_) {
+    public void gossip(@Nonnull ServerWorld p_242368_1_, @Nonnull VillagerEntity p_242368_2_, long p_242368_3_) {
     }
 
-    public void startSleeping(BlockPos p_213342_1_) {
+    public void startSleeping(@Nonnull BlockPos p_213342_1_) {
     }
 
     @Override
-    public void die(DamageSource damageSource) {
+    public void die(@Nonnull DamageSource damageSource) {
         super.die(damageSource);
         Item flower = Items.AIR;
         DyeColor dyeColor = DyeColor.byId(getColor());

@@ -47,6 +47,7 @@ import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
@@ -237,7 +238,7 @@ public class PrincesHorseEntity extends VillagerEntity implements IAnimatable, C
     }
 
     @Override
-    public void die(DamageSource damageSource) {
+    public void die(@Nonnull DamageSource damageSource) {
         if (level instanceof ServerWorld && !(this instanceof PrinceHorseEntity)) {
             PrincessEntity princess = DSEntities.PRINCESS.create(level);
             princess.setPos(getX(), getY(), getZ());
