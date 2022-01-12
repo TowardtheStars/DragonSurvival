@@ -144,9 +144,9 @@ repositories {
         name = "Progwml6 maven"
         url = "https://dvs1.progwml6.com/files/maven/"
     }
-    maven {
-        url "https://cursemaven.com"
-    }
+//    maven {
+//        url "https://cursemaven.com"
+//    }
 }
 
 dependencies {
@@ -155,13 +155,13 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:$mc_version-$forge_version"
 
-    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${property('mc_version')}:${property('geckolib_version')}")
+    implementation ("software.bernie.geckolib:geckolib-forge-${property('mc_version')}:${property('geckolib_version')}")
 
-    compileOnly fg.deobf("mezz.jei:jei-${property('mc_version')}:${property('jei_version')}:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-${property('mc_version')}:${property('jei_version')}")
+    compileOnly ("mezz.jei:jei-${property('mc_version')}:${property('jei_version')}:api")
+    runtimeOnly ("mezz.jei:jei-${property('mc_version')}:${property('jei_version')}")
 
     compile files("lib/appleskin-api.jar")
-    runtimeOnly fg.deobf("curse.maven:appleskin-248787:3512372")
+//    runtimeOnly ("curse.maven:appleskin-248787:3512372")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
 }
