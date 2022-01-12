@@ -161,7 +161,6 @@ dependencies {
     runtimeOnly ("mezz.jei:jei-${property('mc_version')}:${property('jei_version')}")
 
     compile files("lib/appleskin-api.jar")
-//    runtimeOnly ("curse.maven:appleskin-248787:3512372")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
 }
