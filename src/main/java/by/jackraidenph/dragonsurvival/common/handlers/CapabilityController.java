@@ -31,6 +31,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.network.PacketDistributor;
 
+import java.util.Optional;
+
 @EventBusSubscriber
 public class CapabilityController {
     @SubscribeEvent
@@ -173,8 +175,10 @@ public class CapabilityController {
                 player.connection.send(new SSetPassengersPacket(player));
             }
             if (passenger instanceof ServerPlayerEntity) {
-                DragonStateHandler passengerCap = DragonStateProvider.getCap(passenger).orElseGet(null);
-                if (passengerCap.isDragon() && passengerCap.getLevel() != DragonLevel.BABY) {
+                Optional<DragonStateHandler> passengerCap = DragonStateProvider.getCap(passenger)
+                        .filter(DragonStateHandler::isDragon)
+                        .filter(cap->cap.getLevel() != DragonLevel.BABY);
+                if (passengerCap.isPresent()) {
                     flag = true;
                     passenger.stopRiding();
                     player.connection.send(new SSetPassengersPacket(player));

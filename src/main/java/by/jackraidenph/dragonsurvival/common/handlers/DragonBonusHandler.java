@@ -19,6 +19,8 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.Optional;
+
 @Mod.EventBusSubscriber
 public class DragonBonusHandler
 {
@@ -63,7 +65,14 @@ public class DragonBonusHandler
     		return;
     	PlayerEntity player = (PlayerEntity)event.getEntity();
     	DragonStateProvider.getCap(player).ifPresent(dragonStateHandler -> {
-    		if (dragonStateHandler.getType() == DragonType.CAVE && ConfigHandler.SERVER.bonuses.get() && ConfigHandler.SERVER.caveLavaSwimming.get() && DragonSizeHandler.getOverridePose(player) == Pose.SWIMMING && event.getSound().getRegistryName().getPath().contains(".step"))
+    		if (
+    				dragonStateHandler.getType() == DragonType.CAVE
+							&& ConfigHandler.SERVER.bonuses.get()
+							&& ConfigHandler.SERVER.caveLavaSwimming.get()
+							&& DragonSizeHandler.getOverridePose(player) == Pose.SWIMMING
+							&& Optional.ofNullable(event.getSound().getRegistryName())
+							.filter(resourceLocation->resourceLocation.getPath().contains(".step")).isPresent()
+			)
     			event.setCanceled(true);
     	});
     }
