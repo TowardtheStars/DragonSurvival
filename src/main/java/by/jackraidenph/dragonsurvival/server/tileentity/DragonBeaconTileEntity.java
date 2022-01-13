@@ -36,6 +36,7 @@ public class DragonBeaconTileEntity extends BaseBlockTileEntity implements ITick
 
     @Override
     public void tick() {
+        assert level != null;
         BlockState below = level.getBlockState(getBlockPos().below());
         BlockState blockState = getBlockState();
         Block beacon = blockState.getBlock();
@@ -84,7 +85,8 @@ public class DragonBeaconTileEntity extends BaseBlockTileEntity implements ITick
                         break;
                 }
             }
-        } else {
+        }
+        else {
             BlockState thisState = getBlockState();
             if (thisState.getValue(DragonBeacon.LIT)) {
                 level.setBlockAndUpdate(getBlockPos(), thisState.cycle(DragonBeacon.LIT));

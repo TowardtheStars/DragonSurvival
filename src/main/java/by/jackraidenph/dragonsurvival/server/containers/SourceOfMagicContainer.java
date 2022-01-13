@@ -36,7 +36,8 @@ public class SourceOfMagicContainer extends Container {
         });
     }
     
-    public ItemStack quickMoveStack(PlayerEntity p_82846_1_, int p_82846_2_) {
+    @Nonnull
+    public ItemStack quickMoveStack(@Nonnull PlayerEntity p_82846_1_, int p_82846_2_) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(p_82846_2_);
         if (slot != null && slot.hasItem()) {
@@ -73,7 +74,7 @@ public class SourceOfMagicContainer extends Container {
     }
     
     @Override
-    public boolean stillValid(PlayerEntity p_75145_1_)
+    public boolean stillValid(@Nonnull PlayerEntity p_75145_1_)
     {
         return true;
     }

@@ -46,7 +46,11 @@ public class SyncDragonClawsMenu implements IMessage<SyncDragonClawsMenu>
 		int playerId = buffer.readInt();
 		boolean state = buffer.readBoolean();
 		CompoundNBT tag = buffer.readNbt();
-		Inventory inventory = ClawInventory.readClawInventory(tag.getList("inv", 10));
+		Inventory inventory = null;
+		if (tag != null)
+		{
+			inventory = ClawInventory.readClawInventory(tag.getList("inv", 10));
+		}
 		return new SyncDragonClawsMenu(playerId, state, inventory);
 	}
 	

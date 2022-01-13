@@ -36,9 +36,10 @@ public class DragonClawsMenuToggle implements IMessage<DragonClawsMenuToggle>
 		DragonStateProvider.getCap(player).ifPresent(dragonStateHandler -> {
 			dragonStateHandler.getClawInventory().setClawsMenuOpen(message.state);
 		});
-		
-		if(player.containerMenu instanceof DragonContainer){
-			DragonContainer container = (DragonContainer)player.containerMenu;
+
+		if (player != null && player.containerMenu instanceof DragonContainer)
+		{
+			DragonContainer container = (DragonContainer) player.containerMenu;
 			container.update();
 		}
 	}

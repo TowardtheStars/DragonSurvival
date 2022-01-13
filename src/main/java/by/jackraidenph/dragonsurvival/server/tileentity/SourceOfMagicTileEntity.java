@@ -53,6 +53,7 @@ public class SourceOfMagicTileEntity extends BaseBlockTileEntity implements ITic
     
     @Override
     public void tick() {
+        assert level != null;
         if(getBlockState().getBlock() == DSBlocks.seaSourceOfMagic){
             type = DragonType.SEA;
         }else if(getBlockState().getBlock() == DSBlocks.forestSourceOfMagic){

@@ -39,7 +39,7 @@ public class PredatorStarTileEntity extends TileEntity implements ITickableTileE
                     ((CreatureEntity) e).goalSelector.addGoal(-1, new PredatorStarBlock.CallEntity((CreatureEntity) e, pos));
                 }
         }*/
-
+        assert level != null;
         if (this.level.isClientSide) {
             ++this.activeRotation;
         }

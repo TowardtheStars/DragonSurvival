@@ -126,7 +126,10 @@ public class SynchronizeDragonCap implements IMessage<SynchronizeDragonCap>
                     //refresh instances
                     if (thatPlayer != myPlayer) {
                         DragonEntity dragonEntity = DSEntities.DRAGON.create(world);
-                        dragonEntity.player = thatPlayer.getId();
+                        if (dragonEntity != null)
+                        {
+                            dragonEntity.player = thatPlayer.getId();
+                        }
                         ClientDragonRender.playerDragonHashMap.computeIfAbsent(thatPlayer.getId(), integer -> new AtomicReference<>(dragonEntity)).getAndSet(dragonEntity);
                     }
                     thatPlayer.setForcedPose(null);

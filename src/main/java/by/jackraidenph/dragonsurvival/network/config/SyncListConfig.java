@@ -36,7 +36,7 @@ public class SyncListConfig implements IMessage<SyncListConfig>
 	{
 		buffer.writeInt(message.type);
 		buffer.writeInt(message.value.size());
-		message.value.forEach((val) -> buffer.writeUtf(val));
+		message.value.forEach(buffer::writeUtf);
 		buffer.writeUtf(message.key);
 	}
 	

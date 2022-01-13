@@ -31,6 +31,8 @@ public class PotionSync
 	
 	@SubscribeEvent
 	public static void potionRemoved(PotionExpiryEvent event){
+		if (event.getPotionEffect() == null)
+			return;
 		if(event.getPotionEffect().getEffect() != DragonEffects.DRAIN && event.getPotionEffect().getEffect() != DragonEffects.CHARGED && event.getPotionEffect().getEffect() != DragonEffects.BURN){
 			return;
 		}

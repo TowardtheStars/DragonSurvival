@@ -18,6 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.PacketDistributor;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ClawToolSlot extends Slot
@@ -50,6 +51,7 @@ public class ClawToolSlot extends Slot
 		return Pair.of(PlayerContainer.BLOCK_ATLAS, type == null ? SWORD_TEXTURE : type == ToolType.AXE ? AXE_TEXTURE : type == ToolType.PICKAXE ? PICKAXE_TEXTURE : SHOVEL_TEXTURE);
 	}
 	
+	@Nonnull
 	@Override
 	public ItemStack remove(int p_75209_1_)
 	{
@@ -59,7 +61,7 @@ public class ClawToolSlot extends Slot
 	}
 	
 	@Override
-	public void set(ItemStack p_75215_1_)
+	public void set(@Nonnull ItemStack p_75215_1_)
 	{
 		super.set(p_75215_1_);
 		syncSlots();
@@ -68,11 +70,16 @@ public class ClawToolSlot extends Slot
 	private void syncSlots()
 	{
 		if(!dragonContainer.player.level.isClientSide) {
-			DragonStateHandler handler = DragonStateProvider.getCap(dragonContainer.player).orElse(null);
-			
-			if (handler != null) {
-				NetworkHandler.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> dragonContainer.player), new SyncDragonClawsMenu(dragonContainer.player.getId(), handler.getClawInventory().isClawsMenuOpen(), handler.getClawInventory().getClawsInventory()));
-			}
+			DragonStateProvider.getCap(dragonContainer.player).ifPresent (handler ->
+					NetworkHandler.CHANNEL.send(
+							PacketDistributor.TRACKING_ENTITY_AND_SELF
+									.with(() -> dragonContainer.player),
+							new SyncDragonClawsMenu(
+									dragonContainer.player.getId(), handler.getClawInventory().isClawsMenuOpen(),
+									handler.getClawInventory().getClawsInventory()
+							)
+					)
+			);
 		}
 	}
 	

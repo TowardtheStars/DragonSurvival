@@ -39,7 +39,7 @@ public class SyncNumberConfig implements IMessage<SyncNumberConfig>
 	public SyncNumberConfig decode(PacketBuffer buffer)
 	{
 		int type = buffer.readInt();
-		Double value = buffer.readDouble();
+		double value = buffer.readDouble();
 		String key = buffer.readUtf();
 		return new SyncNumberConfig(key, value, type);
 	}

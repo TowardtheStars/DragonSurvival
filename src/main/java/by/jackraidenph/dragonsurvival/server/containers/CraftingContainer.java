@@ -11,6 +11,7 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.Optional;
 
 public class CraftingContainer extends WorkbenchContainer {
@@ -24,16 +25,19 @@ public class CraftingContainer extends WorkbenchContainer {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity playerEntity) {
+    public boolean stillValid(@Nonnull PlayerEntity playerEntity) {
         return true;
     }
 
     @Override
-    public void slotsChanged(IInventory inventory) {
+    public void slotsChanged(@Nonnull IInventory inventory) {
         if (!world.isClientSide) {
             ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) playerEntity;
             ItemStack itemstack = ItemStack.EMPTY;
-            Optional<ICraftingRecipe> optional = world.getServer().getRecipeManager().getRecipeFor(IRecipeType.CRAFTING, craftSlots, world);
+            Optional<ICraftingRecipe> optional = Optional.ofNullable(world.getServer())
+                    .flatMap(server -> server.getRecipeManager()
+                            .getRecipeFor(IRecipeType.CRAFTING, craftSlots, world)
+                    );
             if (optional.isPresent()) {
                 ICraftingRecipe icraftingrecipe = optional.get();
                 if (resultSlots.setRecipeUsed(world, serverplayerentity, icraftingrecipe)) {
@@ -48,7 +52,7 @@ public class CraftingContainer extends WorkbenchContainer {
     }
 
     @Override
-    public void removed(PlayerEntity playerEntity) {
+    public void removed(@Nonnull PlayerEntity playerEntity) {
         super.removed(playerEntity);
         clearContainer(playerEntity, world, craftSlots);
 

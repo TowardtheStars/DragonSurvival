@@ -14,6 +14,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class OpenDragonInventory implements IMessage<OpenDragonInventory>
@@ -29,12 +30,11 @@ public class OpenDragonInventory implements IMessage<OpenDragonInventory>
     @Override
     public void handle(OpenDragonInventory message, Supplier<NetworkEvent.Context> supplier) {
         ServerPlayerEntity serverPlayerEntity = supplier.get().getSender();
-        if(DragonStateProvider.isDragon(serverPlayerEntity)) {
-            
+        if(Objects.nonNull(serverPlayerEntity) && DragonStateProvider.isDragon(serverPlayerEntity)) {
             if(serverPlayerEntity.containerMenu != null){
                 serverPlayerEntity.containerMenu.removed(serverPlayerEntity);
             }
-            
+
             serverPlayerEntity.openMenu(new INamedContainerProvider()
             {
                 @Override
@@ -42,7 +42,7 @@ public class OpenDragonInventory implements IMessage<OpenDragonInventory>
                 {
                     return new StringTextComponent("");
                 }
-        
+
                 @Nullable
                 @Override
                 public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_)
@@ -50,7 +50,7 @@ public class OpenDragonInventory implements IMessage<OpenDragonInventory>
                     return new DragonContainer(p_createMenu_1_, p_createMenu_2_, false);
                 }
             });
-            
+
         }
     }
 }

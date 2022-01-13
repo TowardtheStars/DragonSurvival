@@ -86,12 +86,12 @@ public class DragonContainer extends Container
             final EquipmentSlotType equipmentslottype = VALID_EQUIPMENT_SLOTS[k];
             this.addSlot(new Slot(playerInventory, 39 - k, 8, 8 + k * 18) {
                 @Override
-                public boolean mayPlace(ItemStack stack) {
+                public boolean mayPlace(@Nonnull ItemStack stack) {
                     return stack.canEquip(equipmentslottype, player);
                 }
             
                 @Override
-                public boolean mayPickup(PlayerEntity playerIn) {
+                public boolean mayPickup(@Nonnull PlayerEntity playerIn) {
                     ItemStack itemstack = this.getItem();
                     return (itemstack.isEmpty() || playerIn.isCreative() || !EnchantmentHelper.hasBindingCurse(itemstack)) && super.mayPickup(playerIn);
                 }
@@ -233,7 +233,8 @@ public class DragonContainer extends Container
         if (!player.level.isClientSide) {
             ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) player;
             ItemStack itemstack = ItemStack.EMPTY;
-            Optional<ICraftingRecipe> optional = player.level.getServer().getRecipeManager().getRecipeFor(IRecipeType.CRAFTING, craftMatrix, player.level);
+            Optional<ICraftingRecipe> optional = Optional.ofNullable(player.level.getServer())
+                    .flatMap(obj->obj.getRecipeManager().getRecipeFor(IRecipeType.CRAFTING, craftMatrix, player.level));
             if (optional.isPresent()) {
                 ICraftingRecipe icraftingrecipe = optional.get();
                 if (craftResult.setRecipeUsed(player.level, serverplayerentity, icraftingrecipe)) {

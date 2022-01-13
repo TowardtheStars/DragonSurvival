@@ -17,6 +17,7 @@ import net.minecraftforge.fml.DistExecutor.SafeRunnable;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class SyncMagicAbilities implements IMessage<SyncMagicAbilities>
@@ -48,12 +49,16 @@ public class SyncMagicAbilities implements IMessage<SyncMagicAbilities>
 		
 		ArrayList<DragonAbility> abilities = new ArrayList<>();
 		CompoundNBT tag = buffer.readNbt();
-		
-		for(DragonAbility staticAbility : DragonAbilities.ABILITY_LOOKUP.values()){
-			if(tag.contains(staticAbility.getId())){
-				DragonAbility ability = staticAbility.createInstance();
-				ability.loadNBT(tag.getCompound(staticAbility.getId()));
-				abilities.add(ability);
+		if (Objects.nonNull(tag))
+		{
+			for (DragonAbility staticAbility : DragonAbilities.ABILITY_LOOKUP.values())
+			{
+				if (tag.contains(staticAbility.getId()))
+				{
+					DragonAbility ability = staticAbility.createInstance();
+					ability.loadNBT(tag.getCompound(staticAbility.getId()));
+					abilities.add(ability);
+				}
 			}
 		}
 		

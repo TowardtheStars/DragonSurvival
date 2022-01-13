@@ -10,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -58,7 +59,11 @@ public class SyncAbilityCasting implements IMessage<SyncAbilityCasting>
 		if(hasAbility){
 			String id = buffer.readUtf();
 			ability = DragonAbilities.ABILITY_LOOKUP.get(id).createInstance();
-			ability.loadNBT(buffer.readNbt());
+			CompoundNBT compoundNBT = buffer.readNbt();
+			if (compoundNBT != null)
+			{
+				ability.loadNBT(compoundNBT);
+			}
 		}
 		
 		return new SyncAbilityCasting(playerId, ability);

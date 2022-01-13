@@ -54,7 +54,10 @@ public class RefreshDragons implements IMessage<RefreshDragons>
                 PlayerEntity thatPlayer = (PlayerEntity) myPlayer.level.getEntity(message.playerId);
                 if (thatPlayer != null) {
                     DragonEntity dragonEntity = DSEntities.DRAGON.create(myPlayer.level);
-                    dragonEntity.player = thatPlayer.getId();
+                    if (dragonEntity != null)
+                    {
+                        dragonEntity.player = thatPlayer.getId();
+                    }
                     ClientDragonRender.playerDragonHashMap.computeIfAbsent(thatPlayer.getId(), integer -> new AtomicReference<>(dragonEntity)).getAndSet(dragonEntity);
                 }
             });

@@ -90,8 +90,8 @@ public class ServerFlightHandler {
 		if(tickEvent.phase ==  Phase.START || !DragonStateProvider.isDragon(player) || player.level.isClientSide) return;
 		if(!ConfigHandler.SERVER.foldWingsOnLand.get()) return;
 		
-		DragonStateHandler dragonStateHandler = DragonStateProvider.getCap(player).orElse(null);
-		if(dragonStateHandler != null){
+		DragonStateProvider.getCap(player).
+		ifPresent(dragonStateHandler -> {
 			if(dragonStateHandler.hasFlown && player.isOnGround()){
 				if(dragonStateHandler.isWingsSpread() && player.isCreative()) {
 					dragonStateHandler.hasFlown = false;
@@ -103,7 +103,7 @@ public class ServerFlightHandler {
 					dragonStateHandler.hasFlown = true;
 				}
 			}
-		}
+		});
 	}
 	@SubscribeEvent
 	public static void playerFlightIcon(TickEvent.PlayerTickEvent playerTickEvent) {
@@ -233,32 +233,45 @@ public class ServerFlightHandler {
 	
 	public static final int spinDuration = (int)Math.round(0.76 * 20);
 	public static boolean isSpin(PlayerEntity entity){
-		DragonStateHandler handler = DragonStateProvider.getCap(entity).orElse(null);
-		
-		if(handler != null){
-			if(isFlying(entity) || canSwimSpin(entity)){
-				if(handler.getMovementData().spinAttack > 0){
-					return true;
-				}
-			}
-		}
-		
-		return false;
+//		DragonStateHandler handler = DragonStateProvider.getCap(entity).orElse(null);
+//
+//		if(handler != null){
+//			if(isFlying(entity) || canSwimSpin(entity)){
+//				if(handler.getMovementData().spinAttack > 0){
+//					return true;
+//				}
+//			}
+//		}
+//
+		return (isFlying(entity) || canSwimSpin(entity)) && DragonStateProvider.getCap(entity)
+				.filter(handler->handler.getMovementData().spinAttack > 0)
+				.isPresent();
 	}
 	
 	public static boolean canSwimSpin(LivingEntity player){
-		DragonStateHandler dragonStateHandler = DragonStateProvider.getCap(player).orElse(null);
-		boolean validSwim = ((dragonStateHandler.getType() == DragonType.SEA || dragonStateHandler.getType() == DragonType.FOREST) && player.isInWater()) || (player.isInLava() && dragonStateHandler.getType() == DragonType.CAVE);
-		return dragonStateHandler != null && validSwim && dragonStateHandler.hasWings() && !player.isOnGround();
+//		DragonStateHandler dragonStateHandler = DragonStateProvider.getCap(player).orElse(null);
+//		boolean validSwim = ((dragonStateHandler.getType() == DragonType.SEA || dragonStateHandler.getType() == DragonType.FOREST) && player.isInWater()) || (player.isInLava() && dragonStateHandler.getType() == DragonType.CAVE);
+//		return dragonStateHandler != null && validSwim && dragonStateHandler.hasWings() && !player.isOnGround();
+		return !player.isOnGround() && DragonStateProvider.getCap(player)
+				.filter(
+					dragonStateHandler ->
+							((dragonStateHandler.getType() == DragonType.SEA || dragonStateHandler.getType() == DragonType.FOREST) && player.isInWater()) || (player.isInLava() && dragonStateHandler.getType() == DragonType.CAVE)
+				)
+				.filter(DragonStateHandler::hasWings)
+				.isPresent();
 	}
 	
 	public static boolean isFlying(LivingEntity player){
-		DragonStateHandler dragonStateHandler = DragonStateProvider.getCap(player).orElse(null);
-		return dragonStateHandler != null && dragonStateHandler.hasWings() && dragonStateHandler.isWingsSpread() && !player.isOnGround() && !player.isInWater() && !player.isInLava();
+//		DragonStateHandler dragonStateHandler = DragonStateProvider.getCap(player).orElse(null);
+//		return dragonStateHandler != null && dragonStateHandler.hasWings() && dragonStateHandler.isWingsSpread() && !player.isOnGround() && !player.isInWater() && !player.isInLava();
+		return !player.isOnGround() && !player.isInWater() && !player.isInLava()
+				&& DragonStateProvider.getCap(player)
+				.filter(dragonStateHandler -> dragonStateHandler.hasWings() && dragonStateHandler.isWingsSpread())
+				.isPresent();
 	}
 	
 	public static boolean isGliding(PlayerEntity player){
-		DragonStateHandler dragonStateHandler = DragonStateProvider.getCap(player).orElse(null);
+//		DragonStateHandler dragonStateHandler = DragonStateProvider.getCap(player).orElse(null);
 		boolean hasFood = player.getFoodData().getFoodLevel() > ConfigHandler.SERVER.flightHungerThreshold.get() || player.isCreative() || ConfigHandler.SERVER.allowFlyingWithoutHunger.get();
 		return hasFood && player.isSprinting() && isFlying(player);
 	}

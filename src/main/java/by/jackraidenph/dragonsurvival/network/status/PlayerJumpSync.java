@@ -44,7 +44,11 @@ public class PlayerJumpSync implements IMessage<PlayerJumpSync>
     public void handle(PlayerJumpSync message, Supplier<Context> supplier)
     {
         if (supplier.get().getDirection().getReceptionSide() == LogicalSide.CLIENT) {
-            Entity entity = Minecraft.getInstance().level.getEntity(message.playerId);
+            Entity entity = null;
+            if (Minecraft.getInstance().level != null)
+            {
+                entity = Minecraft.getInstance().level.getEntity(message.playerId);
+            }
             if (entity instanceof PlayerEntity) {
                 ClientEvents.dragonsJumpingTicks.put(entity.getId(), message.ticks);
             }

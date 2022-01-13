@@ -11,6 +11,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class ChangeSkillLevel implements IMessage<ChangeSkillLevel>
@@ -69,7 +70,7 @@ public class ChangeSkillLevel implements IMessage<ChangeSkillLevel>
                 newActivty.setLevel(playerAbility.getLevel() + message.levelChange);
                 int levelCost = message.levelChange > 0 ? -newActivty.getLevelCost() : Math.max((int)(((PassiveDragonAbility)playerAbility).getLevelCost() * 0.8F), 1);
                 
-                dragonStateHandler.getMagic().getAbilities().removeIf((c) -> c.getId() == newActivty.getId());
+                dragonStateHandler.getMagic().getAbilities().removeIf((c) -> Objects.equals(c.getId(), newActivty.getId()));
                 dragonStateHandler.getMagic().addAbility(newActivty);
                 
                 if(levelCost != 0 && !playerEntity.isCreative()){
