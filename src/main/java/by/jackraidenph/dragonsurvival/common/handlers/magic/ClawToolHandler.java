@@ -27,7 +27,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 import java.util.ArrayList;
-import java.util.Optional;
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
 @EventBusSubscriber
@@ -130,11 +130,11 @@ public class ClawToolHandler
             DragonStateProvider.getCap(player).ifPresent(cap ->
             {
                 World world = player.level;
-                BlockRayTraceResult raytraceresult = Item.getPlayerPOVHitResult(world, player, FluidMode.NONE);
+                BlockRayTraceResult rayTraceResult = Item.getPlayerPOVHitResult(world, player, FluidMode.NONE);
                 float newSpeed = 0F;
-                if (raytraceresult.getType() != RayTraceResult.Type.MISS)
+                if (rayTraceResult.getType() != RayTraceResult.Type.MISS)
                 {
-                    BlockState state = world.getBlockState(raytraceresult.getBlockPos());
+                    BlockState state = world.getBlockState(rayTraceResult.getBlockPos());
 
                     for (int i = 1; i < 4; i++)
                     {
@@ -174,37 +174,60 @@ public class ClawToolHandler
 			PlayerEntity playerEntity = breakSpeedEvent.getPlayer();
 			
 			ItemStack mainStack = playerEntity.getMainHandItem();
-			DragonStateHandler dragonStateHandler = DragonStateProvider.getCap(playerEntity).orElse(null);
-			if(mainStack.getItem() instanceof TieredItem || dragonStateHandler == null || !dragonStateHandler.isDragon())
-			    return;
-			
-			BlockState blockState = breakSpeedEvent.getState();
-			Item item = mainStack.getItem();
-			
-			float originalSpeed = breakSpeedEvent.getOriginalSpeed();
-			
-			if(!(item instanceof ToolItem)){
-				for (int i = 1; i < 4; i++) {
-					if (blockState.getHarvestTool() == null || blockState.getHarvestTool() == DragonStateHandler.CLAW_TOOL_TYPES[i]) {
-						ItemStack breakingItem = dragonStateHandler.getClawInventory().getClawsInventory().getItem(i);
-						if (breakingItem != null && !breakingItem.isEmpty()) {
-							return;
-						}
-					}
-				}
-			}
-			
-			if (!(item instanceof ToolItem || item instanceof SwordItem || item instanceof ShearsItem)) {
-				float bonus = dragonStateHandler.getLevel() == DragonLevel.ADULT ? (
-						blockState.getHarvestTool() == ToolType.AXE && dragonStateHandler.getType() == DragonType.FOREST ? 4 :
-						blockState.getHarvestTool() == ToolType.PICKAXE && dragonStateHandler.getType() == DragonType.CAVE ? 4 :
-						blockState.getHarvestTool() == ToolType.SHOVEL && dragonStateHandler.getType() == DragonType.SEA ? 4 : 2F
-						) : dragonStateHandler.getLevel() == DragonLevel.BABY ? ConfigHandler.SERVER.bonusUnlockedAt.get() != DragonLevel.BABY ? 2F : 1F
-						: dragonStateHandler.getLevel() == DragonLevel.YOUNG ? ConfigHandler.SERVER.bonusUnlockedAt.get() == DragonLevel.ADULT && dragonStateHandler.getLevel() != DragonLevel.BABY ? 2F : 1F
-						: 2F;
-				
-				breakSpeedEvent.setNewSpeed((originalSpeed * bonus));
-			}
-		}
+
+			if(mainStack.getItem() instanceof TieredItem)
+                return;
+
+			DragonStateProvider.getCap(playerEntity)
+                    .filter(DragonStateHandler::isDragon)
+                    .ifPresent(dragonStateHandler -> {
+                BlockState blockState = breakSpeedEvent.getState();
+                Item item = mainStack.getItem();
+
+                float originalSpeed = breakSpeedEvent.getOriginalSpeed();
+
+
+                // Check if claws and teeth have the proper tool for the block
+                        /*
+                         * Fix: cobweb and other blocks that return `null` in harvestTool()
+                         *      will never receive bonus mining speed if there is any tool inside claws and teeth
+                         */
+                if (!(mainStack.getItem() instanceof ToolItem))
+                {
+                    int idx = Arrays.binarySearch(
+                            DragonStateHandler.CLAW_TOOL_TYPES,
+                            1, 4, // set fromIndex to 0 and threshold below to be exactly the same logic as original, because null is the first element of that array
+                            blockState.getHarvestTool()
+                    );
+                    // If claws and teeth have the proper tool, no extra modification
+                    if (idx >= 1 && !dragonStateHandler.getClawInventory().getClawsInventory().getItem(idx).isEmpty())
+                        return;
+                }
+
+                // Otherwise, if main hand item is not a tool, a sword or a shear
+
+                if (!(item instanceof ToolItem || item instanceof SwordItem || item instanceof ShearsItem)) {
+
+                    // If dragon older than bonusUnlockedAt config value, apply bonus by 2
+                    float bonus = dragonStateHandler.getLevel().compareTo(
+                            ConfigHandler.SERVER.bonusUnlockedAt.get()
+                    ) < 0 ? 1f : 2f;
+                    // If adult dragon, apply species extra bonus
+                    if (dragonStateHandler.getLevel() == DragonLevel.ADULT)
+                    {
+                        DragonType type = dragonStateHandler.getType();
+                        ToolType harvestTool = blockState.getHarvestTool();
+                        if (
+                                harvestTool == ToolType.AXE && type == DragonType.FOREST ||
+                                harvestTool == ToolType.PICKAXE && type == DragonType.CAVE ||
+                                harvestTool == ToolType.SHOVEL && type == DragonType.SEA
+                        )
+                            bonus *= 2;
+                    }
+                    breakSpeedEvent.setNewSpeed((originalSpeed * bonus));
+                }
+			});
+
+        }
 	}
 }
