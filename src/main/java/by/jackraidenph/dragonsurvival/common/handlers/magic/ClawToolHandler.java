@@ -27,119 +27,141 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 import java.util.ArrayList;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @EventBusSubscriber
 public class ClawToolHandler
 {
-	@SubscribeEvent
-	public static void experiencePickup(PickupXp event){
-		PlayerEntity player = event.getPlayer();
-		
-		DragonStateProvider.getCap(player).ifPresent(cap -> {
-			ArrayList<ItemStack> stacks = new ArrayList<>();
-			
-			for(int i = 0; i < 4; i++){
-				ItemStack clawStack = cap.getClawInventory().getClawsInventory().getItem(i);
-				int mending = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MENDING, clawStack);
-				
-				if(mending > 0 && clawStack.isDamaged()){
-					stacks.add(clawStack);
-				}
-			}
-			
-			if(stacks.size() > 0) {
-				ItemStack repairTime = stacks.get(player.level.random.nextInt(stacks.size()));
-				if (!repairTime.isEmpty() && repairTime.isDamaged()) {
-					
-					int i = Math.min((int)(event.getOrb().value * repairTime.getXpRepairRatio()), repairTime.getDamageValue());
-					event.getOrb().value -= i * 2;
-					repairTime.setDamageValue(repairTime.getDamageValue() - i);
-				}
-			}
-			
-			event.getOrb().value = Math.max(0, event.getOrb().value);
-		});
-	}
-	
-	@SubscribeEvent
-	public static void playerDieEvent(LivingDropsEvent event){
-		Entity ent = event.getEntity();
-		
-		if(ent instanceof PlayerEntity){
-			PlayerEntity player = (PlayerEntity)ent;
-			
-			if(!player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY) && !ConfigHandler.SERVER.keepClawItems.get()){
-				DragonStateHandler handler = DragonStateProvider.getCap(player).orElse(null);
-				
-				if(handler != null){
-					for(int i = 0; i < handler.getClawInventory().getClawsInventory().getContainerSize(); i++){
-						ItemStack stack = handler.getClawInventory().getClawsInventory().getItem(i);
-						
-						if(!stack.isEmpty()) {
-							event.getDrops().add(new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), stack));
-							handler.getClawInventory().getClawsInventory().setItem(i, ItemStack.EMPTY);
-						}
-					}
-				}
-			}
-		}
-	}
-	
-	@SubscribeEvent
-	public static void dropBlocksMinedByPaw(PlayerEvent.HarvestCheck harvestCheck) {
-		if (!ConfigHandler.SERVER.bonuses.get() || !ConfigHandler.SERVER.clawsAreTools.get())
-			return;
-	    PlayerEntity playerEntity = harvestCheck.getPlayer();
-	    DragonStateProvider.getCap(playerEntity).ifPresent(dragonStateHandler -> {
-	        if (dragonStateHandler.isDragon()) {
-	            ItemStack stack = playerEntity.getMainHandItem();
-	            Item item = stack.getItem();
-	            BlockState blockState = harvestCheck.getTargetBlock();
-	            if (!(item instanceof ToolItem || item instanceof SwordItem || item instanceof ShearsItem) && !harvestCheck.canHarvest()) {
-		            harvestCheck.setCanHarvest(dragonStateHandler.canHarvestWithPaw(playerEntity, blockState));
-		        }
-	        }
-	    });
-	}
-	
-	public static ItemStack getDragonTools(PlayerEntity player)
-	{
-		ItemStack mainStack = player.inventory.getSelected();
-		ItemStack harvestTool = mainStack;
-		float newSpeed = 0F;
-		
-		DragonStateHandler cap = DragonStateProvider.getCap(player).orElse(null);
-		
-		if(!(mainStack.getItem() instanceof TieredItem) && cap != null) {
-			World world = player.level;
-			BlockRayTraceResult raytraceresult = Item.getPlayerPOVHitResult(world, player, FluidMode.NONE);
-			
-			if (raytraceresult.getType() != RayTraceResult.Type.MISS) {
-				BlockState state = world.getBlockState(raytraceresult.getBlockPos());
-				
-				if(state != null) {
-					for (int i = 1; i < 4; i++) {
-						ItemStack breakingItem = cap.getClawInventory().getClawsInventory().getItem(i);
-						
-						if (!breakingItem.isEmpty() && breakingItem.getToolTypes().stream().anyMatch(state::isToolEffective)) {
-							float tempSpeed = breakingItem.getDestroySpeed(state);
-							
-							if(breakingItem.getItem() instanceof ToolItem){
-								ToolItem item = (ToolItem)breakingItem.getItem();
-								tempSpeed = item.getDestroySpeed(breakingItem, state);
-							}
-							
-							if (tempSpeed > newSpeed) {
-								newSpeed = tempSpeed;
-								harvestTool = breakingItem;
-							}
-						}
-					}
-				}
-			}
-		}
+    @SubscribeEvent
+    public static void experiencePickup(PickupXp event)
+    {
+        PlayerEntity player = event.getPlayer();
 
-		return harvestTool;
+        DragonStateProvider.getCap(player).ifPresent(cap ->
+        {
+            ArrayList<ItemStack> stacks = new ArrayList<>();
+
+            for (int i = 0; i < 4; i++)
+            {
+                ItemStack clawStack = cap.getClawInventory().getClawsInventory().getItem(i);
+                int mending = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MENDING, clawStack);
+
+                if (mending > 0 && clawStack.isDamaged())
+                {
+                    stacks.add(clawStack);
+                }
+            }
+
+            if (stacks.size() > 0)
+            {
+                ItemStack repairTime = stacks.get(player.level.random.nextInt(stacks.size()));
+                if (!repairTime.isEmpty() && repairTime.isDamaged())
+                {
+
+                    int i = Math.min((int) (event.getOrb().value * repairTime.getXpRepairRatio()), repairTime.getDamageValue());
+                    event.getOrb().value -= i * 2;
+                    repairTime.setDamageValue(repairTime.getDamageValue() - i);
+                }
+            }
+
+            event.getOrb().value = Math.max(0, event.getOrb().value);
+        });
+    }
+
+    @SubscribeEvent
+    public static void playerDieEvent(LivingDropsEvent event)
+    {
+        Entity ent = event.getEntity();
+
+        if (ent instanceof PlayerEntity)
+        {
+            PlayerEntity player = (PlayerEntity) ent;
+
+            if (!player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY) && !ConfigHandler.SERVER.keepClawItems.get())
+            {
+                DragonStateProvider.getCap(player).ifPresent (handler ->
+                {
+                    for (int i = 0; i < handler.getClawInventory().getClawsInventory().getContainerSize(); i++)
+                    {
+                        ItemStack stack = handler.getClawInventory().getClawsInventory().getItem(i);
+
+                        if (!stack.isEmpty())
+                        {
+                            event.getDrops().add(new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), stack));
+                            handler.getClawInventory().getClawsInventory().setItem(i, ItemStack.EMPTY);
+                        }
+                    }
+                }
+                        );
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void dropBlocksMinedByPaw(PlayerEvent.HarvestCheck harvestCheck)
+    {
+        if (!ConfigHandler.SERVER.bonuses.get() || !ConfigHandler.SERVER.clawsAreTools.get())
+        {
+            return;
+        }
+        PlayerEntity playerEntity = harvestCheck.getPlayer();
+        DragonStateProvider.getCap(playerEntity).ifPresent(dragonStateHandler ->
+        {
+            if (dragonStateHandler.isDragon())
+            {
+                ItemStack stack = playerEntity.getMainHandItem();
+                Item item = stack.getItem();
+                BlockState blockState = harvestCheck.getTargetBlock();
+                if (!(item instanceof ToolItem || item instanceof SwordItem || item instanceof ShearsItem) && !harvestCheck.canHarvest())
+                {
+                    harvestCheck.setCanHarvest(dragonStateHandler.canHarvestWithPaw(playerEntity, blockState));
+                }
+            }
+        });
+    }
+
+    public static ItemStack getDragonTools(PlayerEntity player)
+    {
+        ItemStack mainStack = player.inventory.getSelected();
+        AtomicReference<ItemStack> harvestTool = new AtomicReference<>(mainStack);
+        if (!(mainStack.getItem() instanceof TieredItem))
+        {
+            DragonStateProvider.getCap(player).ifPresent(cap ->
+            {
+                World world = player.level;
+                BlockRayTraceResult raytraceresult = Item.getPlayerPOVHitResult(world, player, FluidMode.NONE);
+                float newSpeed = 0F;
+                if (raytraceresult.getType() != RayTraceResult.Type.MISS)
+                {
+                    BlockState state = world.getBlockState(raytraceresult.getBlockPos());
+
+                    for (int i = 1; i < 4; i++)
+                    {
+                        ItemStack breakingItem = cap.getClawInventory().getClawsInventory().getItem(i);
+
+                        if (!breakingItem.isEmpty() && breakingItem.getToolTypes().stream().anyMatch(state::isToolEffective))
+                        {
+                            float tempSpeed = breakingItem.getDestroySpeed(state);
+
+                            if (breakingItem.getItem() instanceof ToolItem)
+                            {
+                                ToolItem item = (ToolItem) breakingItem.getItem();
+                                tempSpeed = item.getDestroySpeed(breakingItem, state);
+                            }
+
+                            if (tempSpeed > newSpeed)
+                            {
+                                newSpeed = tempSpeed;
+                                harvestTool.set(breakingItem);
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+		return harvestTool.get();
 	}
 	
 	
@@ -153,7 +175,8 @@ public class ClawToolHandler
 			
 			ItemStack mainStack = playerEntity.getMainHandItem();
 			DragonStateHandler dragonStateHandler = DragonStateProvider.getCap(playerEntity).orElse(null);
-			if(mainStack.getItem() instanceof TieredItem || dragonStateHandler == null || !dragonStateHandler.isDragon()) return;
+			if(mainStack.getItem() instanceof TieredItem || dragonStateHandler == null || !dragonStateHandler.isDragon())
+			    return;
 			
 			BlockState blockState = breakSpeedEvent.getState();
 			Item item = mainStack.getItem();
