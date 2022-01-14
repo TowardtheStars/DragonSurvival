@@ -152,9 +152,7 @@ public class ClawToolHandler
                                     .max(
                                             Comparator.comparing(
                                                     toolStack ->
-                                                            // Due to mixin altered ItemStack::getDestroySpeed calls ClawToolHandler::getDragonTools
-                                                            // Forcefully use pure vanilla calls here to avoid StackOverflowError
-                                                            toolStack.getItem().getDestroySpeed(toolStack, state)
+                                                            toolStack.getDestroySpeed(state)
 
                                             )
                                     );
@@ -169,9 +167,11 @@ public class ClawToolHandler
     public static boolean willOverrideClawsAndTeeth(@Nonnull ItemStack stack)
     {
         return !stack.isEmpty()
-                || !stack.getToolTypes().isEmpty()
-                || stack.getItem() instanceof ShearsItem
-                || stack.getItem() instanceof TieredItem;
+                && (
+                !stack.getToolTypes().isEmpty()
+                        || stack.getItem() instanceof ShearsItem
+                        || stack.getItem() instanceof TieredItem
+        );
     }
 
 
@@ -181,18 +181,18 @@ public class ClawToolHandler
         @SubscribeEvent
         public void modifyBreakSpeed(PlayerEvent.BreakSpeed breakSpeedEvent)
         {
-			if (!ConfigHandler.SERVER.bonuses.get() || !ConfigHandler.SERVER.clawsAreTools.get())
-			{
-				return;
-			}
+            if (!ConfigHandler.SERVER.bonuses.get() || !ConfigHandler.SERVER.clawsAreTools.get())
+            {
+                return;
+            }
             PlayerEntity playerEntity = breakSpeedEvent.getPlayer();
 
             ItemStack mainStack = playerEntity.getMainHandItem();
 
-			if (willOverrideClawsAndTeeth(mainStack))
-			{
-				return;
-			}
+            if (willOverrideClawsAndTeeth(mainStack))
+            {
+                return;
+            }
 
             DragonStateProvider.getCap(playerEntity)
                     .filter(DragonStateHandler::isDragon)
@@ -218,10 +218,10 @@ public class ClawToolHandler
                             }
                         }
                         // If claws and teeth have the proper tool, no extra modification
-						if (idx >= 1 && !dragonStateHandler.getClawInventory().getClawsInventory().getItem(idx).isEmpty())
-						{
-							return;
-						}
+                        if (idx >= 1 && !dragonStateHandler.getClawInventory().getClawsInventory().getItem(idx).isEmpty())
+                        {
+                            return;
+                        }
 
 
                         // Otherwise, if main hand item is not a tool, a sword or a shear
@@ -231,14 +231,14 @@ public class ClawToolHandler
                         {
                             DragonType type = dragonStateHandler.getType();
                             ToolType harvestTool = blockState.getHarvestTool();
-							if (
-									harvestTool == ToolType.AXE && type == DragonType.FOREST ||
-											harvestTool == ToolType.PICKAXE && type == DragonType.CAVE ||
-											harvestTool == ToolType.SHOVEL && type == DragonType.SEA
-							)
-							{
-								bonus = 4f;
-							}
+                            if (
+                                    harvestTool == ToolType.AXE && type == DragonType.FOREST ||
+                                            harvestTool == ToolType.PICKAXE && type == DragonType.CAVE ||
+                                            harvestTool == ToolType.SHOVEL && type == DragonType.SEA
+                            )
+                            {
+                                bonus = 4f;
+                            }
                         } else
                         {
                             // If dragon older than bonusUnlockedAt config value, apply bonus by 2
