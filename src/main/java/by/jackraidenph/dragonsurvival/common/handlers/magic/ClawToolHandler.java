@@ -140,7 +140,7 @@ public class ClawToolHandler
     public static ItemStack getDragonTools(PlayerEntity player, BlockState dealtState)
     {
         ItemStack mainStack = player.inventory.getSelected();
-        if (!willOverrideClawsAndTeeth(mainStack) && dealtState.isAir())
+        if (!willOverrideClawsAndTeeth(mainStack) && !dealtState.isAir())
         {
             return DragonStateProvider.getCap(player)
                     .filter(DragonStateHandler::isDragon)
@@ -155,7 +155,7 @@ public class ClawToolHandler
                                     .max(
                                             Comparator.comparing(
                                                     toolStack ->
-                                                            toolStack.getDestroySpeed(dealtState)
+                                                            toolStack.getItem().getDestroySpeed(toolStack, dealtState)
 
                                             )
                                     )).orElse(mainStack);
