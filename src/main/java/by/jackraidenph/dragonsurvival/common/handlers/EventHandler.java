@@ -16,6 +16,7 @@ import by.jackraidenph.dragonsurvival.misc.DragonType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
@@ -156,8 +157,9 @@ public class EventHandler {
     public static void expDrops(BlockEvent.BreakEvent breakEvent) {
        if(DragonStateProvider.isDragon(breakEvent.getPlayer())){
            if(breakEvent.getExpToDrop() > 0){
-               int bonusLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.BLOCK_FORTUNE, breakEvent.getPlayer());
-               int silklevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, breakEvent.getPlayer());
+               ItemStack toolStack = ClawToolHandler.getDragonTools(breakEvent.getPlayer(), breakEvent.getState());
+               int bonusLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, toolStack);
+               int silklevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, toolStack);
                breakEvent.setExpToDrop(breakEvent.getState().getExpDrop(breakEvent.getWorld(), breakEvent.getPos(), bonusLevel, silklevel));
            }
        }
