@@ -194,9 +194,10 @@ public class EventHandler {
                         .withParameter(LootParameters.ORIGIN, new Vector3d(blockPos.getX(), blockPos.getY(), blockPos.getZ()))
                         .withParameter(LootParameters.TOOL, mainHandItem));
                 DragonStateProvider.getCap(playerEntity).ifPresent(dragonStateHandler -> {
-                    final boolean suitableOre = (mainHandItem.isCorrectToolForDrops(blockState) ||
-                                                 (dragonStateHandler.isDragon() && dragonStateHandler.canHarvestWithPaw(playerEntity, blockState)))
-                                                && drops.stream().noneMatch(item -> oresTag.contains(item.getItem()));
+                    final boolean suitableOre = (
+                            mainHandItem.isCorrectToolForDrops(blockState)
+                                    || (dragonStateHandler.isDragon() && dragonStateHandler.canHarvestWithPaw(playerEntity, blockState)))
+                            && drops.stream().noneMatch(item -> oresTag.contains(item.getItem()));
                     if (suitableOre && !playerEntity.isCreative()) {
                         boolean isCave = dragonStateHandler.getType() == DragonType.CAVE;
                         

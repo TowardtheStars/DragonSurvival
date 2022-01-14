@@ -23,9 +23,9 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version =  property("mc_version")+"-"+property("mod_version")
+version = property("mc_version")+"-"+property("mod_version")
 group = property("mod_group")
-archivesBaseName = property("mod_file")
+archivesBaseName = property("mod_file")+"_"+property("update_name")
 
 compileJava.options.encoding = 'UTF-8'
 

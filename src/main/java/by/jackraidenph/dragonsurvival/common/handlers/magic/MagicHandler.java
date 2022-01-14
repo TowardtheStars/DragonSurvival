@@ -3,6 +3,7 @@ package by.jackraidenph.dragonsurvival.common.handlers.magic;
 import by.jackraidenph.dragonsurvival.client.particles.DSParticles;
 import by.jackraidenph.dragonsurvival.common.DragonEffects;
 import by.jackraidenph.dragonsurvival.common.capability.Capabilities;
+import by.jackraidenph.dragonsurvival.common.capability.DragonStateHandler;
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateProvider;
 import by.jackraidenph.dragonsurvival.common.capability.GenericCapability;
 import by.jackraidenph.dragonsurvival.common.magic.DragonAbilities;
@@ -48,6 +49,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.network.PacketDistributor;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 @EventBusSubscriber
@@ -174,12 +176,16 @@ public class MagicHandler
 		
 		
 		if(entity.hasEffect(DragonEffects.DRAIN)){
-			DragonType type = DragonStateProvider.getCap(entity).map( cap -> cap.getType()).orElse(null);
+			DragonType type = DragonStateProvider.getCap(entity).map(DragonStateHandler::getType).orElse(DragonType.NONE);
 			
 			if(type != DragonType.FOREST){
 				if (entity.tickCount % 20 == 0) {
+					@Nullable
 					GenericCapability cap = Capabilities.getGenericCapability(entity).orElse(null);
-					PlayerEntity player = cap != null && cap.lastAfflicted != -1 && entity.level.getEntity(cap.lastAfflicted) instanceof PlayerEntity ? ((PlayerEntity)entity.level.getEntity(cap.lastAfflicted)) : null;
+					PlayerEntity player = cap != null
+							&& cap.lastAfflicted != -1
+							&& entity.level.getEntity(cap.lastAfflicted) instanceof PlayerEntity ?
+							((PlayerEntity)entity.level.getEntity(cap.lastAfflicted)) : null;
 					if(player != null){
 						entity.hurt(new EntityDamageSource("magic", player).bypassArmor().setMagic(), 1.0F);
 					}else{
