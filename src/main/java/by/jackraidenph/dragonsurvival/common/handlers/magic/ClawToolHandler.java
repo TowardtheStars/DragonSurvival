@@ -7,12 +7,16 @@ import by.jackraidenph.dragonsurvival.config.ConfigHandler;
 import by.jackraidenph.dragonsurvival.misc.DragonLevel;
 import by.jackraidenph.dragonsurvival.misc.DragonType;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ShearsItem;
+import net.minecraft.item.TieredItem;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext.FluidMode;
 import net.minecraft.util.math.RayTraceResult;
@@ -25,14 +29,11 @@ import net.minecraftforge.event.entity.player.PlayerXpEvent.PickupXp;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.MarkerManager;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
@@ -127,22 +128,24 @@ public class ClawToolHandler
 
     public static ItemStack getDragonTools(PlayerEntity player)
     {
-        ItemStack mainStack = player.inventory.getSelected();
-        if (!willOverrideClawsAndTeeth(mainStack))
+        World world = player.level;
+        BlockRayTraceResult rayTraceResult = Item.getPlayerPOVHitResult(world, player, FluidMode.NONE);
+        if (rayTraceResult.getType() != RayTraceResult.Type.MISS)
         {
-            World world = player.level;
-            BlockRayTraceResult rayTraceResult = Item.getPlayerPOVHitResult(world, player, FluidMode.NONE);
+            return getDragonTools(player, world.getBlockState(rayTraceResult.getBlockPos()));
+        }
+        return player.getMainHandItem();
+    }
 
+    public static ItemStack getDragonTools(PlayerEntity player, BlockState dealtState)
+    {
+        ItemStack mainStack = player.inventory.getSelected();
+        if (!willOverrideClawsAndTeeth(mainStack) && dealtState.isAir())
+        {
             return DragonStateProvider.getCap(player)
                     .filter(DragonStateHandler::isDragon)
                     .flatMap(cap ->
-                    {
-                        if (rayTraceResult.getType() != RayTraceResult.Type.MISS)
-                        {
-                            // Get the fastest claws and teeth tool for the block
-                            BlockState state = world.getBlockState(rayTraceResult.getBlockPos());
-
-                            return IntStream.of(1, 2, 3)    // Slot id for pickaxe, axe and shovel
+                            IntStream.of(1, 2, 3)    // Slot id for pickaxe, axe and shovel
                                     .mapToObj(
                                             i -> cap.getClawInventory().getClawsInventory().getItem(i)
                                     )    // Get C&T item stacks
@@ -152,13 +155,10 @@ public class ClawToolHandler
                                     .max(
                                             Comparator.comparing(
                                                     toolStack ->
-                                                            toolStack.getDestroySpeed(state)
+                                                            toolStack.getDestroySpeed(dealtState)
 
                                             )
-                                    );
-                        }
-                        return Optional.empty();
-                    }).orElse(mainStack);
+                                    )).orElse(mainStack);
         }
 
         return mainStack;
