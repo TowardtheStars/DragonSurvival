@@ -76,6 +76,15 @@
   "block.dragonsurvival.stone_dragon_door": "石质龙门",
   "block.dragonsurvival.legacy_dragon_door": "遗迹龙门",
 
+  "block.dragonsurvival.oak_small_dragon_door": "橡木小型龙门",
+  "block.dragonsurvival.spruce_small_dragon_door": "云杉小型龙门",
+  "block.dragonsurvival.acacia_small_dragon_door": "金合欢小型龙门",
+  "block.dragonsurvival.birch_small_dragon_door": "白桦木小型龙门",
+  "block.dragonsurvival.jungle_small_dragon_door": "丛林木小型龙门",
+  "block.dragonsurvival.dark_oak_small_dragon_door": "深色橡木小型龙门",
+  "block.dragonsurvival.warped_small_dragon_door": "诡异木小型龙门",
+  "block.dragonsurvival.crimson_small_dragon_door": "绯红木小型龙门",
+
   "block.dragonsurvival.forest_source_of_magic": "魔法之源-森林",
   "block.dragonsurvival.sea_source_of_magic": "魔法之源-海洋",
   "block.dragonsurvival.cave_source_of_magic": "魔法之源-洞穴",
