@@ -178,7 +178,13 @@ public class ClientConfig {
 				.define("armorRenderLayer", true);
 
 		customSkinServers = builder
-				.comment("A list of skins servers where the game should try to retrieve player dragon skins")
+				.comment(
+						"A list of skins servers where the game should try to retrieve player dragon skins",
+						"Default:",
+						"[",
+						"	https://raw.githubusercontent.com/DragonSurvivalTeam/DragonSurvival/master/src/test/resources/",
+						"]"
+				)
 				.define("customSkinServers", ImmutableList.of(
 						"https://raw.githubusercontent.com/DragonSurvivalTeam/DragonSurvival/master/src/test/resources/"
 				));
