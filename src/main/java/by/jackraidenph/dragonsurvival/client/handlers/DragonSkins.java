@@ -2,6 +2,7 @@ package by.jackraidenph.dragonsurvival.client.handlers;
 
 import by.jackraidenph.dragonsurvival.DragonSurvivalMod;
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateProvider;
+import by.jackraidenph.dragonsurvival.config.ClientConfig;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
 import by.jackraidenph.dragonsurvival.misc.DragonLevel;
 import by.jackraidenph.dragonsurvival.misc.DragonType;
@@ -162,58 +163,71 @@ public class DragonSkins
 	}
 	
 	public static ResourceLocation fetchSkinFile(PlayerEntity playerEntity, DragonLevel dragonStage, String... extra) {
-		ResourceLocation resourceLocation = null;
+		final ResourceLocation[] resourceLocation = {null};
 		String name = playerEntity.getGameProfile().getName();
 		String playerKey = playerEntity.getGameProfile().getName() + "_" + dragonStage.name;
 		
 		String[] text = ArrayUtils.addAll(new String[]{name, dragonStage.name}, extra);
 		String searchText = StringUtils.join(text, "_");
-		
-		try{
-			URL url = new URL(SKINS + searchText + ".png");
-			InputStream inputStream = url.openConnection().getInputStream();
-			NativeImage customTexture = NativeImage.read(inputStream);
-			resourceLocation = new ResourceLocation(DragonSurvivalMod.MODID, searchText.toLowerCase(Locale.ROOT));
-			Minecraft.getInstance().getTextureManager().register(resourceLocation, new DynamicTexture(customTexture));
-			
-		}catch (IOException e){
-			if(extra == null || extra.length == 0) { //Fetching glow layer failing must not affect normal skin fetches
-				if (!hasFailedFetch.contains(playerKey)) {
+		ConfigHandler.CLIENT.customSkinServers.get().forEach(skins ->
+		{
+			try
+			{
+				URL url = new URL(skins + searchText + ".png");
+				InputStream inputStream = url.openConnection().getInputStream();
+				NativeImage customTexture = NativeImage.read(inputStream);
+				resourceLocation[0] = new ResourceLocation(DragonSurvivalMod.MODID, searchText.toLowerCase(Locale.ROOT));
+				Minecraft.getInstance().getTextureManager().register(resourceLocation[0], new DynamicTexture(customTexture));
+
+			} catch (IOException e)
+			{
+
+			}
+			if (extra == null || extra.length == 0)
+			{ //Fetching glow layer failing must not affect normal skin fetches
+				if (!hasFailedFetch.contains(playerKey))
+				{
 					DragonSurvivalMod.LOGGER.info("Custom skin for user {} doesn't exist", name);
 					hasFailedFetch.add(playerKey);
 				}
 			}
-			
-			return null;
-		}
+			resourceLocation[0] = null;
+		});
 		
-		return resourceLocation;
+		return resourceLocation[0];
 	}
 	
 	public static ResourceLocation fetchSkinFile(String playerKey, String... extra) {
-		ResourceLocation resourceLocation = null;
+		ResourceLocation[] resourceLocation = {null};
 		String[] text = ArrayUtils.addAll(new String[]{playerKey}, extra);
 		String searchText = StringUtils.join(text, "_");
-		
-		try{
-			URL url = new URL(SKINS + searchText + ".png");
-			InputStream inputStream = url.openConnection().getInputStream();
-			NativeImage customTexture = NativeImage.read(inputStream);
-			resourceLocation = new ResourceLocation(DragonSurvivalMod.MODID, searchText.toLowerCase(Locale.ROOT));
-			Minecraft.getInstance().getTextureManager().register(resourceLocation, new DynamicTexture(customTexture));
-			
-		}catch (IOException e){
-			if(extra == null || extra.length == 0) { //Fetching glow layer failing must not affect normal skin fetches
-				if (!hasFailedFetch.contains(playerKey)) {
+
+		ConfigHandler.CLIENT.customSkinServers.get().forEach(skins ->
+		{
+			try
+			{
+				URL url = new URL(skins + searchText + ".png");
+				InputStream inputStream = url.openConnection().getInputStream();
+				NativeImage customTexture = NativeImage.read(inputStream);
+				resourceLocation[0] = new ResourceLocation(DragonSurvivalMod.MODID, searchText.toLowerCase(Locale.ROOT));
+				Minecraft.getInstance().getTextureManager().register(resourceLocation[0], new DynamicTexture(customTexture));
+
+			} catch (IOException e)
+			{
+
+			}
+			if (extra == null || extra.length == 0)
+			{ //Fetching glow layer failing must not affect normal skin fetches
+				if (!hasFailedFetch.contains(playerKey))
+				{
 					DragonSurvivalMod.LOGGER.info("Custom skin for user {} doesn't exist", playerKey);
 					hasFailedFetch.add(playerKey);
 				}
 			}
-			
-			return null;
-		}
+			resourceLocation[0] = null;
+		});
 		
-		return resourceLocation;
+		return resourceLocation[0];
 	}
 	
 	private static ResourceLocation constructTexture(DragonType dragonType, DragonLevel stage, String... extra) {

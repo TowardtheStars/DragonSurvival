@@ -1,6 +1,9 @@
 package by.jackraidenph.dragonsurvival.config;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraftforge.common.ForgeConfigSpec;
+
+import java.util.List;
 
 public class ClientConfig {
 	public final ForgeConfigSpec.BooleanValue dragonNameTags;
@@ -35,12 +38,13 @@ public class ClientConfig {
 	
 	public final ForgeConfigSpec.BooleanValue alternateHeldItem;
 	public final ForgeConfigSpec.BooleanValue thirdPersonItemRender;
-	
+
 	public final ForgeConfigSpec.BooleanValue renderDragonClaws;
 	public final ForgeConfigSpec.BooleanValue renderNewbornSkin;
 	public final ForgeConfigSpec.BooleanValue renderYoungSkin;
 	public final ForgeConfigSpec.BooleanValue renderAdultSkin;
 	public final ForgeConfigSpec.BooleanValue renderOtherPlayerSkins;
+	public final ForgeConfigSpec.ConfigValue<List<String>> customSkinServers;
 	
 	public final ForgeConfigSpec.BooleanValue dragonInventory;
 	public final ForgeConfigSpec.BooleanValue dragonTabs;
@@ -172,6 +176,12 @@ public class ClientConfig {
 		armorRenderLayer = builder
 				.comment("Should the armor be rendered as a layer on the dragon? Some shaders requires this to be off. Can cause some weird effects with armor when turned off.")
 				.define("armorRenderLayer", true);
+
+		customSkinServers = builder
+				.comment("A list of skins servers where the game should try to retrieve player dragon skins")
+				.define("customSkinServers", ImmutableList.of(
+						"https://raw.githubusercontent.com/DragonSurvivalTeam/DragonSurvival/master/src/test/resources/"
+				));
 		
 		builder.pop().push("tooltips");
 		tooltipChanges = builder
