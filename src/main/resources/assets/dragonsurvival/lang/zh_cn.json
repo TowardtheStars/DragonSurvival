@@ -132,7 +132,7 @@
   "ds.wings.disabled": "你收起了你的双翼",
   "ds.wings.nohunger": "你太饿了，飞不起来",
   "ds.you.have.no.wings": "你现在还§c没有翅膀§r。去找末影龙谈谈吧。",
-  "ds.dragon.grants.wings": "<末影龙> 我已赐予你横滚的技能，现在请离开我的地盘！",
+  "ds.dragon.grants.wings": "<末影龙> 我已赐予你飞行的技能，现在请离开我的地盘！",
   "ds.space.occupied": "你需要一个3x3大小的空间来摆放它",
   "ds.cooldown.active": "这个祭坛正在冷却：{0}",
 
