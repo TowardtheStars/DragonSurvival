@@ -38,6 +38,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -215,10 +216,24 @@ public class DragonFoodHandler {
 				builder.alwaysEat();
 			if (humanFood.isFastFood())
 				builder.fast();
-			for (Pair<EffectInstance, Float> effect : humanFood.getEffects())
-				if (effect.getFirst().getEffect() != Effects.HUNGER)
-					builder.effect(effect::getFirst, effect.getSecond());
-			builder.effect(() -> new EffectInstance(Effects.HUNGER, 20 * 60, 0), 1.0F);
+			if (!ConfigHandler.SERVER.allowCommonFoodsForDragon.get())
+			{
+//				for (Pair<EffectInstance, Float> effect : humanFood.getEffects())
+//					if (effect.getFirst().getEffect() != Effects.HUNGER)
+//						builder.effect(effect::getFirst, effect.getSecond());
+				humanFood.getEffects().parallelStream()
+						.filter(pair->pair.getFirst().getEffect() != Effects.HUNGER)
+						.forEach(
+								pair -> builder.effect(pair::getFirst, pair.getSecond())
+						);
+				builder.effect(() -> new EffectInstance(Effects.HUNGER, 20 * 60, 0), 1.0F);
+			}
+			else
+			{
+				humanFood.getEffects().parallelStream().forEach(
+						pair -> builder.effect(pair::getFirst, pair.getSecond())
+				);
+			}
 		}
 		return builder.build();
 	}
@@ -233,9 +248,29 @@ public class DragonFoodHandler {
 	}
 	
 	public static boolean isDragonEdible(Item item, DragonType type) {
-		if (ConfigHandler.SERVER.customDragonFoods.get() && type != DragonType.NONE)
-			return DRAGON_FOODS != null && DRAGON_FOODS.containsKey(type) && item != null && DRAGON_FOODS.get(type).containsKey(item);
-		return item.getFoodProperties() != null;
+		if (Objects.nonNull(item))
+		{
+			if (type != DragonType.NONE && DRAGON_FOODS.containsKey(type) && ConfigHandler.SERVER.customDragonFoods.get())
+			{
+				boolean result = DRAGON_FOODS.get(type).containsKey(item);
+				if (ConfigHandler.SERVER.allowCommonFoodsForDragon.get())
+				{
+					result = result || item.isEdible();
+				}
+				return result;
+			}
+			else
+			{
+				return item.isEdible();
+			}
+		}
+		return false;
+//		if (ConfigHandler.SERVER.customDragonFoods.get() && type != DragonType.NONE)
+//			return DRAGON_FOODS != null
+//					&& (DRAGON_FOODS.containsKey(type)
+//					&& item != null
+//					&& DRAGON_FOODS.get(type).containsKey(item));
+//		return item.getFoodProperties() != null;
 	}
 	
 	public static void dragonEat(FoodStats foodStats, Item item, ItemStack itemStack, DragonType type) {

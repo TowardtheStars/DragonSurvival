@@ -70,9 +70,7 @@ public class ServerConfig {
 	public final ForgeConfigSpec.BooleanValue fireBreathSpreadsFire;
 
     public final ForgeConfigSpec.BooleanValue customDragonFoods;
-    public final ForgeConfigSpec.BooleanValue healthAdjustments;
-    public final ForgeConfigSpec.IntValue minHealth;
-    public final ForgeConfigSpec.IntValue maxHealth;
+    public final ForgeConfigSpec.BooleanValue allowCommonFoodsForDragon;
     public final ForgeConfigSpec.ConfigValue<List<? extends String>> growNewborn;
 	public final ForgeConfigSpec.ConfigValue<List<? extends String>> growYoung;
 	public final ForgeConfigSpec.ConfigValue<List<? extends String>> growAdult;
@@ -338,14 +336,6 @@ public class ServerConfig {
 				.translation("ds.config.server.growth.saveGrowthStage")
 				.comment("Should the growth stage of a dragon be saved even when you change. Does not affect the saving progress of magic (use saveAllAbilities). The author does not approve of weredragons, but if you insist...")
 				.define("saveGrowthStage", false);
-		minHealth = builder
-				.translation("ds.config.server.growth.minHealth")
-				.comment("Dragon starting health. Minumum health dragons will start off with.")
-				.defineInRange("minHealth", 14, 1, 100);
-		maxHealth = builder
-				.translation("ds.config.server.growth.maxHealth")
-				.comment("Maximum health dragons can grow to.")
-				.defineInRange("maxHealth", 40, 1, 100);
 		
 		newbornGrowthModifier = builder
 				.translation("ds.config.server.growth.newbornGrowthModifier")
@@ -512,10 +502,6 @@ public class ServerConfig {
 		
 		// Innate dragon bonuses
 		builder.pop().push("bonuses");
-		healthAdjustments = builder
-				.translation("ds.config.server.bonuses.healthAdjustments")
-				.comment("Apply a health modifier for dragons. The older the dragon, the more health it has.")
-				.define("healthMod", true);
 		
 		bonuses = builder
 				.translation("ds.config.server.bonuses.bonuses")
@@ -928,8 +914,13 @@ public class ServerConfig {
 		builder.pop().push("food");
 		customDragonFoods = builder
 				.translation("ds.config.server.food.customDragonFoods")
-				.comment("Force dragons to eat a unique diet for their type.")
+				.comment("Enable dragons to eat a unique diet for their type.")
 				.define("dragonFoods", true);
+
+		allowCommonFoodsForDragon = builder
+				.translation("ds.config.server.food.allowCommonFoodsForDragon")
+				.comment("Allow dragons to eat common food if dragon foods is enabled.")
+				.define("allowCommonFoodsForDragon", true);
 		
 		caveDragonHurtfulItems = builder
 				.translation("ds.config.server.food.caveDragonHurtfulItems")
