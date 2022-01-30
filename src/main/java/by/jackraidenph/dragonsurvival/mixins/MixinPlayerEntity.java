@@ -42,6 +42,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -97,14 +98,16 @@ public abstract class MixinPlayerEntity extends LivingEntity{
 	private ItemStack getDragonSword(PlayerEntity entity)
 	{
 		ItemStack mainStack = entity.getMainHandItem();
-		DragonStateHandler cap = DragonStateProvider.getCap(entity).orElse(null);
-		
-		if(!(mainStack.getItem() instanceof TieredItem) && cap != null) {
-			ItemStack sword = cap.getClawInventory().getClawsInventory().getItem(0);
 
-			if(sword != null && !sword.isEmpty()){
-				return sword;
-			}
+		
+		if(!(mainStack.getItem() instanceof TieredItem)) {
+            return DragonStateProvider.getCap(entity)
+                    .map(
+                            cap ->
+                                    cap.getClawInventory().getClawsInventory().getItem(0)
+                    )
+                    .filter(ItemStack::isEmpty)
+                    .orElse(mainStack);
 		}
 
 		return mainStack;
@@ -245,7 +248,12 @@ public abstract class MixinPlayerEntity extends LivingEntity{
                f5 = 0.96F;
             }
 
-            f6 *= (float)this.getAttribute(net.minecraftforge.common.ForgeMod.SWIM_SPEED.get()).getValue();
+            f6 *= Optional.ofNullable(
+                    this.getAttribute(net.minecraftforge.common.ForgeMod.SWIM_SPEED.get())
+            )
+                    .map(ModifiableAttributeInstance::getValue)
+                    .orElse(1.0d).floatValue();
+
             this.moveRelative(f6, p_213352_1_);
             this.move(MoverType.SELF, this.getDeltaMovement());
             Vector3d vector3d6 = this.getDeltaMovement();
