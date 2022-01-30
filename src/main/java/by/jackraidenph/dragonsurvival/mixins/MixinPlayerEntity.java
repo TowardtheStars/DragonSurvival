@@ -149,7 +149,7 @@ public abstract class MixinPlayerEntity extends LivingEntity{
 				}
 			}
 			
-			if (this.abilities.flying && !this.isPassenger()) {
+			if (this.abilities.flying && !this.isPassenger() && !this.isDeadOrDying()) {
 				double d5 = this.getDeltaMovement().y;
 				float f = this.flyingSpeed;
 				this.flyingSpeed = this.abilities.getFlyingSpeed() * (float)(this.isSprinting() ? 2 : 1);
