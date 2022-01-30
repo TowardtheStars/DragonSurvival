@@ -7,13 +7,16 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.entity.PartEntity;
 
+import javax.annotation.Nonnull;
+
 public class DragonHitboxPart extends PartEntity<DragonHitBox>
 {
 	public EntitySize size;
+	@Nonnull
 	public final DragonHitBox parentMob;
 	public String name;
 	
-	public DragonHitboxPart(DragonHitBox parent, String name, float sizeX, float sizeY)
+	public DragonHitboxPart(@Nonnull DragonHitBox parent, String name, float sizeX, float sizeY)
 	{
 		super(parent);
 		this.size = EntitySize.scalable(sizeX, sizeY);
@@ -22,7 +25,7 @@ public class DragonHitboxPart extends PartEntity<DragonHitBox>
 	}
 	
 	@Override
-	public boolean isInvulnerableTo(DamageSource pSource)
+	public boolean isInvulnerableTo(@Nonnull DamageSource pSource)
 	{
 		return super.isInvulnerableTo(pSource) || pSource == DamageSource.IN_WALL;
 	}
@@ -31,12 +34,12 @@ public class DragonHitboxPart extends PartEntity<DragonHitBox>
 	protected void defineSynchedData() {}
 	
 	@Override
-	protected void readAdditionalSaveData(CompoundNBT p_70037_1_) {}
+	protected void readAdditionalSaveData(@Nonnull CompoundNBT p_70037_1_) {}
 	
 	@Override
-	protected void addAdditionalSaveData(CompoundNBT p_213281_1_) {}
+	protected void addAdditionalSaveData(@Nonnull CompoundNBT p_213281_1_) {}
 	
-	public boolean hurt(DamageSource pSource, float pAmount) {
+	public boolean hurt(@Nonnull DamageSource pSource, float pAmount) {
 		return !this.isInvulnerableTo(pSource) && this.parentMob.hurt(this, pSource, pAmount);
 	}
 	
@@ -46,13 +49,15 @@ public class DragonHitboxPart extends PartEntity<DragonHitBox>
 		return parentMob.isPickable();
 	}
 	
+	@Nonnull
 	@Override
 	public Vector3d getDeltaMovement()
 	{
 		return parentMob.getDeltaMovement();
 	}
 	
-	public EntitySize getDimensions(Pose p_213305_1_) {
+	@Nonnull
+	public EntitySize getDimensions(@Nonnull Pose p_213305_1_) {
 		return this.size;
 	}
 }

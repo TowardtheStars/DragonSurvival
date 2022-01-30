@@ -4,6 +4,8 @@ import by.jackraidenph.dragonsurvival.client.handlers.ClientFlightHandler;
 import by.jackraidenph.dragonsurvival.common.DragonEffects;
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateHandler;
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateProvider;
+import by.jackraidenph.dragonsurvival.common.entity.creatures.hitbox.DragonHitBox;
+import by.jackraidenph.dragonsurvival.common.entity.creatures.hitbox.DragonHitboxPart;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
 import by.jackraidenph.dragonsurvival.misc.DragonType;
 import by.jackraidenph.dragonsurvival.network.NetworkHandler;
@@ -27,6 +29,8 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -36,6 +40,8 @@ import java.util.List;
 @Mod.EventBusSubscriber()
 @SuppressWarnings("unused")
 public class ServerFlightHandler {
+
+	private static final Logger LOGGER = LogManager.getLogger(ServerFlightHandler.class);
 
     /**
      * Sets the fall damage based on flight speed and dragon's size
@@ -155,10 +161,30 @@ public class ServerFlightHandler {
 				
 				if(isSpin(player)){
 					int range = 5;
-					List<Entity> entities = player.level.getEntities(null, new AxisAlignedBB(player.position().x - range, player.position().y - range, player.position().z - range, player.position().x + range, player.position().y + range, player.position().z + range));
+					List<Entity> entities = player.level.getEntities(null,
+							new AxisAlignedBB(
+									player.position().x - range,
+									player.position().y - range,
+									player.position().z - range,
+									player.position().x + range,
+									player.position().y + range,
+									player.position().z + range)
+					);
 					entities.removeIf((e) -> e.distanceTo(player) > range);
 					entities.remove(player);
-					entities.removeIf((e) -> e instanceof PlayerEntity && !player.canHarmPlayer((PlayerEntity)e));
+					entities.removeIf(entity ->
+							entity instanceof DragonHitBox
+							&& ((DragonHitBox) entity).player.getUUID() == player.getUUID()
+					);
+					entities.removeIf(entity ->
+							entity instanceof DragonHitboxPart
+							&& ((DragonHitboxPart) entity).parentMob.player.getUUID() == player.getUUID()
+							);
+
+					entities.removeIf(
+							(e) -> e instanceof PlayerEntity
+									&& !player.canHarmPlayer((PlayerEntity)e)
+					);
 					
 					for(Entity ent : entities){
 						if(player.hasPassenger(ent)) continue;
@@ -171,6 +197,8 @@ public class ServerFlightHandler {
 							}
 						}
 						player.attack(ent);
+
+						LOGGER.info("Spin attack from " + player.toString() + " to " + ent.toString());
 					}
 					
 					handler.getMovementData().spinAttack--;

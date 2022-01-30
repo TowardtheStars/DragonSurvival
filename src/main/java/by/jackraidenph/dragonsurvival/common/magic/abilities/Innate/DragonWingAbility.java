@@ -40,6 +40,7 @@ public class DragonWingAbility extends InnateDragonAbility
 		
 		DragonStateHandler handler = DragonStateProvider.getCap(player).orElse(null);
 		
-		return new TranslationTextComponent("ds.skill.description." + getId(), key).append("\n").append(new TranslationTextComponent("ds.skill.description." + getId() + (handler != null && handler.getMovementData().spinLearned ? ".has_spin" : ".no_spin")));
+		return new TranslationTextComponent("ds.skill.description." + getId(), key).append("\n")
+				.append(new TranslationTextComponent("ds.skill.description." + getId() + (handler != null && handler.getMovementData().spinLearned ? ".has_spin" : ".no_spin")));
 	}
 }

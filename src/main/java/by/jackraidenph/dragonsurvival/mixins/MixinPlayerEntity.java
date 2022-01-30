@@ -87,13 +87,9 @@ public abstract class MixinPlayerEntity extends LivingEntity{
 	
 	@Inject( method = "push", at = @At("HEAD"), cancellable = true)
 	public void push(Entity pEntity, CallbackInfo info) {
-		DragonStateHandler cap = DragonStateProvider.getCap(pEntity).orElse(null);
-		
-		if(cap != null){
-			if(cap.getEmotes().getCurrentEmote() != null){
-				info.cancel();
-			}
-		}
+		DragonStateProvider.getCap(pEntity)
+                .filter(cap->cap.getEmotes().getCurrentEmote() != null)
+                .ifPresent(cap-> info.cancel());
 	}
 	
 	@Redirect( method = "attack",
@@ -138,7 +134,7 @@ public abstract class MixinPlayerEntity extends LivingEntity{
 	private static final AttributeModifier SLOW_FALLING = new AttributeModifier(SLOW_FALLING_ID, "Slow falling acceleration reduction", -0.07, AttributeModifier.Operation.ADDITION); // Add -0.07 to 0.08 so we get the vanilla default of 0.01
 	
 	@Inject( method = "travel", at = @At("HEAD"), cancellable = true)
-	public void travel(Vector3d p_213352_1_, CallbackInfo ci) {
+	public void travel(Vector3d pos, CallbackInfo ci) {
 		if (DragonStateProvider.isDragon(this)) {
 			double d0 = this.getX();
 			double d1 = this.getY();
@@ -157,14 +153,14 @@ public abstract class MixinPlayerEntity extends LivingEntity{
 				double d5 = this.getDeltaMovement().y;
 				float f = this.flyingSpeed;
 				this.flyingSpeed = this.abilities.getFlyingSpeed() * (float)(this.isSprinting() ? 2 : 1);
-				dragonTravel(p_213352_1_);
+				dragonTravel(pos);
 				Vector3d vector3d = this.getDeltaMovement();
 				this.setDeltaMovement(vector3d.x, d5 * 0.6D, vector3d.z);
 				this.flyingSpeed = f;
 				this.fallDistance = 0.0F;
 				this.setSharedFlag(7, false);
 			} else
-				dragonTravel(p_213352_1_);
+				dragonTravel(pos);
 			this.checkMovementStatistics(this.getX() - d0, this.getY() - d1, this.getZ() - d2);
 			ci.cancel();
 		}
@@ -178,7 +174,9 @@ public abstract class MixinPlayerEntity extends LivingEntity{
 		}
       if (this.isEffectiveAi() || this.isControlledByLocalInstance()) {
          double d0 = 0.08D;
-         ModifiableAttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+         ModifiableAttributeInstance gravity = this.getAttribute(
+                 net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get()
+         );
          boolean flag = this.getDeltaMovement().y <= 0.0D;
          if (flag && this.hasEffect(Effects.SLOW_FALLING)) {
             if (!gravity.hasModifier(SLOW_FALLING)) gravity.addTransientModifier(SLOW_FALLING);

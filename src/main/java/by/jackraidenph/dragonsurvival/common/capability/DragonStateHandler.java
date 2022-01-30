@@ -262,10 +262,10 @@ public class DragonStateHandler {
     
     
     public static AttributeModifier buildHealthMod(double size) {
-		double healthMod = ((float)ConfigHandler.SERVER.minHealth.get() + (((size - 14) / 26F) * ((float)ConfigHandler.SERVER.maxHealth.get() - (float)ConfigHandler.SERVER.minHealth.get()))) - 20;
+		double healthMod = (ConfigHandler.SERVER.minHealth.get() + (((size - 14) / 26F) * (ConfigHandler.SERVER.maxHealth.get() - ConfigHandler.SERVER.minHealth.get()))) - 20;
 		healthMod = Math.min(healthMod, ConfigHandler.SERVER.maxHealth.get() - 20);
-		
-		
+
+
 		return new AttributeModifier(
     			HEALTH_MODIFIER_UUID,
     			"Dragon Health Adjustment",

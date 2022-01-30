@@ -175,6 +175,10 @@ public class ServerConfig {
 	public final ForgeConfigSpec.ConfigValue<List<? extends String>> stormBreathBlockBreaks;
 	public final ForgeConfigSpec.ConfigValue<List<? extends String>> chargedBlacklist;
 	public final ForgeConfigSpec.ConfigValue<List<? extends String>> chargedSpreadBlacklist;
+
+	public final ForgeConfigSpec.ConfigValue<Boolean> healthAdjustments;
+	public final ForgeConfigSpec.DoubleValue minHealth;
+	public final ForgeConfigSpec.DoubleValue maxHealth;
 	
 	
 	public final ForgeConfigSpec.BooleanValue forestBreath;
@@ -1856,6 +1860,19 @@ public class ServerConfig {
 		}
 
 		builder.pop().pop().pop();
+		builder.push("health");
+		{
+			healthAdjustments = builder
+					.comment("Whether growth adjust health cap")
+					.define("healthAdjustments", true);
+
+			minHealth = builder
+					.defineInRange("minHealth", 14d, 2, 1024);
+
+			maxHealth = builder
+					.defineInRange("maxHealth", 40d, 2, 1024);
+		}
+		builder.pop();
 	}
 
 	private boolean isValidHurtfulItem(Object food){
