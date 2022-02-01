@@ -17,14 +17,17 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.Optional;
 
 public class DragonStateProvider implements ICapabilitySerializable<CompoundNBT> {
 
@@ -34,10 +37,15 @@ public class DragonStateProvider implements ICapabilitySerializable<CompoundNBT>
     private final DragonStateHandler instance = Objects.requireNonNull(DRAGON_CAPABILITY.getDefaultInstance());
 
     public static LazyOptional<DragonStateHandler> getCap(Entity entity) {
-        if(entity instanceof FakeClientPlayer){
-            return ((FakeClientPlayer)entity).handler != null ? LazyOptional.of(() -> ((FakeClientPlayer)entity).handler) : LazyOptional.empty();
-        }
-        
+        Optional<LazyOptional<DragonStateHandler>> handler = Optional.ofNullable(DistExecutor.safeCallWhenOn(Dist.CLIENT,
+                ()->(DistExecutor.SafeCallable<LazyOptional<DragonStateHandler>>)(()->{
+                    if(entity instanceof FakeClientPlayer){
+                        return ((FakeClientPlayer)entity).handler != null ? LazyOptional.of(() -> ((FakeClientPlayer)entity).handler) : LazyOptional.empty();
+                    }
+                    return LazyOptional.empty();
+                })));
+        if (handler.isPresent())
+            return handler.get();
         if(entity instanceof DragonHitBox){
             return ((DragonHitBox)entity).player == null ? LazyOptional.empty() : ((DragonHitBox)entity).player.getCapability(DragonStateProvider.DRAGON_CAPABILITY);
         }else  if(entity instanceof DragonHitboxPart){

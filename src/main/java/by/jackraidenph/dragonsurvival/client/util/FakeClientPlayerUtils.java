@@ -8,6 +8,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -17,20 +18,21 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
-@OnlyIn( Dist.CLIENT)
-@EventBusSubscriber
+@Mod.EventBusSubscriber(Dist.CLIENT)
 public class FakeClientPlayerUtils
 {
-	private static final ConcurrentHashMap<Integer, FakeClientPlayer> fakePlayers = new ConcurrentHashMap<>();
-	private static final ConcurrentHashMap<Integer, DragonEntity> fakeDragons = new ConcurrentHashMap<>();
-	
+	public static final ConcurrentHashMap<Integer, Object> fakePlayers = new ConcurrentHashMap<>();
+	public static final ConcurrentHashMap<Integer, DragonEntity> fakeDragons = new ConcurrentHashMap<>();
+
+	@OnlyIn(Dist.CLIENT)
 	public static FakeClientPlayer getFakePlayer(int num, DragonStateHandler handler){
 		fakePlayers.computeIfAbsent(num, FakeClientPlayer::new);
-		fakePlayers.get(num).handler = handler;
-		fakePlayers.get(num).lastAccessed = System.currentTimeMillis();
-		return fakePlayers.get(num);
+		((FakeClientPlayer)fakePlayers.get(num)).handler = handler;
+		((FakeClientPlayer)fakePlayers.get(num)).lastAccessed = System.currentTimeMillis();
+		return (FakeClientPlayer) fakePlayers.get(num);
 	}
-	
+
+	@OnlyIn(Dist.CLIENT)
 	public static DragonEntity getFakeDragon(int num, DragonStateHandler handler){
 		FakeClientPlayer clientPlayer = getFakePlayer(num, handler);
 		
@@ -64,17 +66,6 @@ public class FakeClientPlayerUtils
 		
 		return fakeDragons.get(num);
 	}
-	
-	@SubscribeEvent
-	public static void clientTick(ClientTickEvent event){
-		fakePlayers.forEach((i, v) -> {
-			if (System.currentTimeMillis() - v.lastAccessed >= TimeUnit.MILLISECONDS.convert(10, TimeUnit.MINUTES)) {
-				v.remove();
-				fakeDragons.get(i).remove();
-				
-				fakeDragons.remove(i);
-				fakePlayers.remove(i);
-			}
-		});
-	}
+
+
 }

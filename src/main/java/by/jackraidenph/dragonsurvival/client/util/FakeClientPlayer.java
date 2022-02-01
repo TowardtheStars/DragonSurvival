@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-@OnlyIn( Dist.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class FakeClientPlayer extends AbstractClientPlayerEntity
 {
 	public DragonStateHandler handler = new DragonStateHandler();
