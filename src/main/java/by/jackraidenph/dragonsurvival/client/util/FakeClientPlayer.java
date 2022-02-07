@@ -42,36 +42,41 @@ public class FakeClientPlayer extends AbstractClientPlayerEntity
 	private static final ResourceLocation STEVE_SKIN_LOCATION = new ResourceLocation("textures/entity/steve.png");
 	private static final ResourceLocation ALEX_SKIN_LOCATION = new ResourceLocation("textures/entity/alex.png");
 	
+	@Nonnull
 	@Override
 	public ResourceLocation getSkinTextureLocation()
 	{
 		return number % 2 == 0 ? STEVE_SKIN_LOCATION : ALEX_SKIN_LOCATION;
 	}
 	
+	@Nonnull
 	@Override public IPacket<?> getAddEntityPacket() {return null;}
 	@Override public void onAddedToWorld() {}
+	@Nonnull
 	@Override public Vector3d position(){ return new Vector3d(0, 0, 0); }
+	@Nonnull
 	@Override public BlockPos blockPosition(){ return BlockPos.ZERO; }
-	@Override public void displayClientMessage(ITextComponent chatComponent, boolean actionBar){}
-	@Override public void sendMessage(ITextComponent component, UUID senderUUID) {}
-	@Override public void awardStat(Stat par1StatBase, int par2){}
-	@Override public boolean isInvulnerableTo(DamageSource source){ return true; }
-	@Override public boolean canHarmPlayer(PlayerEntity player){ return false; }
-	@Override public void die(DamageSource source){ return; }
-	@Override public void tick(){ return; }
+	@Override public void displayClientMessage(@Nonnull ITextComponent chatComponent, boolean actionBar){}
+	@Override public void sendMessage(@Nonnull ITextComponent component, @Nonnull UUID senderUUID) {}
+	@Override public void awardStat(@Nonnull Stat par1StatBase, int par2){}
+	@Override public boolean isInvulnerableTo(@Nonnull DamageSource source){ return true; }
+	@Override public boolean canHarmPlayer(@Nonnull PlayerEntity player){ return false; }
+	@Override public void die(@Nonnull DamageSource source){}
+	@Override public void tick(){}
 	@Override @Nullable public MinecraftServer getServer() { return Minecraft.getInstance().getSingleplayerServer(); }
 	@Override public boolean shouldShowName()
 	{
 		return false;
 	}
+	@Nonnull
 	@Override public ITextComponent getDisplayName()
 	{
 		return StringTextComponent.EMPTY;
 	}
 	@Nonnull @Override public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {return LazyOptional.empty();}
 	@Override protected void reviveCaps() {}
-	@Override public void readAdditionalSaveData(CompoundNBT pCompound) {}
-	@Override public void addAdditionalSaveData(CompoundNBT pCompound) {}
-	@Override public boolean saveAsPassenger(CompoundNBT pCompound) {return false;}
-	@Override public boolean save(CompoundNBT pCompound) {return false;}
+	@Override public void readAdditionalSaveData(@Nonnull CompoundNBT pCompound) {}
+	@Override public void addAdditionalSaveData(@Nonnull CompoundNBT pCompound) {}
+	@Override public boolean saveAsPassenger(@Nonnull CompoundNBT pCompound) {return false;}
+	@Override public boolean save(@Nonnull CompoundNBT pCompound) {return false;}
 }

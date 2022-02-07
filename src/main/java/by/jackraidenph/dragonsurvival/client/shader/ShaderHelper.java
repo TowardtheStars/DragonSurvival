@@ -39,8 +39,7 @@ public final class ShaderHelper {
 
     @SuppressWarnings("deprecation")
     public static void initShaders() {
-        if (Minecraft.getInstance() != null
-                && Minecraft.getInstance().getResourceManager() instanceof IReloadableResourceManager) {
+        if (Minecraft.getInstance().getResourceManager() instanceof IReloadableResourceManager) {
             ((IReloadableResourceManager) Minecraft.getInstance().getResourceManager()).registerReloadListener(
                     (IResourceManagerReloadListener) manager -> {
                         PROGRAMS.values().forEach(ShaderLinkHelper::releaseProgram);

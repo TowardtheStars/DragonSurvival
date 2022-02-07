@@ -7,7 +7,7 @@ import net.minecraft.util.math.MathHelper;
 
 public class FastGlideSound extends ElytraSound
 {
-	private  ClientPlayerEntity player;
+	private ClientPlayerEntity player;
 	private int time;
 	
 	public FastGlideSound(ClientPlayerEntity p_i47113_1_) {

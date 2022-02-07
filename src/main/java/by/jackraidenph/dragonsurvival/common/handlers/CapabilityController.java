@@ -42,7 +42,7 @@ public class CapabilityController {
     public static void attachCapabilities(AttachCapabilitiesEvent<Entity> event) {
         event.addCapability(new ResourceLocation("dragonsurvival", "generic_capability_data"), new GenericCapabilityProvider());
     
-        if (event.getObject() instanceof PlayerEntity && !(event.getObject() instanceof FakeClientPlayer)) {
+        if (event.getObject() instanceof PlayerEntity ) {
             event.addCapability(new ResourceLocation("dragonsurvival", "playerstatehandler"), new DragonStateProvider());
             event.addCapability(new ResourceLocation("dragonsurvival", "village_relations"), new VillageRelationshipsProvider());
             DragonSurvivalMod.LOGGER.info("Successfully attached capabilities to the " + event.getObject().getClass().getSimpleName());

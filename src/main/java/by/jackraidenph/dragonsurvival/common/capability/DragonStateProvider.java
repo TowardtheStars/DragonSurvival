@@ -8,7 +8,6 @@ import by.jackraidenph.dragonsurvival.config.ConfigHandler;
 import by.jackraidenph.dragonsurvival.misc.DragonType;
 import by.jackraidenph.dragonsurvival.network.NetworkHandler;
 import by.jackraidenph.dragonsurvival.network.magic.SyncMagicStats;
-import by.jackraidenph.dragonsurvival.client.util.FakeClientPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -17,12 +16,10 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
@@ -37,15 +34,14 @@ public class DragonStateProvider implements ICapabilitySerializable<CompoundNBT>
     private final DragonStateHandler instance = Objects.requireNonNull(DRAGON_CAPABILITY.getDefaultInstance());
 
     public static LazyOptional<DragonStateHandler> getCap(Entity entity) {
-        Optional<LazyOptional<DragonStateHandler>> handler = Optional.ofNullable(DistExecutor.safeCallWhenOn(Dist.CLIENT,
-                ()->(DistExecutor.SafeCallable<LazyOptional<DragonStateHandler>>)(()->{
-                    if(entity instanceof FakeClientPlayer){
-                        return ((FakeClientPlayer)entity).handler != null ? LazyOptional.of(() -> ((FakeClientPlayer)entity).handler) : LazyOptional.empty();
-                    }
-                    return LazyOptional.empty();
-                })));
-        if (handler.isPresent())
-            return handler.get();
+//        if (FMLEnvironment.dist == Dist.CLIENT)
+//        {
+//            if(entity instanceof FakeClientPlayer){
+//                return ((FakeClientPlayer)entity).handler != null ? LazyOptional.of(() -> ((FakeClientPlayer)entity).handler) : LazyOptional.empty();
+//            }
+//            return LazyOptional.empty();
+//        };
+
         if(entity instanceof DragonHitBox){
             return ((DragonHitBox)entity).player == null ? LazyOptional.empty() : ((DragonHitBox)entity).player.getCapability(DragonStateProvider.DRAGON_CAPABILITY);
         }else  if(entity instanceof DragonHitboxPart){
