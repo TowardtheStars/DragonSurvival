@@ -3,9 +3,11 @@ package by.jackraidenph.dragonsurvival.common.handlers;
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateProvider;
 import by.jackraidenph.dragonsurvival.common.entity.DSEntities;
 import by.jackraidenph.dragonsurvival.common.entity.creatures.hitbox.DragonHitBox;
+import by.jackraidenph.dragonsurvival.common.entity.creatures.hitbox.DragonHitboxPart;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
@@ -48,4 +50,19 @@ public class DragonHitboxHandler
 			dragonHitboxes.put(player.getId(), hitbox.getId());
 		}
 	}
+
+	public static boolean isThisPlayer(Entity entity, Entity player)
+	{
+		return (entity instanceof DragonHitBox) ?
+				((DragonHitBox) entity).getPlayerId() == player.getId() :
+				entity instanceof DragonHitboxPart
+						&& ((DragonHitboxPart) entity).parentMob.getPlayerId() == player.getId();
+	}
+
+	@SubscribeEvent
+	public static void cancelSelfHurting(LivingHurtEvent event)
+	{
+		event.setCanceled(isThisPlayer(event.getEntity(), event.getSource().getEntity()));
+	}
+
 }
