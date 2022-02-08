@@ -2,7 +2,9 @@ package by.jackraidenph.dragonsurvival.common.tags;
 
 import by.jackraidenph.dragonsurvival.DragonSurvivalMod;
 import net.minecraft.item.Item;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 
@@ -23,10 +25,8 @@ public class DSItemTags
     public static final Tags.IOptionalNamedTag<Item> FOREST_DRAGON_HURTFUL_ITEMS;
     public static final Tags.IOptionalNamedTag<Item> CAVE_DRAGON_HURTFUL_ITEMS;
 
-    public static final String DRAGON_FOOD = "dragon_food";
-    public static final Tags.IOptionalNamedTag<Item> CAVE_DRAGON_FOOD;
-    public static final Tags.IOptionalNamedTag<Item> FOREST_DRAGON_FOOD;
-    public static final Tags.IOptionalNamedTag<Item> SEA_DRAGON_FOOD;
+
+    public static final Tags.IOptionalNamedTag<Item> UNAVAILABLE_FOR_DRAGON;
 
     static {
         GROW_ADULT = tag("grow_adult");
@@ -38,9 +38,7 @@ public class DSItemTags
         FOREST_DRAGON_HURTFUL_ITEMS = tag(FOREST_DRAGON, HURTFUL_ITEMS);
         CAVE_DRAGON_HURTFUL_ITEMS = tag(CAVE_DRAGON, HURTFUL_ITEMS);
 
-        CAVE_DRAGON_FOOD = tag(CAVE_DRAGON, DRAGON_FOOD);
-        FOREST_DRAGON_FOOD = tag(FOREST_DRAGON, DRAGON_FOOD);
-        SEA_DRAGON_FOOD= tag(SEA_DRAGON, DRAGON_FOOD);
+        UNAVAILABLE_FOR_DRAGON = tag("unavailable_for_dragon");
 
     }
 
