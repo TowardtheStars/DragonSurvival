@@ -1,12 +1,14 @@
 package by.jackraidenph.dragonsurvival.data;
 
 import by.jackraidenph.dragonsurvival.common.blocks.DSBlocks;
+import by.jackraidenph.dragonsurvival.common.tags.DSBlockTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeBlockTagsProvider;
 
@@ -63,5 +65,66 @@ public class DSBlockTagGenerator extends ForgeBlockTagsProvider
                 );
         tag(SEA_HYDRATION_BLOCKS).addTag(ICE)
                 .add(Blocks.SNOW, Blocks.SNOW_BLOCK, DSBlocks.seaSourceOfMagic);
+
+        tag(SEA_MANA_BLOCKS)
+                .addTags(ICE)
+                .add(
+                        DSBlocks.seaSourceOfMagic,
+                        Blocks.SNOW_BLOCK,
+                        Blocks.SNOW,
+                        Blocks.WATER,
+                        Blocks.WET_SPONGE,
+                        Blocks.CAULDRON
+                );
+        tag(FOREST_MANA_BLOCKS)
+                .add(DSBlocks.forestSourceOfMagic)
+                .addTags(SMALL_FLOWERS, FLOWERS, TALL_FLOWERS);
+
+        tag(CAVE_MANA_BLOCKS)
+                .add(
+                        DSBlocks.caveSourceOfMagic,
+                        Blocks.LAVA,
+                        Blocks.SMOKER,
+                        Blocks.FURNACE,
+                        Blocks.MAGMA_BLOCK,
+                        Blocks.BLAST_FURNACE
+                )
+                .addTags(CAMPFIRES);
+
+        tag(FOREST_BREATH_BREAKABLE)
+                .addTags(BANNERS);
+
+        tag(STORM_BREATH_BREAKABLE)
+                .addTags(
+                        IMPERMEABLE,
+                        CROPS,
+                        FLOWERS,
+                        BANNERS,
+                        LEAVES
+                )
+                .add(Blocks.SNOW);
+
+        tag(FIRE_BREATH_BREAKABLE)
+                .addTags(
+                        ICE,
+                        CROPS,
+                        LEAVES,
+                        FLOWERS,
+                        BANNERS,
+                        WOODEN_FENCES,
+                        LOGS_THAT_BURN,
+                        WOODEN_STAIRS,
+                        WOODEN_DOORS,
+                        WOOL,
+                        SAPLINGS,
+                        IMPERMEABLE
+                )
+                .add(
+                        Blocks.SNOW,
+                        Blocks.COBWEB,
+                        Blocks.LARGE_FERN,
+                        Blocks.SUGAR_CANE,
+                        Blocks.SNOW_BLOCK
+                );
     }
 }

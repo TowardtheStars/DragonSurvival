@@ -156,6 +156,7 @@ public class DSItemTagGenerator extends ForgeItemTagsProvider
                 .add(Items.POTION, Items.MILK_BUCKET)
         ;
 
+        addParameterTag(CAVE_DRAGON_HURTFUL_ITEMS);
 
 
     }
