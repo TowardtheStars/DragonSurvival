@@ -1,5 +1,6 @@
 package by.jackraidenph.dragonsurvival.common.entity.creatures.hitbox;
 
+import by.jackraidenph.dragonsurvival.common.handlers.DragonHitboxHandler;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.Pose;
 import net.minecraft.nbt.CompoundNBT;
@@ -27,7 +28,7 @@ public class DragonHitboxPart extends PartEntity<DragonHitBox>
 	@Override
 	public boolean isInvulnerableTo(@Nonnull DamageSource pSource)
 	{
-		return super.isInvulnerableTo(pSource) || pSource == DamageSource.IN_WALL;
+		return DragonHitboxHandler.isThisPlayer(this, pSource.getEntity()) || super.isInvulnerableTo(pSource) || pSource == DamageSource.IN_WALL;
 	}
 	
 	@Override

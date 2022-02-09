@@ -8,13 +8,11 @@ import by.jackraidenph.dragonsurvival.client.sounds.SoundRegistry;
 import by.jackraidenph.dragonsurvival.common.DragonEffects;
 import by.jackraidenph.dragonsurvival.common.capability.Capabilities;
 import by.jackraidenph.dragonsurvival.common.capability.GenericCapability;
-import by.jackraidenph.dragonsurvival.common.handlers.DragonConfigHandler;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
-import by.jackraidenph.dragonsurvival.data.tags.DSBlockTags;
+import by.jackraidenph.dragonsurvival.data.DSTags;
 import by.jackraidenph.dragonsurvival.misc.DragonType;
 import by.jackraidenph.dragonsurvival.util.Functions;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.PotatoBlock;
 import net.minecraft.client.Minecraft;
@@ -228,7 +226,7 @@ public class ForestBreathAbility extends BreathAbility
 				}
 			}
 		}
-		if(blockState.getBlock() == Blocks.POTATOES){
+		if(blockState.getBlock() == net.minecraft.block.Blocks.POTATOES){
 			if (player.level.random.nextInt(100) < 10) {
 				PotatoBlock bl = (PotatoBlock)blockState.getBlock();
 				if(bl.isMaxAge(blockState)){
@@ -238,10 +236,10 @@ public class ForestBreathAbility extends BreathAbility
 			}
 		}
 		
-		if(blockState.getBlock() != Blocks.GRASS_BLOCK && blockState.getBlock() != Blocks.GRASS) {
+		if(blockState.getBlock() != net.minecraft.block.Blocks.GRASS_BLOCK && blockState.getBlock() != net.minecraft.block.Blocks.GRASS) {
 			if (player.level.random.nextInt(100) < 50) {
 				if (blockState.getBlock() instanceof IGrowable) {
-					if (!DSBlockTags.FOREST_BREATH_INEFFECTIVE_BLOCKS.contains(blockState.getBlock())) {
+					if (!DSTags.Blocks.FOREST_BREATH_INEFFECTIVE_BLOCKS.contains(blockState.getBlock())) {
 						IGrowable igrowable = (IGrowable)blockState.getBlock();
 						if (igrowable.isValidBonemealTarget(player.level, pos, blockState, player.level.isClientSide)) {
 							if (player.level instanceof ServerWorld) {

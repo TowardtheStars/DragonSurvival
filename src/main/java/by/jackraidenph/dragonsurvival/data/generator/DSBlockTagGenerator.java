@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeBlockTagsProvider;
 
-import static by.jackraidenph.dragonsurvival.data.tags.DSBlockTags.*;
+import static by.jackraidenph.dragonsurvival.data.DSTags.Blocks.*;
 import static net.minecraft.tags.BlockTags.*;
 import static net.minecraftforge.common.Tags.Blocks.*;
 

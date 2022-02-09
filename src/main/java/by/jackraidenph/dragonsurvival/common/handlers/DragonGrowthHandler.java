@@ -3,13 +3,12 @@ package by.jackraidenph.dragonsurvival.common.handlers;
 import by.jackraidenph.dragonsurvival.DragonSurvivalMod;
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateProvider;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
-import by.jackraidenph.dragonsurvival.config.ConfigUtils;
-import by.jackraidenph.dragonsurvival.data.tags.DSItemTags;
+import by.jackraidenph.dragonsurvival.data.DSTags;
 import by.jackraidenph.dragonsurvival.network.NetworkHandler;
 import by.jackraidenph.dragonsurvival.network.entity.player.SyncSize;
 import by.jackraidenph.dragonsurvival.common.items.DSItems;
 import by.jackraidenph.dragonsurvival.misc.DragonLevel;
-import net.minecraft.block.Block;
+import com.google.common.collect.Lists;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,7 +22,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -48,18 +46,25 @@ public class DragonGrowthHandler {
                 return;
 
             boolean canContinue = false;
-            Tags.IOptionalNamedTag<Item> tag = DSItemTags.GROW_ADULT;
+            Tags.IOptionalNamedTag<Item> tag = DSTags.Items.GROW_ADULT;
+            List<Tags.IOptionalNamedTag<Item>> otherTag = Lists.newArrayList();
 
             switch (handler.getLevel())
             {
                 case BABY:
-                    tag = DSItemTags.GROW_NEWBORN;
+                    tag = DSTags.Items.GROW_NEWBORN;
+                    otherTag.add(DSTags.Items.GROW_YOUNG);
+                    otherTag.add(DSTags.Items.GROW_ADULT);
                     break;
                 case YOUNG:
-                    tag = DSItemTags.GROW_YOUNG;
+                    tag = DSTags.Items.GROW_YOUNG;
+                    otherTag.add(DSTags.Items.GROW_ADULT);
+                    otherTag.add(DSTags.Items.GROW_NEWBORN);
                     break;
                 case ADULT:
-                    tag = DSItemTags.GROW_ADULT;
+                    tag = DSTags.Items.GROW_ADULT;
+                    otherTag.add(DSTags.Items.GROW_YOUNG);
+                    otherTag.add(DSTags.Items.GROW_NEWBORN);
                     break;
             }
             canContinue = tag.contains(item);
@@ -95,7 +100,7 @@ public class DragonGrowthHandler {
 //            }
 
             if (!canContinue) {
-                if (!tag.getValues().isEmpty() && world.isClientSide()) {
+                if (otherTag.stream().anyMatch(ptag -> ptag.contains(item)) && world.isClientSide()) {
                     List<String> displayData = tag.getValues().stream()
                             .map(i -> new ItemStack(i).getDisplayName().getString())
                             .collect(Collectors.toList());
@@ -130,9 +135,9 @@ public class DragonGrowthHandler {
     
     public static int getIncrement(Item item, DragonLevel level)
     {
-        List<Item> newbornList = DSItemTags.GROW_NEWBORN.getValues();
-        List<Item> youngList = DSItemTags.GROW_YOUNG.getValues();
-        List<Item> adultList = DSItemTags.GROW_ADULT.getValues();
+        List<Item> newbornList = DSTags.Items.GROW_NEWBORN.getValues();
+        List<Item> youngList = DSTags.Items.GROW_YOUNG.getValues();
+        List<Item> adultList = DSTags.Items.GROW_ADULT.getValues();
         
         int increment = 0;
         

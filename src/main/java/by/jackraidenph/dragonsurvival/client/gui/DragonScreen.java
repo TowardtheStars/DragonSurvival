@@ -9,7 +9,7 @@ import by.jackraidenph.dragonsurvival.client.handlers.KeyInputHandler;
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateHandler;
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateProvider;
 import by.jackraidenph.dragonsurvival.common.handlers.DragonGrowthHandler;
-import by.jackraidenph.dragonsurvival.data.tags.DSItemTags;
+import by.jackraidenph.dragonsurvival.data.DSTags;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
 import by.jackraidenph.dragonsurvival.misc.DragonLevel;
 import by.jackraidenph.dragonsurvival.network.NetworkHandler;
@@ -423,9 +423,9 @@ public class DragonScreen extends DisplayEffectsScreen<DragonContainer> {
     
                 ArrayList<Item> allowedList = new ArrayList<>();
     
-                List<Item> newbornList = DSItemTags.GROW_NEWBORN.getValues();
-                List<Item> youngList = DSItemTags.GROW_YOUNG.getValues();
-                List<Item> adultList = DSItemTags.GROW_ADULT.getValues();
+                List<Item> newbornList = DSTags.Items.GROW_NEWBORN.getValues();
+                List<Item> youngList = DSTags.Items.GROW_YOUNG.getValues();
+                List<Item> adultList = DSTags.Items.GROW_ADULT.getValues();
                 
                 if(handler.getSize() < DragonLevel.YOUNG.size){
                     allowedList.addAll(newbornList);

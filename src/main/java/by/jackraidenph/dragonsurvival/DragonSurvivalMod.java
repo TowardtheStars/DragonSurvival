@@ -13,6 +13,7 @@ import by.jackraidenph.dragonsurvival.common.handlers.magic.ClawToolHandler.Even
 import by.jackraidenph.dragonsurvival.common.items.DragonSurvivalCreativeTab;
 import by.jackraidenph.dragonsurvival.common.magic.DragonAbilities;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
+import by.jackraidenph.dragonsurvival.data.DSTags;
 import by.jackraidenph.dragonsurvival.network.NetworkHandler;
 import by.jackraidenph.dragonsurvival.util.BiomeDictionaryHelper;
 import com.mojang.brigadier.CommandDispatcher;
@@ -84,6 +85,7 @@ public class DragonSurvivalMod {
         DragonAbilities.initAbilities();
         NetworkHandler.setup();
         LOGGER.info("Successfully registered packets!");
+        DSTags.init();
     }
 
     @SubscribeEvent

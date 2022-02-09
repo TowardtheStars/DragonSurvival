@@ -4,17 +4,15 @@ import by.jackraidenph.dragonsurvival.client.handlers.KeyInputHandler;
 import by.jackraidenph.dragonsurvival.common.DragonEffects;
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateHandler;
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateProvider;
-import by.jackraidenph.dragonsurvival.common.handlers.DragonConfigHandler;
 import by.jackraidenph.dragonsurvival.common.magic.common.AbilityAnimation;
 import by.jackraidenph.dragonsurvival.common.magic.common.ActiveDragonAbility;
 import by.jackraidenph.dragonsurvival.common.magic.common.ISecondAnimation;
-import by.jackraidenph.dragonsurvival.data.tags.DSBlockTags;
+import by.jackraidenph.dragonsurvival.data.DSTags;
 import by.jackraidenph.dragonsurvival.misc.DragonLevel;
 import by.jackraidenph.dragonsurvival.misc.DragonType;
 import by.jackraidenph.dragonsurvival.server.handlers.ServerFlightHandler;
 import by.jackraidenph.dragonsurvival.util.Functions;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -270,8 +268,8 @@ public abstract class BreathAbility extends ActiveDragonAbility implements ISeco
 						BlockPos newPos = new BlockPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
 						if(newPos.distSqr(pos) <= RANGE){
 							BlockState state = player.level.getBlockState(newPos);
-							if(state.getBlock() != Blocks.AIR){
-								if(DSBlockTags.BREATH_BREAKABLE.containsKey(type) && DSBlockTags.BREATH_BREAKABLE.get(type).contains(state.getBlock())){
+							if(state.getBlock() != net.minecraft.block.Blocks.AIR){
+								if(DSTags.Blocks.BREATH_BREAKABLE.containsKey(type) && DSTags.Blocks.BREATH_BREAKABLE.get(type).contains(state.getBlock())){
 									if(!player.level.isClientSide) {
 										if (player.level.random.nextFloat() * 100 <= blockBreakChance()) {
 											player.level.destroyBlock(newPos, false, player);

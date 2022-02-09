@@ -11,14 +11,13 @@ import by.jackraidenph.dragonsurvival.common.magic.abilities.Passives.LightInDar
 import by.jackraidenph.dragonsurvival.common.magic.abilities.Passives.WaterAbility;
 import by.jackraidenph.dragonsurvival.common.magic.common.DragonAbility;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
-import by.jackraidenph.dragonsurvival.data.tags.DSBlockTags;
+import by.jackraidenph.dragonsurvival.data.DSTags;
 import by.jackraidenph.dragonsurvival.misc.DragonType;
 import by.jackraidenph.dragonsurvival.network.NetworkHandler;
 import by.jackraidenph.dragonsurvival.network.entity.player.SyncCapabilityDebuff;
 import by.jackraidenph.dragonsurvival.util.Functions;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.CauldronBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.ParticleTypes;
@@ -61,7 +60,7 @@ public class DragonTraitHandler
 
             //Because it is used for both cave and sea dragon it is added here
             boolean isInCauldron = false;
-            if (blockUnder.getBlock() == Blocks.CAULDRON)
+            if (blockUnder.getBlock() == net.minecraft.block.Blocks.CAULDRON)
             {
                 if (blockUnder.hasProperty(CauldronBlock.LEVEL))
                 {
@@ -72,7 +71,7 @@ public class DragonTraitHandler
                         isInCauldron = true;
                     }
                 }
-            } else if (feetBlock.getBlock() == Blocks.CAULDRON)
+            } else if (feetBlock.getBlock() == net.minecraft.block.Blocks.CAULDRON)
             {
                 if (feetBlock.hasProperty(CauldronBlock.LEVEL))
                 {
@@ -86,13 +85,13 @@ public class DragonTraitHandler
             }
 
             boolean isInSeaBlock =
-                    (DSBlockTags.SEA_HYDRATION_BLOCKS.contains(block)
-                            || DSBlockTags.SEA_HYDRATION_BLOCKS.contains(feetBlock.getBlock()) || isInCauldron);
+                    (DSTags.Blocks.SEA_HYDRATION_BLOCKS.contains(block)
+                            || DSTags.Blocks.SEA_HYDRATION_BLOCKS.contains(feetBlock.getBlock()) || isInCauldron);
 
             if (!world.isClientSide
                     && ConfigHandler.SERVER.bonuses.get()
                     && ConfigHandler.SERVER.speedupEffectLevel.get() > 0
-                    && DSBlockTags.SPEED_UP_BLOCKS.get(dragonStateHandler.getType()).contains(block))
+                    && DSTags.Blocks.SPEED_UP_BLOCKS.get(dragonStateHandler.getType()).contains(block))
             {
                 int duration =
                         dragonStateHandler.getType() == DragonType.SEA && dragonStateHandler.getMagic().getAbility(DragonAbilities.SEA_ATHLETICS) != null ? ((AthleticsAbility) dragonStateHandler.getMagic().getAbility(DragonAbilities.SEA_ATHLETICS)).getDuration() :

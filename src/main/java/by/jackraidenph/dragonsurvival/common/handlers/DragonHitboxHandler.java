@@ -11,6 +11,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
+import javax.annotation.Nullable;
 import java.util.concurrent.ConcurrentHashMap;
 
 @EventBusSubscriber
@@ -51,12 +52,12 @@ public class DragonHitboxHandler
 		}
 	}
 
-	public static boolean isThisPlayer(Entity entity, Entity player)
+	public static boolean isThisPlayer(@Nullable Entity entity, @Nullable Entity player)
 	{
-		return (entity instanceof DragonHitBox) ?
+		return entity != null && player != null && ((entity instanceof DragonHitBox) ?
 				((DragonHitBox) entity).getPlayerId() == player.getId() :
 				entity instanceof DragonHitboxPart
-						&& ((DragonHitboxPart) entity).parentMob.getPlayerId() == player.getId();
+						&& ((DragonHitboxPart) entity).parentMob.getPlayerId() == player.getId());
 	}
 
 	@SubscribeEvent

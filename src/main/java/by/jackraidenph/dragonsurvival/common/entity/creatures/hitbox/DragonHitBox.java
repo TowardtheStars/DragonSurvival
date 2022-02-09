@@ -2,6 +2,7 @@ package by.jackraidenph.dragonsurvival.common.entity.creatures.hitbox;
 
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateHandler;
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateProvider;
+import by.jackraidenph.dragonsurvival.common.handlers.DragonHitboxHandler;
 import by.jackraidenph.dragonsurvival.common.handlers.DragonSizeHandler;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
 import net.minecraft.client.Minecraft;
@@ -226,7 +227,7 @@ public class DragonHitBox extends MobEntity
 	@Override
 	public boolean isInvulnerableTo(DamageSource pSource)
 	{
-		return super.isInvulnerableTo(pSource) || pSource == DamageSource.IN_WALL;
+		return DragonHitboxHandler.isThisPlayer(this, pSource.getEntity()) || super.isInvulnerableTo(pSource) || pSource == DamageSource.IN_WALL;
 	}
 	
 	@Nonnull

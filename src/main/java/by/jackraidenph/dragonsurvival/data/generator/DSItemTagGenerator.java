@@ -14,7 +14,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeItemTagsProvider;
 
-import static by.jackraidenph.dragonsurvival.data.tags.DSItemTags.*;
+import static by.jackraidenph.dragonsurvival.data.DSTags.Items.*;
 
 public class DSItemTagGenerator extends ForgeItemTagsProvider
 {
