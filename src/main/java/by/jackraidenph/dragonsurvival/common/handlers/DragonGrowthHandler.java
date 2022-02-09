@@ -4,15 +4,18 @@ import by.jackraidenph.dragonsurvival.DragonSurvivalMod;
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateProvider;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
 import by.jackraidenph.dragonsurvival.config.ConfigUtils;
+import by.jackraidenph.dragonsurvival.data.tags.DSItemTags;
 import by.jackraidenph.dragonsurvival.network.NetworkHandler;
 import by.jackraidenph.dragonsurvival.network.entity.player.SyncSize;
 import by.jackraidenph.dragonsurvival.common.items.DSItems;
 import by.jackraidenph.dragonsurvival.misc.DragonLevel;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -45,40 +48,55 @@ public class DragonGrowthHandler {
                 return;
 
             boolean canContinue = false;
+            Tags.IOptionalNamedTag<Item> tag = DSItemTags.GROW_ADULT;
 
-            List<Item> newbornList = ConfigUtils.parseConfigItemList(ConfigHandler.SERVER.growNewborn.get());
-            List<Item> youngList = ConfigUtils.parseConfigItemList(ConfigHandler.SERVER.growYoung.get());
-            List<Item> adultList = ConfigUtils.parseConfigItemList(ConfigHandler.SERVER.growAdult.get());
-
-            List<Item> allowedItems = new ArrayList<>();
-
-            switch (handler.getLevel()) {
+            switch (handler.getLevel())
+            {
                 case BABY:
-                    if (newbornList.contains(item))
-                        canContinue = true;
-                    else if (youngList.contains(item) || adultList.contains(item))
-                        allowedItems = newbornList;
-
+                    tag = DSItemTags.GROW_NEWBORN;
                     break;
                 case YOUNG:
-                    if (youngList.contains(item))
-                        canContinue = true;
-                    else if (newbornList.contains(item) || adultList.contains(item))
-                        allowedItems = youngList;
-
+                    tag = DSItemTags.GROW_YOUNG;
                     break;
                 case ADULT:
-                    if (adultList.contains(item))
-                        canContinue = true;
-                    else if (newbornList.contains(item) || youngList.contains(item))
-                        allowedItems = adultList;
-
+                    tag = DSItemTags.GROW_ADULT;
                     break;
             }
+            canContinue = tag.contains(item);
+
+//            List<Item> newbornList = DSItemTags.GROW_NEWBORN.getValues();
+//            List<Item> youngList = ConfigUtils.parseConfigItemList(ConfigHandler.SERVER.growYoung.get());
+//            List<Item> adultList = ConfigUtils.parseConfigItemList(ConfigHandler.SERVER.growAdult.get());
+//
+//            List<Item> allowedItems = new ArrayList<>();
+//
+//            switch (handler.getLevel()) {
+//                case BABY:
+//                    if (newbornList.contains(item))
+//                        canContinue = true;
+//                    else if (youngList.contains(item) || adultList.contains(item))
+//                        allowedItems = newbornList;
+//
+//                    break;
+//                case YOUNG:
+//                    if (youngList.contains(item))
+//                        canContinue = true;
+//                    else if (newbornList.contains(item) || adultList.contains(item))
+//                        allowedItems = youngList;
+//
+//                    break;
+//                case ADULT:
+//                    if (adultList.contains(item))
+//                        canContinue = true;
+//                    else if (newbornList.contains(item) || youngList.contains(item))
+//                        allowedItems = adultList;
+//
+//                    break;
+//            }
 
             if (!canContinue) {
-                if (!allowedItems.isEmpty() && world.isClientSide()) {
-                    List<String> displayData = allowedItems.stream()
+                if (!tag.getValues().isEmpty() && world.isClientSide()) {
+                    List<String> displayData = tag.getValues().stream()
                             .map(i -> new ItemStack(i).getDisplayName().getString())
                             .collect(Collectors.toList());
                     StringBuilder result = new StringBuilder();
@@ -112,9 +130,9 @@ public class DragonGrowthHandler {
     
     public static int getIncrement(Item item, DragonLevel level)
     {
-        List<Item> newbornList = ConfigUtils.parseConfigItemList(ConfigHandler.SERVER.growNewborn.get());
-        List<Item> youngList = ConfigUtils.parseConfigItemList(ConfigHandler.SERVER.growYoung.get());
-        List<Item> adultList = ConfigUtils.parseConfigItemList(ConfigHandler.SERVER.growAdult.get());
+        List<Item> newbornList = DSItemTags.GROW_NEWBORN.getValues();
+        List<Item> youngList = DSItemTags.GROW_YOUNG.getValues();
+        List<Item> adultList = DSItemTags.GROW_ADULT.getValues();
         
         int increment = 0;
         

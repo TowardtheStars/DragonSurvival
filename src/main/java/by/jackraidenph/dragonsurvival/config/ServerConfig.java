@@ -55,7 +55,7 @@ public class ServerConfig {
 	
 	public final ForgeConfigSpec.BooleanValue ridingBlacklist;
 	public final ForgeConfigSpec.ConfigValue<List<? extends String>> allowedVehicles;
-	public final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklistedItems;
+//	public final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklistedItems;
 	public final ForgeConfigSpec.ConfigValue<List<? extends Integer>> blacklistedSlots;
 	
 	public final ForgeConfigSpec.BooleanValue alternateGrowing;
@@ -71,9 +71,9 @@ public class ServerConfig {
 
     public final ForgeConfigSpec.BooleanValue customDragonFoods;
     public final ForgeConfigSpec.BooleanValue allowCommonFoodsForDragon;
-    public final ForgeConfigSpec.ConfigValue<List<? extends String>> growNewborn;
-	public final ForgeConfigSpec.ConfigValue<List<? extends String>> growYoung;
-	public final ForgeConfigSpec.ConfigValue<List<? extends String>> growAdult;
+//    public final ForgeConfigSpec.ConfigValue<List<? extends String>> growNewborn;
+//	public final ForgeConfigSpec.ConfigValue<List<? extends String>> growYoung;
+//	public final ForgeConfigSpec.ConfigValue<List<? extends String>> growAdult;
 
     public final ForgeConfigSpec.BooleanValue bonuses;
     public final ForgeConfigSpec.BooleanValue attackDamage;
@@ -89,14 +89,14 @@ public class ServerConfig {
     public final ForgeConfigSpec.BooleanValue caveFireImmunity;
     public final ForgeConfigSpec.BooleanValue caveLavaSwimming;
     public final ForgeConfigSpec.IntValue caveLavaSwimmingTicks; // 0 = Disabled
-    public final ForgeConfigSpec.ConfigValue<List<? extends String>> caveSpeedupBlocks;
+//    public final ForgeConfigSpec.ConfigValue<List<? extends String>> caveSpeedupBlocks;
 
     public final ForgeConfigSpec.DoubleValue forestFallReduction; // 0.0 = Disabled
     public final ForgeConfigSpec.BooleanValue forestBushImmunity;
 	public final ForgeConfigSpec.BooleanValue forestCactiImmunity;
-    public final ForgeConfigSpec.ConfigValue<List<? extends String>> forestSpeedupBlocks;
+//    public final ForgeConfigSpec.ConfigValue<List<? extends String>> forestSpeedupBlocks;
     public final ForgeConfigSpec.BooleanValue seaSwimmingBonuses;
-    public final ForgeConfigSpec.ConfigValue<List<? extends String>> seaSpeedupBlocks;
+//    public final ForgeConfigSpec.ConfigValue<List<? extends String>> seaSpeedupBlocks;
 
     public final ForgeConfigSpec.BooleanValue penalties;
 
@@ -112,10 +112,10 @@ public class ServerConfig {
     public final ForgeConfigSpec.IntValue seaTicksWithoutWater; // 0 = Disabled
 	public final ForgeConfigSpec.BooleanValue seaTicksBasedOnTemperature;
 	public final ForgeConfigSpec.DoubleValue seaDehydrationDamage;
-    public final ForgeConfigSpec.ConfigValue<List<? extends String>> seaHydrationBlocks;
+//    public final ForgeConfigSpec.ConfigValue<List<? extends String>> seaHydrationBlocks;
     public final ForgeConfigSpec.BooleanValue seaAllowWaterBottles;
     public final ForgeConfigSpec.IntValue seaTicksWithoutWaterRestored; // 0 = Disabled
-    public final ForgeConfigSpec.ConfigValue<List<? extends String>> seaAdditionalWaterUseables;
+//    public final ForgeConfigSpec.ConfigValue<List<? extends String>> seaAdditionalWaterUseables;
 
     public final ForgeConfigSpec.DoubleValue humanOreDustChance;
     public final ForgeConfigSpec.DoubleValue dragonOreDustChance;
@@ -127,9 +127,9 @@ public class ServerConfig {
 	public final ForgeConfigSpec.DoubleValue weakDragonHeartChance;
 	public final ForgeConfigSpec.DoubleValue elderDragonHeartChance;
 
-	public final ForgeConfigSpec.ConfigValue<List<? extends String>> seaDragonHurtfulItems;
-	public final ForgeConfigSpec.ConfigValue<List<? extends String>> caveDragonHurtfulItems;
-	public final ForgeConfigSpec.ConfigValue<List<? extends String>> forestDragonHurtfulItems;
+//	public final ForgeConfigSpec.ConfigValue<List<? extends String>> seaDragonHurtfulItems;
+//	public final ForgeConfigSpec.ConfigValue<List<? extends String>> caveDragonHurtfulItems;
+//	public final ForgeConfigSpec.ConfigValue<List<? extends String>> forestDragonHurtfulItems;
 
     public final ForgeConfigSpec.ConfigValue<List<? extends String>> caveDragonFoods;
     public final ForgeConfigSpec.ConfigValue<List<? extends String>> forestDragonFoods;
@@ -143,9 +143,9 @@ public class ServerConfig {
 	public final ForgeConfigSpec.IntValue favorableManaTicks;
 	public final ForgeConfigSpec.IntValue normalManaTicks;
 	
-	public final ForgeConfigSpec.ConfigValue<List<? extends String>> seaDragonManaBlocks;
-	public final ForgeConfigSpec.ConfigValue<List<? extends String>> forestDragonManaBlocks;
-	public final ForgeConfigSpec.ConfigValue<List<? extends String>> caveDragonManaBlocks;
+//	public final ForgeConfigSpec.ConfigValue<List<? extends String>> seaDragonManaBlocks;
+//	public final ForgeConfigSpec.ConfigValue<List<? extends String>> forestDragonManaBlocks;
+//	public final ForgeConfigSpec.ConfigValue<List<? extends String>> caveDragonManaBlocks;
 	
 	public final ForgeConfigSpec.BooleanValue dragonAbilities;
 	public final ForgeConfigSpec.BooleanValue caveDragonAbilities;
@@ -158,7 +158,7 @@ public class ServerConfig {
 	public final ForgeConfigSpec.IntValue fireBreathInitialMana;
 	public final ForgeConfigSpec.IntValue fireBreathOvertimeMana;
 	public final ForgeConfigSpec.IntValue fireBreathManaTicks;
-	public final ForgeConfigSpec.ConfigValue<List<? extends String>> fireBreathBlockBreaks;
+//	public final ForgeConfigSpec.ConfigValue<List<? extends String>> fireBreathBlockBreaks;
 	
 	public final ForgeConfigSpec.BooleanValue stormBreath;
 	public final ForgeConfigSpec.IntValue stormBreathCooldown;
@@ -172,9 +172,9 @@ public class ServerConfig {
 	public final ForgeConfigSpec.IntValue chargedChainRange;
 	public final ForgeConfigSpec.IntValue chargedEffectDamage;
 	
-	public final ForgeConfigSpec.ConfigValue<List<? extends String>> stormBreathBlockBreaks;
-	public final ForgeConfigSpec.ConfigValue<List<? extends String>> chargedBlacklist;
-	public final ForgeConfigSpec.ConfigValue<List<? extends String>> chargedSpreadBlacklist;
+//	public final ForgeConfigSpec.ConfigValue<List<? extends String>> stormBreathBlockBreaks;
+//	public final ForgeConfigSpec.ConfigValue<List<? extends String>> chargedBlacklist;
+//	public final ForgeConfigSpec.ConfigValue<List<? extends String>> chargedSpreadBlacklist;
 
 	public final ForgeConfigSpec.ConfigValue<Boolean> healthAdjustments;
 	public final ForgeConfigSpec.DoubleValue minHealth;
@@ -187,8 +187,8 @@ public class ServerConfig {
 	public final ForgeConfigSpec.IntValue forestBreathInitialMana;
 	public final ForgeConfigSpec.IntValue forestBreathOvertimeMana;
 	public final ForgeConfigSpec.IntValue forestBreathManaTicks;
-	public final ForgeConfigSpec.ConfigValue<List<? extends String>> forestBreathGrowBlacklist;
-	public final ForgeConfigSpec.ConfigValue<List<? extends String>> forestBreathBlockBreaks;
+//	public final ForgeConfigSpec.ConfigValue<List<? extends String>> forestBreathGrowBlacklist;
+//	public final ForgeConfigSpec.ConfigValue<List<? extends String>> forestBreathBlockBreaks;
 	
 	public final ForgeConfigSpec.BooleanValue spike;
 	public final ForgeConfigSpec.IntValue spikeCooldown;
@@ -303,27 +303,27 @@ public class ServerConfig {
 				.translation("ds.config.server.growth.hitboxGrowsPastHuman")
 				.comment("Whether the dragon hitbox grows past a human hitbox.")
 				.define("largerDragonHitbox", true);
-		growNewborn = builder
-				.translation("ds.config.server.growth.growNewborn")
-				.comment("List of items to grow newborn dragon. Format: item/tag:modid:id")
-				.defineList("growNewborn", Arrays.asList(
-						"item:dragonsurvival:heart_element",
-						"item:dragonsurvival:weak_dragon_heart",
-						"item:dragonsurvival:elder_dragon_heart"
-				), ConfigHandler.itemsAndTagsPredicate);
-		growYoung = builder
-				.translation("ds.config.server.growth.growYoung")
-				.comment("List of items to grow young dragon. Format: item/tag:modid:id")
-				.defineList("growYoung", Arrays.asList(
-						"item:dragonsurvival:weak_dragon_heart",
-						"item:dragonsurvival:elder_dragon_heart"
-				), ConfigHandler.itemsAndTagsPredicate);
-		growAdult = builder
-				.translation("ds.config.server.growth.growAdult")
-				.comment("List of items to grow adult dragon. Format: item/tag:modid:id")
-				.defineList("growAdult", Collections.singletonList(
-						"item:dragonsurvival:elder_dragon_heart"
-				), ConfigHandler.itemsAndTagsPredicate);
+//		growNewborn = builder
+//				.translation("ds.config.server.growth.growNewborn")
+//				.comment("List of items to grow newborn dragon. Format: item/tag:modid:id")
+//				.defineList("growNewborn", Arrays.asList(
+//						"item:dragonsurvival:heart_element",
+//						"item:dragonsurvival:weak_dragon_heart",
+//						"item:dragonsurvival:elder_dragon_heart"
+//				), ConfigHandler.itemsAndTagsPredicate);
+//		growYoung = builder
+//				.translation("ds.config.server.growth.growYoung")
+//				.comment("List of items to grow young dragon. Format: item/tag:modid:id")
+//				.defineList("growYoung", Arrays.asList(
+//						"item:dragonsurvival:weak_dragon_heart",
+//						"item:dragonsurvival:elder_dragon_heart"
+//				), ConfigHandler.itemsAndTagsPredicate);
+//		growAdult = builder
+//				.translation("ds.config.server.growth.growAdult")
+//				.comment("List of items to grow adult dragon. Format: item/tag:modid:id")
+//				.defineList("growAdult", Collections.singletonList(
+//						"item:dragonsurvival:elder_dragon_heart"
+//				), ConfigHandler.itemsAndTagsPredicate);
 		alternateGrowing = builder
 				.translation("ds.config.server.growth.alternateGrowing")
 				.comment("Defines if dragon should grow without requirement of catalyst items. Your dragon will just grow over time.")
@@ -588,23 +588,23 @@ public class ServerConfig {
 				.comment("The maximum number of ticks a cave dragon can swim in lava. Set to 0 to allow unlimited air while under lava.")
 				.defineInRange("lavaSwimTicks", 3600, 0, 100000);
 		
-		caveSpeedupBlocks = builder
-				.translation("ds.config.server.bonuses.cave.caveSpeedupBlocks")
-				.comment("Blocks cave dragons gain speed when standing above. Formatting: block/tag:modid:id")
-				.worldRestart()
-				.defineList("caveSpeedupBlocks", Arrays.asList(
-						"tag:minecraft:base_stone_nether",
-						"tag:minecraft:base_stone_overworld",
-						"tag:minecraft:stone_bricks",
-						"tag:minecraft:beacon_base_blocks",
-						"tag:forge:cobblestone",
-						"tag:forge:sandstone",
-						"tag:forge:stone",
-						"tag:forge:ores",
-						"block:quark:deepslate",
-						"block:quark:deepslate_bricks",
-						"block:quark:cobbled_deepslate"
-				), ConfigHandler.blocksAndTagsPredicate);
+//		caveSpeedupBlocks = builder
+//				.translation("ds.config.server.bonuses.cave.caveSpeedupBlocks")
+//				.comment("Blocks cave dragons gain speed when standing above. Formatting: block/tag:modid:id")
+//				.worldRestart()
+//				.defineList("caveSpeedupBlocks", Arrays.asList(
+//						"tag:minecraft:base_stone_nether",
+//						"tag:minecraft:base_stone_overworld",
+//						"tag:minecraft:stone_bricks",
+//						"tag:minecraft:beacon_base_blocks",
+//						"tag:forge:cobblestone",
+//						"tag:forge:sandstone",
+//						"tag:forge:stone",
+//						"tag:forge:ores",
+//						"block:quark:deepslate",
+//						"block:quark:deepslate_bricks",
+//						"block:quark:cobbled_deepslate"
+//				), ConfigHandler.blocksAndTagsPredicate);
 
 		// Forest Dragon Bonuses
 		builder.pop().push("forest");
@@ -623,16 +623,16 @@ public class ServerConfig {
 				.comment("Whether forest dragons are immune to Cactus damage.")
 				.define("cactiImmunity", true);
 		
-		forestSpeedupBlocks = builder
-				.translation("ds.config.server.bonuses.forest.forestSpeedupBlocks")
-				.comment("Blocks forest dragons gain speed when standing above. Formatting: block/tag:modid:id")
-				.worldRestart()
-				.defineList("forestSpeedupBlocks", Arrays.asList(
-						"tag:minecraft:logs",
-						"tag:minecraft:leaves",
-						"tag:minecraft:planks",
-						"tag:forge:dirt"
-				), ConfigHandler.blocksAndTagsPredicate);
+//		forestSpeedupBlocks = builder
+//				.translation("ds.config.server.bonuses.forest.forestSpeedupBlocks")
+//				.comment("Blocks forest dragons gain speed when standing above. Formatting: block/tag:modid:id")
+//				.worldRestart()
+//				.defineList("forestSpeedupBlocks", Arrays.asList(
+//						"tag:minecraft:logs",
+//						"tag:minecraft:leaves",
+//						"tag:minecraft:planks",
+//						"tag:forge:dirt"
+//				), ConfigHandler.blocksAndTagsPredicate);
 
 		// Sea Dragon Bonuses
 		builder.pop().push("sea");
@@ -641,27 +641,27 @@ public class ServerConfig {
 				.comment("Whether sea dragons gain bonus swim speed and unlimited air.")
 				.define("waterBonuses", true);
 		
-		seaSpeedupBlocks = builder
-				.translation("ds.config.server.bonuses.sea.seaSpeedupBlocks")
-				.comment("Blocks sea dragons gain speed when standing above. Formatting: block/tag:modid:id")
-				.worldRestart()
-				.defineList("seaSpeedupBlocks", Arrays.asList(
-						"tag:minecraft:ice",
-						"tag:minecraft:impermeable",
-						"tag:minecraft:sand",
-						"tag:minecraft:coral_blocks",
-						"tag:forge:sand",
-						"block:minecraft:dirt_path",
-						"block:minecraft:sandstone",
-						"block:minecraft:cut_sandstone",
-						"block:minecraft:chiseled_sandstone",
-						"block:minecraft:smooth_sandstone",
-						"block:minecraft:red_sandstone",
-						"block:minecraft:cut_red_sandstone",
-						"block:minecraft:chiseled_red_sandstone",
-						"block:minecraft:smooth_red_sandstone",
-						"block:minecraft:water"
-				), ConfigHandler.blocksAndTagsPredicate);
+//		seaSpeedupBlocks = builder
+//				.translation("ds.config.server.bonuses.sea.seaSpeedupBlocks")
+//				.comment("Blocks sea dragons gain speed when standing above. Formatting: block/tag:modid:id")
+//				.worldRestart()
+//				.defineList("seaSpeedupBlocks", Arrays.asList(
+//						"tag:minecraft:ice",
+//						"tag:minecraft:impermeable",
+//						"tag:minecraft:sand",
+//						"tag:minecraft:coral_blocks",
+//						"tag:forge:sand",
+//						"block:minecraft:dirt_path",
+//						"block:minecraft:sandstone",
+//						"block:minecraft:cut_sandstone",
+//						"block:minecraft:chiseled_sandstone",
+//						"block:minecraft:smooth_sandstone",
+//						"block:minecraft:red_sandstone",
+//						"block:minecraft:cut_red_sandstone",
+//						"block:minecraft:chiseled_red_sandstone",
+//						"block:minecraft:smooth_red_sandstone",
+//						"block:minecraft:water"
+//				), ConfigHandler.blocksAndTagsPredicate);
 
 		//Dragon Penalties
 		builder.pop().pop().push("penalties");
@@ -682,125 +682,125 @@ public class ServerConfig {
 				.comment("Should dragons be limited by which entities they can ride")
 				.define("limitedRiding", true);
 		
-		blacklistedItems = builder
-				.translation("ds.config.server.penalties.blacklistedItems")
-				.comment("List of items that disallowed to be used by dragons. Format: item/tag:modid:id")
-				.defineList("blacklistedItems", Arrays.asList(
-						"item:minecraft:bow",
-						"item:spartanshields:shield_basic_nickel",
-						"item:spartanshields:shield_basic_invar",
-						"item:spartanshields:shield_basic_constantan",
-						"item:spartanshields:shield_basic_platinum",
-						"item:spartanshields:shield_mekanism_refined_glowstone",
-						"item:spartanshields:shield_tower_wood",
-						"item:spartanshields:shield_tower_stone",
-						"item:spartanshields:shield_tower_iron",
-						"item:spartanshields:shield_tower_gold",
-						"item:spartanshields:shield_tower_diamond",
-						"item:spartanshields:shield_tower_netherite",
-						"item:spartanshields:shield_tower_obsidian",
-						"item:spartanshields:shield_tower_copper",
-						"item:spartanshields:shield_tower_tin",
-						"item:spartanshields:shield_tower_bronze",
-						"item:spartanshields:shield_tower_steel",
-						"item:spartanshields:shield_tower_silver",
-						"item:spartanshields:shield_tower_lead",
-						"item:spartanshields:shield_tower_nickel",
-						"item:spartanshields:shield_tower_constantan",
-						"item:spartanshields:shield_tower_invar",
-						"item:spartanshields:shield_tower_platinum",
-						"item:spartanshields:shield_tower_electrum",
-						"item:spartanshields:shield_mekanism_powered_ultimate",
-						"item:quark:flamerang", "item:quark:pickarang",
-						"item:spartanshields:shield_botania_manasteel",
-						"item:spartanshields:shield_botania_elementium",
-						"item:spartanshields:shield_mekanism_osmium",
-						"item:spartanshields:shield_mekanism_lapis_lazuli",
-						"item:spartanshields:shield_basic_electrum",
-						"item:spartanshields:shield_mekanism_refined_obsidian",
-						"item:spartanshields:shield_mekanism_powered_basic",
-						"item:spartanshields:shield_mekanism_powered_advanced",
-						"item:spartanshields:shield_mekanism_powered_elite",
-						"item:spartanweaponry:boomerang_steel",
-						"item:spartanweaponry:boomerang_invar",
-						"item:spartanweaponry:boomerang_platinum",
-						"item:spartanweaponry:boomerang_electrum",
-						"item:spartanshields:shield_basic_bronze",
-						"item:spartanshields:shield_basic_tin",
-						"item:spartanshields:shield_basic_copper",
-						"item:spartanshields:shield_basic_obsidian",
-						"item:spartanshields:shield_basic_netherite",
-						"item:spartanshields:shield_basic_diamond",
-						"item:spartanshields:shield_basic_gold",
-						"item:spartanshields:shield_basic_iron",
-						"item:spartanshields:shield_basic_stone",
-						"item:spartanshields:shield_basic_wood",
-						"item:spartanweaponry:boomerang_lead",
-						"item:spartanweaponry:boomerang_nickel",
-						"item:spartanshields:shield_basic_steel",
-						"item:spartanshields:shield_basic_silver",
-						"item:spartanshields:shield_basic_lead",
-						"item:spartanweaponry:boomerang_bronze",
-						"item:spartanweaponry:boomerang_tin",
-						"item:spartanweaponry:boomerang_copper",
-						"item:spartanweaponry:boomerang_netherite",
-						"item:spartanweaponry:boomerang_gold",
-						"item:spartanweaponry:boomerang_iron",
-						"item:spartanweaponry:boomerang_stone",
-						"item:spartanweaponry:heavy_crossbow_bronze",
-						"item:spartanshields:shield_botania_terrasteel",
-						"item:spartanweaponry:heavy_crossbow_leather",
-						"item:spartanweaponry:heavy_crossbow_iron",
-						"item:spartanweaponry:heavy_crossbow_gold",
-						"item:spartanweaponry:heavy_crossbow_diamond",
-						"item:spartanweaponry:heavy_crossbow_netherite",
-						"item:spartanweaponry:heavy_crossbow_copper",
-						"item:spartanweaponry:heavy_crossbow_tin",
-						"item:spartanweaponry:boomerang_wood",
-						"item:nethers_exoticism:rambutan_shield",
-						"item:minecraft:shield",
-						"item:minecraft:trident",
-						"item:spartanweaponry:heavy_crossbow_lead",
-						"item:spartanweaponry:heavy_crossbow_nickel",
-						"item:spartanweaponry:heavy_crossbow_electrum",
-						"item:spartanweaponry:heavy_crossbow_platinum",
-						"item:spartanweaponry:heavy_crossbow_invar",
-						"item:spartanweaponry:heavy_crossbow_silver",
-						"item:spartanweaponry:heavy_crossbow_steel",
-						"item:spartanweaponry:boomerang_diamond",
-						"item:spartanweaponry:heavy_crossbow_wood",
-						"item:minecraft:crossbow",
-						"item:aquaculture:neptunium_bow",
-						"item:spartanweaponry:longbow_electrum",
-						"item:spartanweaponry:longbow_invar",
-						"item:infernalexp:glowsilk_bow",
-						"item:spartanweaponry:longbow_wood",
-						"item:spartanweaponry:longbow_leather",
-						"item:spartanweaponry:longbow_silver",
-						"item:spartanweaponry:longbow_steel",
-						"item:spartanweaponry:longbow_bronze",
-						"item:spartanweaponry:longbow_tin",
-						"item:spartanweaponry:longbow_copper",
-						"item:spartanweaponry:longbow_netherite",
-						"item:spartanweaponry:longbow_diamond",
-						"item:spartanweaponry:longbow_gold",
-						"item:spartanweaponry:longbow_iron",
-						"item:spartanweaponry:boomerang_diamond",
-						"item:spartanweaponry:boomerang_iron",
-						"item:spartanweaponry:boomerang_wood",
-						"item:spartanweaponry:boomerang_gold",
-						"item:spartanweaponry:boomerang_netherite",
-						"item:spartanweaponry:boomerang_copper",
-						"item:spartanweaponry:boomerang_tin",
-						"item:spartanweaponry:boomerang_bronze",
-						"item:spartanweaponry:boomerang_stone",
-						"item:spartanweaponry:boomerang_platinum",
-						"item:spartanweaponry:boomerang_electrum",
-						"item:spartanweaponry:boomerang_steel",
-						"item:spartanweaponry:boomerang_lead",
-						"item:spartanweaponry:boomerang_invar",
-						"item:spartanweaponry:boomerang_nickel"
-				), ConfigHandler.itemsAndTagsPredicate);
+//		blacklistedItems = builder
+//				.translation("ds.config.server.penalties.blacklistedItems")
+//				.comment("List of items that disallowed to be used by dragons. Format: item/tag:modid:id")
+//				.defineList("blacklistedItems", Arrays.asList(
+//						"item:minecraft:bow",
+//						"item:spartanshields:shield_basic_nickel",
+//						"item:spartanshields:shield_basic_invar",
+//						"item:spartanshields:shield_basic_constantan",
+//						"item:spartanshields:shield_basic_platinum",
+//						"item:spartanshields:shield_mekanism_refined_glowstone",
+//						"item:spartanshields:shield_tower_wood",
+//						"item:spartanshields:shield_tower_stone",
+//						"item:spartanshields:shield_tower_iron",
+//						"item:spartanshields:shield_tower_gold",
+//						"item:spartanshields:shield_tower_diamond",
+//						"item:spartanshields:shield_tower_netherite",
+//						"item:spartanshields:shield_tower_obsidian",
+//						"item:spartanshields:shield_tower_copper",
+//						"item:spartanshields:shield_tower_tin",
+//						"item:spartanshields:shield_tower_bronze",
+//						"item:spartanshields:shield_tower_steel",
+//						"item:spartanshields:shield_tower_silver",
+//						"item:spartanshields:shield_tower_lead",
+//						"item:spartanshields:shield_tower_nickel",
+//						"item:spartanshields:shield_tower_constantan",
+//						"item:spartanshields:shield_tower_invar",
+//						"item:spartanshields:shield_tower_platinum",
+//						"item:spartanshields:shield_tower_electrum",
+//						"item:spartanshields:shield_mekanism_powered_ultimate",
+//						"item:quark:flamerang", "item:quark:pickarang",
+//						"item:spartanshields:shield_botania_manasteel",
+//						"item:spartanshields:shield_botania_elementium",
+//						"item:spartanshields:shield_mekanism_osmium",
+//						"item:spartanshields:shield_mekanism_lapis_lazuli",
+//						"item:spartanshields:shield_basic_electrum",
+//						"item:spartanshields:shield_mekanism_refined_obsidian",
+//						"item:spartanshields:shield_mekanism_powered_basic",
+//						"item:spartanshields:shield_mekanism_powered_advanced",
+//						"item:spartanshields:shield_mekanism_powered_elite",
+//						"item:spartanweaponry:boomerang_steel",
+//						"item:spartanweaponry:boomerang_invar",
+//						"item:spartanweaponry:boomerang_platinum",
+//						"item:spartanweaponry:boomerang_electrum",
+//						"item:spartanshields:shield_basic_bronze",
+//						"item:spartanshields:shield_basic_tin",
+//						"item:spartanshields:shield_basic_copper",
+//						"item:spartanshields:shield_basic_obsidian",
+//						"item:spartanshields:shield_basic_netherite",
+//						"item:spartanshields:shield_basic_diamond",
+//						"item:spartanshields:shield_basic_gold",
+//						"item:spartanshields:shield_basic_iron",
+//						"item:spartanshields:shield_basic_stone",
+//						"item:spartanshields:shield_basic_wood",
+//						"item:spartanweaponry:boomerang_lead",
+//						"item:spartanweaponry:boomerang_nickel",
+//						"item:spartanshields:shield_basic_steel",
+//						"item:spartanshields:shield_basic_silver",
+//						"item:spartanshields:shield_basic_lead",
+//						"item:spartanweaponry:boomerang_bronze",
+//						"item:spartanweaponry:boomerang_tin",
+//						"item:spartanweaponry:boomerang_copper",
+//						"item:spartanweaponry:boomerang_netherite",
+//						"item:spartanweaponry:boomerang_gold",
+//						"item:spartanweaponry:boomerang_iron",
+//						"item:spartanweaponry:boomerang_stone",
+//						"item:spartanweaponry:heavy_crossbow_bronze",
+//						"item:spartanshields:shield_botania_terrasteel",
+//						"item:spartanweaponry:heavy_crossbow_leather",
+//						"item:spartanweaponry:heavy_crossbow_iron",
+//						"item:spartanweaponry:heavy_crossbow_gold",
+//						"item:spartanweaponry:heavy_crossbow_diamond",
+//						"item:spartanweaponry:heavy_crossbow_netherite",
+//						"item:spartanweaponry:heavy_crossbow_copper",
+//						"item:spartanweaponry:heavy_crossbow_tin",
+//						"item:spartanweaponry:boomerang_wood",
+//						"item:nethers_exoticism:rambutan_shield",
+//						"item:minecraft:shield",
+//						"item:minecraft:trident",
+//						"item:spartanweaponry:heavy_crossbow_lead",
+//						"item:spartanweaponry:heavy_crossbow_nickel",
+//						"item:spartanweaponry:heavy_crossbow_electrum",
+//						"item:spartanweaponry:heavy_crossbow_platinum",
+//						"item:spartanweaponry:heavy_crossbow_invar",
+//						"item:spartanweaponry:heavy_crossbow_silver",
+//						"item:spartanweaponry:heavy_crossbow_steel",
+//						"item:spartanweaponry:boomerang_diamond",
+//						"item:spartanweaponry:heavy_crossbow_wood",
+//						"item:minecraft:crossbow",
+//						"item:aquaculture:neptunium_bow",
+//						"item:spartanweaponry:longbow_electrum",
+//						"item:spartanweaponry:longbow_invar",
+//						"item:infernalexp:glowsilk_bow",
+//						"item:spartanweaponry:longbow_wood",
+//						"item:spartanweaponry:longbow_leather",
+//						"item:spartanweaponry:longbow_silver",
+//						"item:spartanweaponry:longbow_steel",
+//						"item:spartanweaponry:longbow_bronze",
+//						"item:spartanweaponry:longbow_tin",
+//						"item:spartanweaponry:longbow_copper",
+//						"item:spartanweaponry:longbow_netherite",
+//						"item:spartanweaponry:longbow_diamond",
+//						"item:spartanweaponry:longbow_gold",
+//						"item:spartanweaponry:longbow_iron",
+//						"item:spartanweaponry:boomerang_diamond",
+//						"item:spartanweaponry:boomerang_iron",
+//						"item:spartanweaponry:boomerang_wood",
+//						"item:spartanweaponry:boomerang_gold",
+//						"item:spartanweaponry:boomerang_netherite",
+//						"item:spartanweaponry:boomerang_copper",
+//						"item:spartanweaponry:boomerang_tin",
+//						"item:spartanweaponry:boomerang_bronze",
+//						"item:spartanweaponry:boomerang_stone",
+//						"item:spartanweaponry:boomerang_platinum",
+//						"item:spartanweaponry:boomerang_electrum",
+//						"item:spartanweaponry:boomerang_steel",
+//						"item:spartanweaponry:boomerang_lead",
+//						"item:spartanweaponry:boomerang_invar",
+//						"item:spartanweaponry:boomerang_nickel"
+//				), ConfigHandler.itemsAndTagsPredicate);
 		
 		blacklistedSlots = builder
 				.translation("ds.config.server.penalties.blacklistedSlots")
@@ -860,16 +860,16 @@ public class ServerConfig {
 				.comment("The amount of damage taken per tick while dehydrated (once every 40 ticks unless fully dehydrated, then once every 20 ticks).")
 				.defineInRange("dehydrationDamage", 1.0, 0.5, 100.0);
 		
-		seaHydrationBlocks = builder
-				.translation("ds.config.server.penalties.sea.seaHydrationBlocks")
-				.comment("When sea dragons stand on these blocks, hydration is restored. Format: block/tag:modid:id")
-				.worldRestart()
-				.defineList("seaHydrationBlocks", Arrays.asList(
-						"tag:minecraft:ice",
-						"block:minecraft:snow",
-						"block:minecraft:snow_block",
-						"block:dragonsurvival:sea_source_of_magic"
-				), ConfigHandler.blocksAndTagsPredicate);
+//		seaHydrationBlocks = builder
+//				.translation("ds.config.server.penalties.sea.seaHydrationBlocks")
+//				.comment("When sea dragons stand on these blocks, hydration is restored. Format: block/tag:modid:id")
+//				.worldRestart()
+//				.defineList("seaHydrationBlocks", Arrays.asList(
+//						"tag:minecraft:ice",
+//						"block:minecraft:snow",
+//						"block:minecraft:snow_block",
+//						"block:dragonsurvival:sea_source_of_magic"
+//				), ConfigHandler.blocksAndTagsPredicate);
 		
 		seaAllowWaterBottles = builder
 				.translation("ds.config.server.penalties.sea.seaAllowWaterBottles")
@@ -881,13 +881,13 @@ public class ServerConfig {
 				.comment("How many ticks do water restoration items restore when used. Set to 0 to disable.")
 				.defineInRange("waterItemRestorationTicks", 5000, 0, 100000);
 		
-		seaAdditionalWaterUseables = builder
-				.translation("ds.config.server.penalties.sea.seaAdditionalWaterUseables")
-				.comment("Additional modded USEABLE items that restore water when used (called from LivingEntityUseItemEvent.Finish). Format: item/tag:modid:id")
-				.worldRestart()
-				.defineList("seaHydrationItems", Collections.singletonList(
-						"item:minecraft:enchanted_golden_apple"
-				), ConfigHandler.itemsAndTagsPredicate);
+//		seaAdditionalWaterUseables = builder
+//				.translation("ds.config.server.penalties.sea.seaAdditionalWaterUseables")
+//				.comment("Additional modded USEABLE items that restore water when used (called from LivingEntityUseItemEvent.Finish). Format: item/tag:modid:id")
+//				.worldRestart()
+//				.defineList("seaHydrationItems", Collections.singletonList(
+//						"item:minecraft:enchanted_golden_apple"
+//				), ConfigHandler.itemsAndTagsPredicate);
 		// Ore Loot
 		builder.pop().pop().push("ore");
 		humanOreDustChance = builder
@@ -926,24 +926,24 @@ public class ServerConfig {
 				.comment("Allow dragons to eat common food if dragon foods is enabled.")
 				.define("allowCommonFoodsForDragon", true);
 		
-		caveDragonHurtfulItems = builder
-				.translation("ds.config.server.food.caveDragonHurtfulItems")
-				.comment("Items which will cause damage to cave dragons when consumed. Formatting: item/tag:modid:itemid:damage")
-				.defineList("hurtfulToCaveDragon", Arrays.asList(
-						"item:minecraft:potion:2",
-						"item:minecraft:water_bottle:2",
-						"item:minecraft:milk_bucket:2"
-				), ConfigHandler.itemsAndTagsPredicate.and(this::isValidHurtfulItem));
+//		caveDragonHurtfulItems = builder
+//				.translation("ds.config.server.food.caveDragonHurtfulItems")
+//				.comment("Items which will cause damage to cave dragons when consumed. Formatting: item/tag:modid:itemid:damage")
+//				.defineList("hurtfulToCaveDragon", Arrays.asList(
+//						"item:minecraft:potion:2",
+//						"item:minecraft:water_bottle:2",
+//						"item:minecraft:milk_bucket:2"
+//				), ConfigHandler.itemsAndTagsPredicate.and(this::isValidHurtfulItem));
 		
-		seaDragonHurtfulItems = builder
-				.translation("ds.config.server.food.seaDragonHurtfulItems")
-				.comment("Items which will cause damage to sea dragons when consumed. Formatting: item/tag:modid:itemid:damage")
-				.defineList("hurtfulToSeaDragon", Arrays.asList(), ConfigHandler.itemsAndTagsPredicate.and(this::isValidHurtfulItem));
-		
-		forestDragonHurtfulItems = builder
-				.translation("ds.config.server.food.forestDragonHurtfulItems")
-				.comment("Items which will cause damage to forest dragons when consumed. Formatting: item/tag:modid:itemid:damage")
-				.defineList("hurtfulToForestDragon", Arrays.asList(),  ConfigHandler.itemsAndTagsPredicate.and(this::isValidHurtfulItem));
+//		seaDragonHurtfulItems = builder
+//				.translation("ds.config.server.food.seaDragonHurtfulItems")
+//				.comment("Items which will cause damage to sea dragons when consumed. Formatting: item/tag:modid:itemid:damage")
+//				.defineList("hurtfulToSeaDragon", Arrays.asList(), ConfigHandler.itemsAndTagsPredicate.and(this::isValidHurtfulItem));
+//
+//		forestDragonHurtfulItems = builder
+//				.translation("ds.config.server.food.forestDragonHurtfulItems")
+//				.comment("Items which will cause damage to forest dragons when consumed. Formatting: item/tag:modid:itemid:damage")
+//				.defineList("hurtfulToForestDragon", Arrays.asList(),  ConfigHandler.itemsAndTagsPredicate.and(this::isValidHurtfulItem));
 		
 		chargedSoupBuffDuration = builder
 				.translation("ds.config.server.food.chargedSoupBuffDuration")
@@ -1303,44 +1303,44 @@ public class ServerConfig {
 		
 		builder.push("Mana");
 		
-		seaDragonManaBlocks = builder
-				.translation("ds.config.server.magic.mana.seaDragonManaBlocks")
-				.worldRestart()
-				.comment("Blocks that will restore mana quicker when a sea dragon is standing on it. Formatting: block/tag:modid:blockid")
-				.defineList("seaDragonManaBlocks", Arrays.asList(
-						"block:dragonsurvival:sea_source_of_magic",
-						"tag:minecraft:ice",
-						"block:minecraft:snow",
-						"block:minecraft:snow_block",
-						"block:minecraft:water",
-						"block:minecraft:wet_sponge",
-						"block:minecraft:cauldron"
-				), ConfigHandler.blocksAndTagsPredicate);
-		
-		forestDragonManaBlocks = builder
-				.translation("ds.config.server.magic.mana.forestDragonManaBlocks")
-				.worldRestart()
-				.comment("Blocks that will restore mana quicker when a forest dragon is standing on it. Formatting: block/tag:modid:blockid")
-				.defineList("forestDragonManaBlocks", Arrays.asList(
-						"block:dragonsurvival:forest_source_of_magic",
-						"tag:minecraft:small_flowers",
-						"tag:minecraft:flowers",
-						"tag:minecraft:tall_flowers"
-				), ConfigHandler.blocksAndTagsPredicate);
-		
-		caveDragonManaBlocks = builder
-				.translation("ds.config.server.magic.mana.caveDragonManaBlocks")
-				.worldRestart()
-				.comment("Blocks that will restore mana quicker when a cave dragon is standing on it. Formatting: block/tag:modid:blockid")
-				.defineList("caveDragonManaBlocks", Arrays.asList(
-						"block:dragonsurvival:cave_source_of_magic",
-						"tag:minecraft:campfires",
-						"block:minecraft:lava",
-						"block:minecraft:smoker",
-						"block:minecraft:furnace",
-						"block:minecraft:magma_block",
-						"block:minecraft:blast_furnace"
-				), ConfigHandler.blocksAndTagsPredicate);
+//		seaDragonManaBlocks = builder
+//				.translation("ds.config.server.magic.mana.seaDragonManaBlocks")
+//				.worldRestart()
+//				.comment("Blocks that will restore mana quicker when a sea dragon is standing on it. Formatting: block/tag:modid:blockid")
+//				.defineList("seaDragonManaBlocks", Arrays.asList(
+//						"block:dragonsurvival:sea_source_of_magic",
+//						"tag:minecraft:ice",
+//						"block:minecraft:snow",
+//						"block:minecraft:snow_block",
+//						"block:minecraft:water",
+//						"block:minecraft:wet_sponge",
+//						"block:minecraft:cauldron"
+//				), ConfigHandler.blocksAndTagsPredicate);
+//
+//		forestDragonManaBlocks = builder
+//				.translation("ds.config.server.magic.mana.forestDragonManaBlocks")
+//				.worldRestart()
+//				.comment("Blocks that will restore mana quicker when a forest dragon is standing on it. Formatting: block/tag:modid:blockid")
+//				.defineList("forestDragonManaBlocks", Arrays.asList(
+//						"block:dragonsurvival:forest_source_of_magic",
+//						"tag:minecraft:small_flowers",
+//						"tag:minecraft:flowers",
+//						"tag:minecraft:tall_flowers"
+//				), ConfigHandler.blocksAndTagsPredicate);
+//
+//		caveDragonManaBlocks = builder
+//				.translation("ds.config.server.magic.mana.caveDragonManaBlocks")
+//				.worldRestart()
+//				.comment("Blocks that will restore mana quicker when a cave dragon is standing on it. Formatting: block/tag:modid:blockid")
+//				.defineList("caveDragonManaBlocks", Arrays.asList(
+//						"block:dragonsurvival:cave_source_of_magic",
+//						"tag:minecraft:campfires",
+//						"block:minecraft:lava",
+//						"block:minecraft:smoker",
+//						"block:minecraft:furnace",
+//						"block:minecraft:magma_block",
+//						"block:minecraft:blast_furnace"
+//				), ConfigHandler.blocksAndTagsPredicate);
 		
 		builder.pop();
 		
@@ -1433,17 +1433,17 @@ public class ServerConfig {
 					.comment("How often in ticks, mana is consumed while using forest breath")
 					.defineInRange("forestBreathManaTicks", Functions.secondsToTicks(2), 0, 100);
 			
-			forestBreathBlockBreaks = builder
-					.comment("Blocks that have a chance to be broken by forest breath. Formatting: block/tag:modid:id")
-					.worldRestart()
-					.defineList("forestBreathBlockBreaks", Arrays.asList(
-							"tag:minecraft:banners"
-					), ConfigHandler.blocksAndTagsPredicate);
-			
-			forestBreathGrowBlacklist = builder
-					.comment("Blocks that will not be grown by the forest breath. Formatting: block/tag:modid:id")
-					.worldRestart()
-					.defineList("forestBreathGrowBlacklist", Arrays.asList(), ConfigHandler.blocksAndTagsPredicate);
+//			forestBreathBlockBreaks = builder
+//					.comment("Blocks that have a chance to be broken by forest breath. Formatting: block/tag:modid:id")
+//					.worldRestart()
+//					.defineList("forestBreathBlockBreaks", Arrays.asList(
+//							"tag:minecraft:banners"
+//					), ConfigHandler.blocksAndTagsPredicate);
+//
+//			forestBreathGrowBlacklist = builder
+//					.comment("Blocks that will not be grown by the forest breath. Formatting: block/tag:modid:id")
+//					.worldRestart()
+//					.defineList("forestBreathGrowBlacklist", Arrays.asList(), ConfigHandler.blocksAndTagsPredicate);
 		}
 		{
 			builder.pop().push("spike");
@@ -1564,27 +1564,27 @@ public class ServerConfig {
 					.comment("How often in ticks, mana is consumed while using storm breath")
 					.defineInRange("stormBreathManaTicks", Functions.secondsToTicks(2), 0, 100);
 			
-			stormBreathBlockBreaks = builder
-					.comment("Blocks that have a chance to be broken by storm breath. Formatting: block/tag:modid:id")
-					.worldRestart()
-					.defineList("stormBreathBlockBreaks", Arrays.asList(
-							"tag:minecraft:impermeable",
-							"block:minecraft:snow",
-							"tag:minecraft:crops",
-							"tag:minecraft:flowers",
-							"tag:minecraft:banners",
-							"tag:minecraft:lush_plants_replaceable",
-							"tag:minecraft:azalea_log_replaceable",
-							"tag:minecraft:replaceable_plants",
-							"tag:minecraft:leaves"
-							), ConfigHandler.blocksAndTagsPredicate);
-			
-			chargedBlacklist = builder
-					.comment("List of entities that do not work with the charged effect. Format: modid:id")
-					.defineList("chargedBlacklist", Arrays.asList(
-							"upgrade_aquatic:thrasher",
-							"upgrade_aquatic:great_thrasher"
-					), ConfigHandler.entitiesAndTagsPredicate);
+//			stormBreathBlockBreaks = builder
+//					.comment("Blocks that have a chance to be broken by storm breath. Formatting: block/tag:modid:id")
+//					.worldRestart()
+//					.defineList("stormBreathBlockBreaks", Arrays.asList(
+//							"tag:minecraft:impermeable",
+//							"block:minecraft:snow",
+//							"tag:minecraft:crops",
+//							"tag:minecraft:flowers",
+//							"tag:minecraft:banners",
+//							"tag:minecraft:lush_plants_replaceable",
+//							"tag:minecraft:azalea_log_replaceable",
+//							"tag:minecraft:replaceable_plants",
+//							"tag:minecraft:leaves"
+//							), ConfigHandler.blocksAndTagsPredicate);
+//
+//			chargedBlacklist = builder
+//					.comment("List of entities that do not work with the charged effect. Format: modid:id")
+//					.defineList("chargedBlacklist", Arrays.asList(
+//							"upgrade_aquatic:thrasher",
+//							"upgrade_aquatic:great_thrasher"
+//					), ConfigHandler.entitiesAndTagsPredicate);
 			
 			stormBreathChainCount = builder
 					.comment("How many mobs stormbreath is able to chain to at once")
@@ -1606,11 +1606,11 @@ public class ServerConfig {
 					.comment("The amount of damage the charged effect deals each second")
 					.defineInRange("chargedEffectDamage", 1, 0, 100);
 			
-			chargedSpreadBlacklist = builder
-					.comment("List of entities that will not spread the charged effect. Format: modid:id")
-					.defineList("chargedBlacklist", Arrays.asList(
-							"minecraft:armor_stand"
-					), ConfigHandler.entitiesAndTagsPredicate);
+//			chargedSpreadBlacklist = builder
+//					.comment("List of entities that will not spread the charged effect. Format: modid:id")
+//					.defineList("chargedBlacklist", Arrays.asList(
+//							"minecraft:armor_stand"
+//					), ConfigHandler.entitiesAndTagsPredicate);
 		}
 		
 		{
@@ -1741,32 +1741,32 @@ public class ServerConfig {
 					.comment("Whether the fire breath actually spreads fire when used")
 					.define("fireBreathSpreadsFire", true);
 			
-			fireBreathBlockBreaks = builder
-					.comment("Blocks that have a chance to be broken by fire breath. Formatting: block/tag:modid:id")
-					.worldRestart()
-					.defineList("fireBreathBlockBreaks", Arrays.asList(
-							"tag:minecraft:ice",
-							"block:minecraft:snow",
-							"tag:minecraft:crops",
-							"tag:minecraft:leaves",
-							"tag:minecraft:flowers",
-							"tag:minecraft:banners",
-							"tag:minecraft:lush_plants_replaceable",
-							"tag:minecraft:azalea_log_replaceable",
-							"tag:minecraft:replaceable_plants",
-							"tag:minecraft:wooden_fences",
-							"tag:minecraft:logs_that_burn",
-							"tag:minecraft:mycelium",
-							"tag:minecraft:wooden_stairs",
-							"tag:minecraft:wooden_doors",
-							"tag:minecraft:wool",
-							"tag:minecraft:saplings",
-							"tag:minecraft:impermeable",
-							"block:minecraft:cobweb",
-							"block:minecraft:large_fern",
-							"block:minecraft:sugar_cane",
-							"block:minecraft:snow_block"
-					), ConfigHandler.blocksAndTagsPredicate);
+//			fireBreathBlockBreaks = builder
+//					.comment("Blocks that have a chance to be broken by fire breath. Formatting: block/tag:modid:id")
+//					.worldRestart()
+//					.defineList("fireBreathBlockBreaks", Arrays.asList(
+//							"tag:minecraft:ice",
+//							"block:minecraft:snow",
+//							"tag:minecraft:crops",
+//							"tag:minecraft:leaves",
+//							"tag:minecraft:flowers",
+//							"tag:minecraft:banners",
+//							"tag:minecraft:lush_plants_replaceable",
+//							"tag:minecraft:azalea_log_replaceable",
+//							"tag:minecraft:replaceable_plants",
+//							"tag:minecraft:wooden_fences",
+//							"tag:minecraft:logs_that_burn",
+//							"tag:minecraft:mycelium",
+//							"tag:minecraft:wooden_stairs",
+//							"tag:minecraft:wooden_doors",
+//							"tag:minecraft:wool",
+//							"tag:minecraft:saplings",
+//							"tag:minecraft:impermeable",
+//							"block:minecraft:cobweb",
+//							"block:minecraft:large_fern",
+//							"block:minecraft:sugar_cane",
+//							"block:minecraft:snow_block"
+//					), ConfigHandler.blocksAndTagsPredicate);
 		}
 		
 		{

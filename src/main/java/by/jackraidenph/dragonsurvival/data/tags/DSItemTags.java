@@ -1,13 +1,13 @@
-package by.jackraidenph.dragonsurvival.common.tags;
+package by.jackraidenph.dragonsurvival.data.tags;
 
 import by.jackraidenph.dragonsurvival.DragonSurvivalMod;
 import net.minecraft.item.Item;
-import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
+import org.lwjgl.system.NonnullDefault;
 
+@NonnullDefault
 public class DSItemTags
 {
     public static final String CAVE_DRAGON = "cave_dragon";

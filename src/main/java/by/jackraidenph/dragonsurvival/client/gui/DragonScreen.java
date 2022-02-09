@@ -9,8 +9,8 @@ import by.jackraidenph.dragonsurvival.client.handlers.KeyInputHandler;
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateHandler;
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateProvider;
 import by.jackraidenph.dragonsurvival.common.handlers.DragonGrowthHandler;
+import by.jackraidenph.dragonsurvival.data.tags.DSItemTags;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
-import by.jackraidenph.dragonsurvival.config.ConfigUtils;
 import by.jackraidenph.dragonsurvival.misc.DragonLevel;
 import by.jackraidenph.dragonsurvival.network.NetworkHandler;
 import by.jackraidenph.dragonsurvival.network.claw.DragonClawsMenuToggle;
@@ -423,9 +423,9 @@ public class DragonScreen extends DisplayEffectsScreen<DragonContainer> {
     
                 ArrayList<Item> allowedList = new ArrayList<>();
     
-                List<Item> newbornList = ConfigUtils.parseConfigItemList(ConfigHandler.SERVER.growNewborn.get());
-                List<Item> youngList = ConfigUtils.parseConfigItemList(ConfigHandler.SERVER.growYoung.get());
-                List<Item> adultList = ConfigUtils.parseConfigItemList(ConfigHandler.SERVER.growAdult.get());
+                List<Item> newbornList = DSItemTags.GROW_NEWBORN.getValues();
+                List<Item> youngList = DSItemTags.GROW_YOUNG.getValues();
+                List<Item> adultList = DSItemTags.GROW_ADULT.getValues();
                 
                 if(handler.getSize() < DragonLevel.YOUNG.size){
                     allowedList.addAll(newbornList);

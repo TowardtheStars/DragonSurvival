@@ -1,18 +1,13 @@
-package by.jackraidenph.dragonsurvival.data;
+package by.jackraidenph.dragonsurvival.data.generator;
 
 import by.jackraidenph.dragonsurvival.common.blocks.DSBlocks;
-import by.jackraidenph.dragonsurvival.common.tags.DSBlockTags;
-import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeBlockTagsProvider;
 
-import static by.jackraidenph.dragonsurvival.common.tags.DSBlockTags.*;
+import static by.jackraidenph.dragonsurvival.data.tags.DSBlockTags.*;
 import static net.minecraft.tags.BlockTags.*;
 import static net.minecraftforge.common.Tags.Blocks.*;
 

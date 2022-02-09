@@ -2,8 +2,8 @@ package by.jackraidenph.dragonsurvival.mixins;
 
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateProvider;
 import by.jackraidenph.dragonsurvival.common.handlers.DragonFoodHandler;
+import by.jackraidenph.dragonsurvival.data.tags.DSItemTags;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
-import by.jackraidenph.dragonsurvival.config.ConfigUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,7 +30,7 @@ public class MixinItem {
 		if(player.isCreative() || player.isSpectator()) return;
 		
 		DragonStateProvider.getCap(player).ifPresent(dragonStateHandler -> {
-			if (dragonStateHandler.isDragon() && ConfigHandler.SERVER.blacklistedSlots.get().contains(slot) && ConfigUtils.parseConfigItemList(ConfigHandler.SERVER.blacklistedItems.get()).contains(stack.getItem())) {
+			if (dragonStateHandler.isDragon() && ConfigHandler.SERVER.blacklistedSlots.get().contains(slot) && DSItemTags.UNAVAILABLE_FOR_DRAGON.contains(stack.getItem())) {
 				if(slot >= 0 && slot < 9 && !isSelected && !ItemStack.matches(player.getOffhandItem(), stack)) return;
 				if (stack.isEmpty() || !stack.onDroppedByPlayer(player)) return;
 				

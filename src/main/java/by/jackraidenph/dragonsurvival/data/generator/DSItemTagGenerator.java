@@ -1,4 +1,4 @@
-package by.jackraidenph.dragonsurvival.data;
+package by.jackraidenph.dragonsurvival.data.generator;
 
 import by.jackraidenph.dragonsurvival.common.items.DSItems;
 import com.google.common.collect.ImmutableList;
@@ -14,9 +14,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeItemTagsProvider;
 
-import java.util.stream.Collectors;
-
-import static by.jackraidenph.dragonsurvival.common.tags.DSItemTags.*;
+import static by.jackraidenph.dragonsurvival.data.tags.DSItemTags.*;
 
 public class DSItemTagGenerator extends ForgeItemTagsProvider
 {
@@ -160,16 +158,13 @@ public class DSItemTagGenerator extends ForgeItemTagsProvider
 
         tag(GROW_NEWBORN)
                 .add(
-                        DSItems.dragonHeartShard,
-                        DSItems.weakDragonHeart,
-                        DSItems.elderDragonHeart
-                );
+                        DSItems.dragonHeartShard
+                ).addTags(GROW_YOUNG, GROW_ADULT);
 
         tag(GROW_YOUNG)
                 .add(
-                        DSItems.weakDragonHeart,
-                        DSItems.elderDragonHeart
-                );
+                        DSItems.weakDragonHeart
+                ).addTags(GROW_ADULT);
 
         tag(GROW_ADULT)
                 .add(

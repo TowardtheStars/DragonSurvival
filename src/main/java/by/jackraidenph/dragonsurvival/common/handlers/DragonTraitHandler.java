@@ -11,6 +11,7 @@ import by.jackraidenph.dragonsurvival.common.magic.abilities.Passives.LightInDar
 import by.jackraidenph.dragonsurvival.common.magic.abilities.Passives.WaterAbility;
 import by.jackraidenph.dragonsurvival.common.magic.common.DragonAbility;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
+import by.jackraidenph.dragonsurvival.data.tags.DSBlockTags;
 import by.jackraidenph.dragonsurvival.misc.DragonType;
 import by.jackraidenph.dragonsurvival.network.NetworkHandler;
 import by.jackraidenph.dragonsurvival.network.entity.player.SyncCapabilityDebuff;
@@ -84,11 +85,14 @@ public class DragonTraitHandler
                 }
             }
 
-            boolean isInSeaBlock = DragonConfigHandler.SEA_DRAGON_HYDRATION_BLOCKS != null &&
-                    (DragonConfigHandler.SEA_DRAGON_HYDRATION_BLOCKS.contains(block)
-                            || DragonConfigHandler.SEA_DRAGON_HYDRATION_BLOCKS.contains(feetBlock.getBlock()) || isInCauldron);
+            boolean isInSeaBlock =
+                    (DSBlockTags.SEA_HYDRATION_BLOCKS.contains(block)
+                            || DSBlockTags.SEA_HYDRATION_BLOCKS.contains(feetBlock.getBlock()) || isInCauldron);
 
-            if (!world.isClientSide && ConfigHandler.SERVER.bonuses.get() && ConfigHandler.SERVER.speedupEffectLevel.get() > 0 && DragonConfigHandler.DRAGON_SPEEDUP_BLOCKS != null && DragonConfigHandler.DRAGON_SPEEDUP_BLOCKS.get(dragonStateHandler.getType()).contains(block))
+            if (!world.isClientSide
+                    && ConfigHandler.SERVER.bonuses.get()
+                    && ConfigHandler.SERVER.speedupEffectLevel.get() > 0
+                    && DSBlockTags.SPEED_UP_BLOCKS.get(dragonStateHandler.getType()).contains(block))
             {
                 int duration =
                         dragonStateHandler.getType() == DragonType.SEA && dragonStateHandler.getMagic().getAbility(DragonAbilities.SEA_ATHLETICS) != null ? ((AthleticsAbility) dragonStateHandler.getMagic().getAbility(DragonAbilities.SEA_ATHLETICS)).getDuration() :

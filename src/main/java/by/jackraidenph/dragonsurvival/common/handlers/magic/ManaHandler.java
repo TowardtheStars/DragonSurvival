@@ -5,6 +5,7 @@ import by.jackraidenph.dragonsurvival.common.blocks.TreasureBlock;
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateProvider;
 import by.jackraidenph.dragonsurvival.common.handlers.DragonConfigHandler;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
+import by.jackraidenph.dragonsurvival.data.tags.DSBlockTags;
 import by.jackraidenph.dragonsurvival.misc.DragonType;
 import by.jackraidenph.dragonsurvival.util.Functions;
 import net.minecraft.block.AbstractFurnaceBlock;
@@ -66,8 +67,8 @@ public class ManaHandler
 		
 		return DragonStateProvider.getCap(player).map(cap -> {
 			
-			if(DragonConfigHandler.DRAGON_MANA_BLOCKS != null && DragonConfigHandler.DRAGON_MANA_BLOCKS.containsKey(cap.getType())) {
-				if (DragonConfigHandler.DRAGON_MANA_BLOCKS.get(cap.getType()).contains(blockBelow.getBlock()) || DragonConfigHandler.DRAGON_MANA_BLOCKS.get(cap.getType()).contains(feetBlock.getBlock())) {
+			if(DSBlockTags.MANA_BLOCKS != null && DSBlockTags.MANA_BLOCKS.containsKey(cap.getType())) {
+				if (DSBlockTags.MANA_BLOCKS.get(cap.getType()).contains(blockBelow.getBlock()) || DSBlockTags.MANA_BLOCKS.get(cap.getType()).contains(feetBlock.getBlock())) {
 					if (!(blockBelow.getBlock() instanceof AbstractFurnaceBlock) && !(feetBlock.getBlock() instanceof AbstractFurnaceBlock) && !(blockBelow.getBlock() instanceof CauldronBlock) && !(feetBlock.getBlock() instanceof CauldronBlock)) {
 						return true;
 					}
@@ -79,8 +80,8 @@ public class ManaHandler
 					if (player.isInWaterRainOrBubble() || player.hasEffect(DragonEffects.CHARGED) || player.hasEffect(DragonEffects.PEACE)) {
 						return true;
 					}
-					if(DragonConfigHandler.DRAGON_MANA_BLOCKS != null && DragonConfigHandler.DRAGON_MANA_BLOCKS.containsKey(DragonType.SEA)) {
-						if (DragonConfigHandler.DRAGON_MANA_BLOCKS.get(DragonType.SEA).contains(blockBelow.getBlock())) {
+					if(DSBlockTags.MANA_BLOCKS.containsKey(DragonType.SEA)) {
+						if (DSBlockTags.MANA_BLOCKS.get(DragonType.SEA).contains(blockBelow.getBlock())) {
 							if (blockBelow.getBlock() == Blocks.CAULDRON) {
 								if (blockBelow.hasProperty(CauldronBlock.LEVEL)) {
 									int level = blockBelow.getValue(CauldronBlock.LEVEL);
@@ -133,8 +134,8 @@ public class ManaHandler
 					}
 					
 					//If cave dragon is ontop of a burning furnace
-					if(DragonConfigHandler.DRAGON_MANA_BLOCKS != null && DragonConfigHandler.DRAGON_MANA_BLOCKS.containsKey(DragonType.CAVE)) {
-						if (DragonConfigHandler.DRAGON_MANA_BLOCKS.get(DragonType.CAVE).contains(blockBelow.getBlock())) {
+					if(DSBlockTags.MANA_BLOCKS.containsKey(DragonType.CAVE)) {
+						if (DSBlockTags.MANA_BLOCKS.get(DragonType.CAVE).contains(blockBelow.getBlock())) {
 							if (blockBelow.getBlock() instanceof AbstractFurnaceBlock) {
 								if (blockBelow.hasProperty(AbstractFurnaceBlock.LIT)) {
 									if (blockBelow.getValue(AbstractFurnaceBlock.LIT)) {

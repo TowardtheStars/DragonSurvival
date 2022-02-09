@@ -8,6 +8,7 @@ import by.jackraidenph.dragonsurvival.common.handlers.DragonConfigHandler;
 import by.jackraidenph.dragonsurvival.common.magic.common.AbilityAnimation;
 import by.jackraidenph.dragonsurvival.common.magic.common.ActiveDragonAbility;
 import by.jackraidenph.dragonsurvival.common.magic.common.ISecondAnimation;
+import by.jackraidenph.dragonsurvival.data.tags.DSBlockTags;
 import by.jackraidenph.dragonsurvival.misc.DragonLevel;
 import by.jackraidenph.dragonsurvival.misc.DragonType;
 import by.jackraidenph.dragonsurvival.server.handlers.ServerFlightHandler;
@@ -270,7 +271,7 @@ public abstract class BreathAbility extends ActiveDragonAbility implements ISeco
 						if(newPos.distSqr(pos) <= RANGE){
 							BlockState state = player.level.getBlockState(newPos);
 							if(state.getBlock() != Blocks.AIR){
-								if(DragonConfigHandler.DRAGON_BREATH_BLOCKS != null && DragonConfigHandler.DRAGON_BREATH_BLOCKS.containsKey(type) && DragonConfigHandler.DRAGON_BREATH_BLOCKS.get(type).contains(state.getBlock())){
+								if(DSBlockTags.BREATH_BREAKABLE.containsKey(type) && DSBlockTags.BREATH_BREAKABLE.get(type).contains(state.getBlock())){
 									if(!player.level.isClientSide) {
 										if (player.level.random.nextFloat() * 100 <= blockBreakChance()) {
 											player.level.destroyBlock(newPos, false, player);
@@ -278,10 +279,8 @@ public abstract class BreathAbility extends ActiveDragonAbility implements ISeco
 										}
 									}
 								}
-								
-								if(newPos != null && state != null) {
-									onBlock(newPos, state, result.getDirection());
-								}
+
+								onBlock(newPos, state, result.getDirection());
 							}
 						}
 					}
@@ -317,7 +316,7 @@ public abstract class BreathAbility extends ActiveDragonAbility implements ISeco
 	{
 		ArrayList<ITextComponent> components = new ArrayList<ITextComponent>();
 		
-		DragonLevel growthLevel = DragonStateProvider.getCap(player).map(cap -> cap.getLevel()).get();
+		DragonLevel growthLevel = DragonStateProvider.getCap(player).map(DragonStateHandler::getLevel).get();
 		int RANGE = growthLevel == DragonLevel.BABY ? 4 : growthLevel == DragonLevel.YOUNG ? 7 : 10;
 		
 		components.add(new TranslationTextComponent("ds.skill.mana_cost", getManaCost()));

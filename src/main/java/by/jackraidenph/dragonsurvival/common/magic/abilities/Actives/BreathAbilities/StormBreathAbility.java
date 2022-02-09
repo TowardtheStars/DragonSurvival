@@ -11,6 +11,7 @@ import by.jackraidenph.dragonsurvival.common.capability.DragonStateProvider;
 import by.jackraidenph.dragonsurvival.common.capability.GenericCapability;
 import by.jackraidenph.dragonsurvival.common.entity.DSEntities;
 import by.jackraidenph.dragonsurvival.common.entity.projectiles.StormBreathEntity;
+import by.jackraidenph.dragonsurvival.data.tags.DSEntityTypeTags;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
 import by.jackraidenph.dragonsurvival.config.ConfigUtils;
 import by.jackraidenph.dragonsurvival.misc.DragonType;
@@ -255,7 +256,7 @@ public class StormBreathAbility extends BreathAbility
 		for(LivingEntity target : secondaryTargets){
 			boolean damaged = false;
 			if(target != null && target.getType() != null && target.getType().getRegistryType() != null) {
-				if (ConfigUtils.containsEntity(ConfigHandler.SERVER.chargedBlacklist.get(), target)) {
+				if (DSEntityTypeTags.STORM_BREATH_CANNOT_CHARGE.contains(target.getType())) {
 					if(player != null) {
 						target.hurt(DamageSource.playerAttack(player), damage);
 					}else{
@@ -274,7 +275,7 @@ public class StormBreathAbility extends BreathAbility
 				}
 			}
 			onDamageChecks(target);
-			if(!ConfigUtils.containsEntity(ConfigHandler.SERVER.chargedSpreadBlacklist.get(), source)) {
+			if(! DSEntityTypeTags.STORM_BREATH_CANNOT_SPREAD.contains(source.getType())) {
 				if (target != source) {
 					GenericCapability capSource = Capabilities.getGenericCapability(source).orElse(null);
 					GenericCapability cap = Capabilities.getGenericCapability(target).orElse(null);

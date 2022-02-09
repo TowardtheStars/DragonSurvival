@@ -10,6 +10,7 @@ import by.jackraidenph.dragonsurvival.common.capability.Capabilities;
 import by.jackraidenph.dragonsurvival.common.capability.GenericCapability;
 import by.jackraidenph.dragonsurvival.common.handlers.DragonConfigHandler;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
+import by.jackraidenph.dragonsurvival.data.tags.DSBlockTags;
 import by.jackraidenph.dragonsurvival.misc.DragonType;
 import by.jackraidenph.dragonsurvival.util.Functions;
 import net.minecraft.block.BlockState;
@@ -240,7 +241,7 @@ public class ForestBreathAbility extends BreathAbility
 		if(blockState.getBlock() != Blocks.GRASS_BLOCK && blockState.getBlock() != Blocks.GRASS) {
 			if (player.level.random.nextInt(100) < 50) {
 				if (blockState.getBlock() instanceof IGrowable) {
-					if (!DragonConfigHandler.FOREST_DRAGON_BREATH_GROW_BLACKLIST.contains(blockState.getBlock())) {
+					if (!DSBlockTags.FOREST_BREATH_INEFFECTIVE_BLOCKS.contains(blockState.getBlock())) {
 						IGrowable igrowable = (IGrowable)blockState.getBlock();
 						if (igrowable.isValidBonemealTarget(player.level, pos, blockState, player.level.isClientSide)) {
 							if (player.level instanceof ServerWorld) {

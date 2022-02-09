@@ -4,21 +4,25 @@ import by.jackraidenph.dragonsurvival.common.DamageSources;
 import by.jackraidenph.dragonsurvival.common.DragonEffects;
 import by.jackraidenph.dragonsurvival.common.capability.DragonStateProvider;
 import by.jackraidenph.dragonsurvival.config.ConfigHandler;
+import by.jackraidenph.dragonsurvival.data.tags.DSItemTags;
 import by.jackraidenph.dragonsurvival.misc.DragonType;
 import by.jackraidenph.dragonsurvival.network.NetworkHandler;
 import by.jackraidenph.dragonsurvival.network.entity.player.SyncCapabilityDebuff;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PotionEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.PotionItem;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -69,35 +73,47 @@ public class DragonPenaltyHandler
 			
 			DragonStateProvider.getCap(playerEntity).ifPresent(dragonStateHandler -> {
 				if (dragonStateHandler.isDragon()) {
-					List<String> hurtfulItems = new ArrayList<>(
-							dragonStateHandler.getType() == DragonType.FOREST ? ConfigHandler.SERVER.forestDragonHurtfulItems.get() :
-							dragonStateHandler.getType() == DragonType.CAVE ? ConfigHandler.SERVER.caveDragonHurtfulItems.get() :
-							dragonStateHandler.getType() == DragonType.SEA ? ConfigHandler.SERVER.seaDragonHurtfulItems.get() : new ArrayList<>());
-	
-					if(hurtfulItems.size() > 0){
-						ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(itemStack.getItem());
-						
-						if(itemId != null){
-							for(String item : hurtfulItems){
-								boolean match = item.startsWith("item:" + itemId + ":");
-								
-								if(!match){
-									for(ResourceLocation tag : itemStack.getItem().getTags()){
-										if(item.startsWith("tag:" + tag + ":")){
-											match = true;
-											break;
+					Tags.IOptionalNamedTag<Item> hurtfulItems = (
+							dragonStateHandler.getType() == DragonType.FOREST ? DSItemTags.FOREST_DRAGON_HURTFUL_ITEMS:
+							dragonStateHandler.getType() == DragonType.CAVE ? DSItemTags.CAVE_DRAGON_HURTFUL_ITEMS:
+							dragonStateHandler.getType() == DragonType.SEA ? DSItemTags.SEA_DRAGON_HURTFUL_ITEMS: null);
+					if (hurtfulItems != null)
+					{
+						itemStack.getItem().getTags().stream()
+								.filter(res -> res.toString().startsWith(hurtfulItems.getName().toString()))
+								.findAny()
+								.ifPresent(
+										res -> {
+											String[] paths = res.toString().split("/");
+											float damage = Float.parseFloat(paths[paths.length - 1].split("damage_")[1]);
+											playerEntity.hurt(DamageSource.GENERIC, damage);
 										}
-									}
-								}
-								
-								if(match){
-									String damage = item.substring(item.lastIndexOf(":") + 1);
-									playerEntity.hurt(DamageSource.GENERIC, Float.parseFloat(damage));
-									break;
-								}
-							}
-						}
+								);
 					}
+//					if(hurtfulItems.size() > 0){
+//						ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(itemStack.getItem());
+//
+//						if(itemId != null){
+//							for(String item : hurtfulItems){
+//								boolean match = item.startsWith("item:" + itemId + ":");
+//
+//								if(!match){
+//									for(ResourceLocation tag : itemStack.getItem().getTags()){
+//										if(item.startsWith("tag:" + tag + ":")){
+//											match = true;
+//											break;
+//										}
+//									}
+//								}
+//
+//								if(match){
+//									String damage = item.substring(item.lastIndexOf(":") + 1);
+//									playerEntity.hurt(DamageSource.GENERIC, Float.parseFloat(damage));
+//									break;
+//								}
+//							}
+//						}
+//					}
 				}
 			});
 		}
@@ -116,7 +132,7 @@ public class DragonPenaltyHandler
 							NetworkHandler.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> playerEntity), new SyncCapabilityDebuff(playerEntity.getId(), dragonStateHandler.getDebuffData().timeWithoutWater, dragonStateHandler.getDebuffData().timeInDarkness, dragonStateHandler.getDebuffData().timeInRain));
 						}
 	            }
-	            if (DragonConfigHandler.SEA_DRAGON_HYDRATION_USE_ALTERNATIVES.contains(itemStack.getItem()) && !playerEntity.level.isClientSide) {
+	            if (DSItemTags.HYDRATION_USABLES.contains(itemStack.getItem()) && !playerEntity.level.isClientSide) {
 		            dragonStateHandler.getDebuffData().timeWithoutWater = Math.max(dragonStateHandler.getDebuffData().timeWithoutWater - ConfigHandler.SERVER.seaTicksWithoutWaterRestored.get(), 0);
 		            NetworkHandler.CHANNEL.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> playerEntity), new SyncCapabilityDebuff(playerEntity.getId(), dragonStateHandler.getDebuffData().timeWithoutWater, dragonStateHandler.getDebuffData().timeInDarkness, dragonStateHandler.getDebuffData().timeInRain));
 	            }

@@ -179,6 +179,7 @@ public class DragonStateHandler {
         isHiding = hiding;
     }
 
+    @Nonnull
     public DragonLevel getLevel() {
         if (size < 20F)
         	return DragonLevel.BABY;
