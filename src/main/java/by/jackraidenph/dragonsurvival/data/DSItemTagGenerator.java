@@ -158,6 +158,24 @@ public class DSItemTagGenerator extends ForgeItemTagsProvider
 
         addParameterTag(CAVE_DRAGON_HURTFUL_ITEMS);
 
+        tag(GROW_NEWBORN)
+                .add(
+                        DSItems.dragonHeartShard,
+                        DSItems.weakDragonHeart,
+                        DSItems.elderDragonHeart
+                );
+
+        tag(GROW_YOUNG)
+                .add(
+                        DSItems.weakDragonHeart,
+                        DSItems.elderDragonHeart
+                );
+
+        tag(GROW_ADULT)
+                .add(
+                        DSItems.elderDragonHeart
+                );
+
 
     }
 
